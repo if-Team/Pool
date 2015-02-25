@@ -173,8 +173,16 @@ Pool.Canvas.drawLine3D = function(x0, y0, z0, x1, y1, z1, blockId, blockDamage){
     }while(true);
 }
 
+/*
+ * @param center{Pool.Vector3} 원의 중심
+*/
 Pool.Canvas.drawCircle = function(center, radius, blockId, blockDamage){
-	//TODO: Implement method!
+	for(var a = 0; a <= 360; a += 0.1){
+   		var x = java.lang.Math.cos(java.lang.Math.toRadians(a)) * radius;
+    	var z = java.lang.Math.sin(java.lang.Math.toRadians(a)) * radius;
+
+		Level.setTile(center.x + x, center.y, center.z + z, blockId, blockDamage);
+	}
 };
 
 Pool.IO.Zipper = function(kirito, psycho){
