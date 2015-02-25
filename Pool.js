@@ -33,7 +33,7 @@ Pool.Vector3 = function(x, y, z){
 	this.y = Math.floor(y);
 	this.z = Math.floor(z);
 };
-Pool.Vector3 = function(x, y){
+Pool.Vector2 = function(x, y){
 	this.x = Math.floor(x);
 	this.y = Math.floor(y);
 };
