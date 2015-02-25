@@ -19,6 +19,7 @@
 /**
  * @since 2015-02-24
  * @author ChalkPE <amato17@naver.com> 
+ * @author Choseul <chocoslime05@naver.com> 
  */
 var Pool = {};
 Pool.VERSION = "0.1";
@@ -171,6 +172,18 @@ Pool.Canvas.drawCircle = function(center, radius, blockId, blockDamage){
 };
 
 Pool.IO.Zipper = function(kirito, psycho){
+	//TODO: Implement method!
+}
+
+Pool.IO.saveFile = function(str, path){
+	//TODO: Implement method!
+}
+
+Pool.IO.readFile = function(str){
+	//TODO: Implement method!
+}
+
+Pool.IO.removeFile = function(str){
 	//TODO: Implement method!
 }
 
