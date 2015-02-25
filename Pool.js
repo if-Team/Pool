@@ -85,6 +85,8 @@ Pool.Canvas = {};
 
 Pool.IO = {};
 
+Pool.Entity = {};
+
 /**
  * @param begin {Pool.Vector3} 시작점의 위치
  * @param end {Pool.Vector3} 종료점의 위치
@@ -218,6 +220,12 @@ Pool.IO.readFile = function(str){
 
 Pool.IO.removeFile = function(str){
 	//TODO: Implement method!
+}
+
+Pool.Entity.getEntitiesInRange = function(range){
+    return Entity.getAll().filter(function(value){
+        return Math.hypot(Player.getX()-Entity.getX(value),Player.getY()-Entity.getY(value),Player.getZ()-Entity.getZ(value)) < range;
+    }
 }
 
 function selectLevelHook(){
