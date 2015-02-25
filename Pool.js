@@ -61,6 +61,25 @@ Pool.Vector3.prototype.set = function(x, y, z){
 	}
 };
 
+Pool.Vector2.prototype = {};
+Pool.Vector2.prototype.equals = function(x, y){
+	if(x instanceof Pool.Vector3 && arguments.length === 1){
+		return x.x === this.x && x.y === this.y;
+	}
+	return Math.floor(x) === this.x && Math.floor(y) === this.y;
+};
+Pool.Vector2.prototype.toString = function(){
+	return "[" + [this.x, this.y].join(", ") + "]";
+}
+Pool.Vector2.prototype.set = function(x, y){
+	if(typeof x === "number"){
+		this.x = Math.floor(x);
+	}
+	if(typeof y === "number"){
+		this.y = Math.floor(y);
+	}
+};
+
 
 Pool.Canvas = {};
 
