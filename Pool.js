@@ -28,6 +28,11 @@ Pool.VERSION = "0.1";
 //Pool.SubPackage.someMethod
 //Pool.Constructor
 
+Pool.load = function(path){
+	var content = Pool.IO.readAllLines(path);
+	eval(content);
+}
+
 Pool.Vector3 = function(x, y, z){
 	this.x = Math.floor(x);
 	this.y = Math.floor(y);
@@ -214,8 +219,27 @@ Pool.IO.saveFile = function(str, path){
 	//TODO: Implement method!
 }
 
-Pool.IO.readFile = function(str){
-	//TODO: Implement method!
+Pool.IO.readAllLines = function(str){
+	try{
+		var file = path;
+		if(path instanceof String){
+			br = new java.io.File(path);
+		}
+		
+		br = new java.io.BufferedReader(java.io.FileReader(path));
+		
+		var sb = new java.lang.StringBuffer();
+		
+		var tmp;
+		while((tmp = br.readLine()) !== null){
+			sb.append(tmp + "\n");
+		}
+		
+		return sb.toString()+"";
+	}catch(e){
+		clientMessage("OH MY GOD ERROR!!!! UNBELIEVABLE!!!");
+	}
+	return null;
 }
 
 Pool.IO.removeFile = function(str){
