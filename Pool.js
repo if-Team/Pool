@@ -20,6 +20,7 @@
  * @since 2015-02-24
  * @author ChalkPE <amato17@naver.com> 
  * @author Choseul <chocoslime05@naver.com> 
+ * @author IchiKaku <woni8708@naver.com> 
  */
 var Pool = {};
 Pool.VERSION = "0.1";
@@ -32,6 +33,11 @@ Pool.Vector3 = function(x, y, z){
 	this.y = Math.floor(y);
 	this.z = Math.floor(z);
 };
+Pool.Vector3 = function(x, y){
+	this.x = Math.floor(x);
+	this.y = Math.floor(y);
+};
+
 
 Pool.Vector3.prototype = {};
 Pool.Vector3.prototype.equals = function(x, y, z){
