@@ -63,7 +63,7 @@ Pool.Vector3.prototype.set = function(x, y, z){
 
 Pool.Vector2.prototype = {};
 Pool.Vector2.prototype.equals = function(x, y){
-	if(x instanceof Pool.Vector3 && arguments.length === 1){
+	if(x instanceof Pool.Vector2 && arguments.length === 1){
 		return x.x === this.x && x.y === this.y;
 	}
 	return Math.floor(x) === this.x && Math.floor(y) === this.y;
