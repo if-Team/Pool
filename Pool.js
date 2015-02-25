@@ -23,7 +23,9 @@
  * @author IchiKaku <woni8708@naver.com> 
  */
 var Pool = {};
+
 Pool.VERSION = "0.1";
+Pool.APIVERSION = 1;
 
 //Pool.SubPackage.someMethod
 //Pool.Constructor
