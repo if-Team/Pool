@@ -57,6 +57,8 @@ Pool.Vector3.prototype.set = function(x, y, z){
 
 Pool.Canvas = {};
 
+Pool.IO = {};
+
 /**
  * @param begin {Pool.Vector3} 시작점의 위치
  * @param end {Pool.Vector3} 종료점의 위치
@@ -168,6 +170,10 @@ Pool.Canvas.drawCircle = function(center, radius, blockId, blockDamage){
 	//TODO: Implement method!
 };
 
+Pool.IO.Zipper = function(kirito, psycho){
+	//TODO: Implement method!
+}
+
 function selectLevelHook(){
 	var scripts = net.zhuoweizhang.mcpelauncher.ScriptManager.scripts;
     var ScriptableObject = org.mozilla.javascript.ScriptableObject;
@@ -179,3 +185,4 @@ function selectLevelHook(){
 		}
 	}
 }
+
