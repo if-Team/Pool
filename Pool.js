@@ -560,6 +560,43 @@ Math.hypot = Math.hypot || function(){
 };
 
 
+/**
+ * @since 2015-02-26 (API 1)
+ * @author onebone <jyc0410@naver.com>
+ */
+ Pool.Utils = {};
+ 
+ 
+ /**
+  * @since 2015-02-26 (API 1)
+  * @author onebone <jyc0410@naver.com>
+  * @param path{String | java.io.File} 파일의 경로
+  */
+Pool.Utils.loadScript = function(path){
+	var file = path;
+	
+	if(file instanceof String){
+		file = new java.io.File(file);
+	}
+	
+	try{
+		net.zhuoweizhang.mcpelauncher.ScriptManager.loadScript(file);
+	}catch(e){
+		Pool.showError(e);
+	}
+};
+
+/**
+ * @since 2015-02-26 (API 1)
+ * @author onebone <jyc0410@naver.com>
+ * @param functionName {String} 함수의 이름
+ * @param args {object...} 이벤트 호출 시 인자
+ */
+Pool.Utils.launchEvent = function(functionName){
+	net.zhuoweizhang.mcpelauncher.ScriptManager.callScriptMethod(functionName, arguments);
+}
+
+
 
 
 
