@@ -61,9 +61,9 @@ Pool.showError = function(error){
  * @since 2015-02-26
  * @author IchiKaku <woni8708@naver.com>
  */
-Pool.Vector2 = function(x, y){
+Pool.Vector2 = function(x, z){
 	this.x = Math.floor(x);
-	this.y = Math.floor(y);
+	this.z = Math.floor(z);
 };
 
 /**
@@ -76,11 +76,11 @@ Pool.Vector2.prototype = {};
  * @since 2015-02-26
  * @author IchiKaku <woni8708@naver.com>
  */
-Pool.Vector2.prototype.equals = function(x, y){
+Pool.Vector2.prototype.equals = function(x, z){
 	if(x instanceof Pool.Vector2 && arguments.length === 1){
-		return x.x === this.x && x.y === this.y;
+		return x.x === this.x && x.z === this.z;
 	}
-	return Math.floor(x) === this.x && Math.floor(y) === this.y;
+	return Math.floor(x) === this.x && Math.floor(z) === this.z;
 };
 
 /**
@@ -88,19 +88,19 @@ Pool.Vector2.prototype.equals = function(x, y){
  * @author IchiKaku <woni8708@naver.com>
  */
 Pool.Vector2.prototype.toString = function(){
-	return "[" + [this.x, this.y].join(", ") + "]";
+	return "[" + [this.x, this.z].join(", ") + "]";
 }
 
 /**
  * @since 2015-02-26
  * @author IchiKaku <woni8708@naver.com>
  */
-Pool.Vector2.prototype.set = function(x, y){
+Pool.Vector2.prototype.set = function(x, z){
 	if(typeof x === "number"){
 		this.x = Math.floor(x);
 	}
-	if(typeof y === "number"){
-		this.y = Math.floor(y);
+	if(typeof z === "number"){
+		this.z = Math.floor(z);
 	}
 };
 
