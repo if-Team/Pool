@@ -658,7 +658,7 @@ Pool.Entity.getPlayer = function(){
  * @since 2015-02-26 (API 1)
  * @author affogatoman <colombia2@naver.com>
  * @param {Number} ent - 엔티티 아이디
- * @returns {Boolean} 엔티티의 존재 여부
+ * @returns {Boolean} - 엔티티의 존재 여부
  */
 Pool.Entity.isEntity = function(ent){
 	if(ent instanceof Pool.Entity){
@@ -684,7 +684,26 @@ Pool.Entity.prototype = {};
  */
 Pool.Entity.prototype.getVector = function(){
 	return new Pool.Vector3(Entity.getX(this.ent), Entity.getY(this.ent), Entity.getZ(this.ent));
-}
+};
+
+/**
+ * 엔티티를 이동시킵니다
+ * 
+ * @since 2015-02-26 (API 1)
+ * @author affogatoman <colombia2@naver.com>
+ * @param {Number|Pool.Vector3} x
+ * @param {Number} y
+ * @param {Number} z
+ */
+ Pool.Entity.prototype.moveTo = function(x, y, z){
+	 if(x instanceof Pool.Vector3){
+		 Entity.setPosition(this.ent, x.x, x.y, x.z);
+	 }
+	 
+	 if(typeof x === "number" && typeof y === "number" && typeof z === "number"){
+		 Entity.setPosition(this.ent, x, y, z),
+	 }
+ };
 
 
 
