@@ -598,7 +598,7 @@ Pool.IO.copyFile = function(source, target, deleteSourceAfterCopy){
  * @param {String|File} file - zip 파일의 경로 혹은 파일 객체
  * @param {String} target - 압축해제될 폴더의 경로
  */
-Pool.IO.unZip(file, target) {
+Pool.IO.unZip = function(file, target) {
 	try{
 		var zip = new java.util.zip.ZipFile(file);
 		var elements = zip.entries();
