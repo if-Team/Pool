@@ -189,16 +189,50 @@ Pool.Vector3.prototype = {};
  * 
  * @since 2015-02-24 (API 1)
  * @author ChalkPE <amato0617@gmail.com>
- * @param {Number|Pool.Vector2} x
+ * @param {Number|Pool.Vector3} x
  * @param {Number} y
  * @param {Number} z
  * @return {Boolean} 동일 여부
  */
 Pool.Vector3.prototype.equals = function(x, y, z){
-	if(x instanceof Pool.Vector3 && arguments.length === 1){
+	if(x instanceof Pool.Vector3){
 		return x.x === this.x && x.y === this.y && x.z === this.z
 	}
 	return Math.floor(x) === this.x && Math.floor(y) === this.y && Math.floor(z) === this.z;
+};
+
+/**
+ * 좌표에 대하여 더합니다
+ *
+ * @since 2015-02-26 (API 1)
+ * @author onebone <jyc0410@naver.com>
+ * @param {Number|Pool.Vector3} x
+ * @param {Number} y
+ * @param {Number} z
+ * @return {Pool.Vector3} 결과 값
+ */
+Pool.Vector3.prototype.add = function(x, y, z){
+	if(x instanceof  Pool.Vector3){
+		return new Pool.Vector3(this.x + x.x, this.y + x.y, this.z + x.z);
+	}
+	return new Pool.Vector3(this.x + x, this.y + y, this.z + z);
+};
+
+/**
+ * 좌표에 대하여 뺍니다
+ * 
+ * @since 2015-02-26 (API 1)
+ * @author onebone <jyc0410@naver.com>
+ * @param {Number|Pool.Vector3} x
+ * @param {Number} y
+ * @param {Number} z
+ * @return {Pool.Vector3} 결과 값
+*/
+Pool.Vector3.prototype.subtract = function(x, y, z){
+	if(x instanceof  Pool.Vector3){
+		return new Pool.Vector3(this.x - x.x, this.y - x.y, this.z - x.z);
+	}
+	return new Pool.Vector3(this.x - x, this.y - y, this.z - z);
 };
 
 /**
