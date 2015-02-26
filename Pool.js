@@ -101,6 +101,9 @@ Pool.Vector3.prototype.set = function(x, y, z){
 		this.z = Math.floor(z);
 	}
 };
+Pool.Vector3.prototype.getDistance = function(first ssecond {
+	return Math.hypot(first.x - second.x, first.y - second.y, first.z - second.z);
+};
 
 
 Pool.Canvas = {};
@@ -316,10 +319,6 @@ Pool.Entity.getEntitiesInRange = function(range, baseEntity){
     return Entity.getAll().filter(function(ent){
         return Math.hypot(Player.getX() - Entity.getX(ent), Player.getY() - Entity.getY(ent), Player.getZ() - Entity.getZ(ent)) < range;
     });
-};
-
-Pool.Map.getDistance = function(first, second) {
-	return Math.hypot(first.x - second.x, first.y - second.y, first.z - second.z);
 };
 
 
