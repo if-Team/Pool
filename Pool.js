@@ -906,30 +906,6 @@ Pool.Entity.prototype.getVector = function(){
 	return android.graphics.BitmapFactory.decodeStream(ModPE.openInputStreamFromTexturePack("images/" + Entity.getMobSkin(this.ent)));
  };
 
- /**
- * 특정 엔티티를 모두 제거합니다
- * 
- * @since 2015-02-27 (API 1)
- * @author Choseul <chocoslime05@naver.com>
- * @return {Entity Type Id} 엔티티 타입 아이디
- */
-Pool.Entity.entityRemover = function(id){
-	var e = Entity.getAll();
-	
-	e.filter(function(ent){
-		if(id == null){
-			if(ent != getPlayerEnt()){
-				Entity.remove(ent);
-			}
-		} else if(id != null) {
-+			if(Entity.getEntityTypeId(ent) == id && ent != getPlayerEnt()){
-				Entity.remove(ent);
-			}
-		}
-	});
-}
-
-
 /**
  * @since 2015-02-26 (API 1)
  * @author affogatoman <colombia2@naver.com>
