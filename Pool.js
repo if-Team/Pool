@@ -150,6 +150,17 @@ Pool.Vector2.prototype.set = function(x, z){
 	}
 };
 
+/**
+ * 다른 좌표와의 거리를 구합니다
+ * 
+ * @since 2015-02-26 (API 1)
+ * @author ChalkPE <amato0617@gmail.com>
+ * @param {Pool.Vector2} vec2
+ * @return {Number} 자신과 vec2 사이의 거리
+ */
+Pool.Vector2.prototype.getDistance = function(vec2){
+	return Math.hypot(this.x - vec2.x, this.z - vec2.z);
+};
 
 
 
@@ -234,7 +245,6 @@ Pool.Vector3.prototype.set = function(x, y, z){
 };
 
 /**
-<<<<<<< HEAD
  * 다른 좌표와의 거리를 구합니다
  * 
  * @since 2015-02-26 (API 1)
@@ -399,7 +409,6 @@ Pool.Canvas.drawCircle = function(center, radius, blockId, blockDamage){
  */
 Pool.IO = {};
 
-
 /**
  * 문자열을 파일에 저장합니다
  * 
@@ -544,33 +553,17 @@ Pool.Map.getHighestVector = function(vec2){
 
 /**
  * @since 2015-02-26 (API 1)
- * @author ChalkPE <amato0617@gmail.com>
- * @memberof Math
- * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/hypot
- */
-Math.hypot = Math.hypot || function(){
-	var y = 0;
-	for(var i = 0; i < arguments.length; i++){
-		if(arguments[i] === Infinity || arguments[i] === -Infinity){
-			return Infinity;
-		}
-		y += arguments[i] * arguments[i];
-	}
-	return Math.sqrt(y);
-};
-
-
-/**
- * @since 2015-02-26 (API 1)
  * @author onebone <jyc0410@naver.com>
+ * @namespace
  */
  Pool.Utils = {};
  
- 
  /**
+  * 블럭런쳐에 스크립트를 불러옵니다
+  * 
   * @since 2015-02-26 (API 1)
   * @author onebone <jyc0410@naver.com>
-  * @param path{String | java.io.File} 파일의 경로
+  * @param {String|File} path - 파일의 경로
   */
 Pool.Utils.loadScript = function(path){
 	var file = path;
@@ -587,14 +580,40 @@ Pool.Utils.loadScript = function(path){
 };
 
 /**
+ * 블럭런쳐에 적용된 모든 스크립트들의 메서드들을 호출합니다
+ * 
  * @since 2015-02-26 (API 1)
  * @author onebone <jyc0410@naver.com>
- * @param functionName {String} 함수의 이름
- * @param args {object...} 이벤트 호출 시 인자
+ * @param {String} functionName - 함수의 이름
+ * @param {...Object} args - 함수에 전달할 인자
  */
-Pool.Utils.launchEvent = function(functionName){
-	net.zhuoweizhang.mcpelauncher.ScriptManager.callScriptMethod(functionName, arguments);
-}
+Pool.Utils.launchEvent = function(){
+	var args = Array.slice(arguments);
+	var functionName = args.shift();
+	
+	net.zhuoweizhang.mcpelauncher.ScriptManager.callScriptMethod(functionName, args);
+};
+
+
+
+
+
+/**
+ * @since 2015-02-26 (API 1)
+ * @author ChalkPE <amato0617@gmail.com>
+ * @memberof Math
+ * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/hypot
+ */
+Math.hypot = Math.hypot || function(){
+	var y = 0;
+	for(var i = 0; i < arguments.length; i++){
+		if(arguments[i] === Infinity || arguments[i] === -Infinity){
+			return Infinity;
+		}
+		y += arguments[i] * arguments[i];
+	}
+	return Math.sqrt(y);
+};
 
 
 
