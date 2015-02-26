@@ -105,7 +105,7 @@ Pool.Vector2.prototype = {};
  * @return {Boolean} 동일 여부
  */
 Pool.Vector2.prototype.equals = function(x, z){
-	if(x instanceof Pool.Vector2 && arguments.length === 1){
+	if(x instanceof Pool.Vector2){
 		return x.x === this.x && x.z === this.z;
 	}
 	return Math.floor(x) === this.x && Math.floor(z) === this.z;
