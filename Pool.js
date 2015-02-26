@@ -145,10 +145,10 @@ Pool.Vector2.prototype.toArray = function(){
  * @param {Number} [z] - 생략할 경우 변경하지 않습니다
  */
 Pool.Vector2.prototype.set = function(x, z){
-	if(!isNaN(x)){
+	if(!isNaN(x) && typeof x == "number"){
 		this.x = Math.floor(x);
 	}
-	if(!isNaN(z) === "number"){
+	if(!isNaN(z) && typeof z == "number"){
 		this.z = Math.floor(z);
 	}
 };
