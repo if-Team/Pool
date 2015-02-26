@@ -339,13 +339,6 @@ Pool.Canvas.drawCircle = function(center, radius, blockId, blockDamage){
  */
 Pool.IO = {};
 
-/**
- * @since 2015-02-26 (API 1)
- * @author Choseul <chocoslime05@naver.com>
- */
-Pool.IO.Zipper = function(kirito, psycho){
-	//TODO: Implement this method!
-}
 
 /**
  * @since 2015-02-26 (API 1)
