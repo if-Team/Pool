@@ -807,11 +807,7 @@ Pool.Entity.isMob = function(ent) {
 		ent = ent.ent;
 	}
 	
-	if(Entity.getEntityTypeId(ent) >= 32 && Entity.getEntityTypeId(ent) <= 39){
-		return true;
-	}
-	
-	return false;
+	return Entity.getEntityTypeId(ent) >= 32 && Entity.getEntityTypeId(ent) <= 39;
 }
 
 /**
