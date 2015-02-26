@@ -736,10 +736,32 @@ Pool.IO.unZip = function(file, target) {
 		Pool.showError(e);
 	}
 };
-/*
- * @author chalkPE <amato0617@gmaila.ccom
- * @author IchiKaku <woni8708@naver.com>o
-*/
+
+
+
+
+
+/**
+ * @since 2015-02-26 (API 1)
+ * @author netherTNT <canghaun@naver.com>
+ * @author ChalkPE <amato0617@gmail.com>
+ * @class
+ */
+Pool.Entity = function(ent){
+	if(ent instanceof Pool.Entity){
+		this.ent = ent.ent
+	}else if(typeof ent === "number"){
+		this.ent = ent;
+	}else{
+		throw new Error("Illegal argument type");
+	}
+};
+
+/**
+ * @since 2015-2-27 (API 1)
+ * @author ChalkPE <amato0617@gmail.com>
+ * @author IchiKaku <woni8708@naver.com>
+ */
 Pool.Entity.EntityType = {
     HUMAN: 0,
     
@@ -767,23 +789,6 @@ Pool.Entity.EntityTypeName = {
     "80": "Arrow", "81": "Snowball", "82": "Egg", "83": "Painting", "84": "Minecart"
 };
 
-
-/**
- * @since 2015-02-26 (API 1)
- * @author netherTNT <canghaun@naver.com>
- * @author ChalkPE <amato0617@gmail.com>
- * @class
- */
-Pool.Entity = function(ent){
-	if(ent instanceof Pool.Entity){
-		this.ent = ent.ent
-	}else if(typeof ent === "number"){
-		this.ent = ent;
-	}else{
-		throw new Error("Illegal argument type");
-	}
-};
-
 /**
  * 플레이어의 엔티티 객체를 구합니다
  * 
@@ -799,16 +804,17 @@ Pool.Entity.getPlayer = function(){
  * 엔티티가 적대적인지 확인헙나다.
  * @since 2015-2-27 (API 1)
  * @author IchiKaku <woni8708@naver.com>
+ * @author affogatoman <colombia2@naver.com>
  * @param {Number|Pool.Entity} ent - 엔티티 아이디 또는 객체
  * @return {Boolean} - 엔티티와 플레이어의 적대관계여부
 */
-Pool.Entity.isMob = function(ent) {
+Pool.Entity.isMob = function(ent){
 	if(ent instanceof Pool.Entity){
 		ent = ent.ent;
 	}
 	
 	return Entity.getEntityTypeId(ent) >= 32 && Entity.getEntityTypeId(ent) <= 39;
-}
+};
 
 /**
  * 엔티티가 존재하는지 확인합니다
@@ -863,7 +869,7 @@ Pool.Entity.prototype.getVector = function(){
 	 }
  };
  
- /**
+/**
  * 엔티티의 스킨의 비트맵을 얻습니다
  * 
  * @since 2015-02-26 (API 1)
