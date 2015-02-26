@@ -98,7 +98,15 @@ Pool.Vector2.prototype.equals = function(x, z){
  */
 Pool.Vector2.prototype.toString = function(){
 	return "[" + [this.x, this.z].join(", ") + "]";
-}
+};
+
+/**
+ * @since 2015-02-26 (API 1)
+ * @author affogatoman <colombia2@naver.com>
+ */
+Pool.Vector2.prototype.toArray = function(){
+	return [this.x, this.z];
+};
 
 /**
  * @since 2015-02-26 (API 1)
@@ -146,7 +154,15 @@ Pool.Vector3.prototype.equals = function(x, y, z){
  */
 Pool.Vector3.prototype.toString = function(){
 	return "[" + [this.x, this.y, this.z].join(", ") + "]";
-}
+};
+
+/**
+ * @since 2015-02-26 (API 1)
+ * @author affogatoman <colombia2@naver.com>
+ */
+Pool.Vector3.prototype.toArray = function(){
+	return [this.x, this.y, this.z];
+};
 
 /**
  * @since 2015-02-24 (API 1)
