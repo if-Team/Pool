@@ -98,7 +98,15 @@ Pool.Vector2.prototype.equals = function(x, z){
  */
 Pool.Vector2.prototype.toString = function(){
 	return "[" + [this.x, this.z].join(", ") + "]";
-}
+};
+
+/**
+ * @since 2015-02-26 (API 1)
+ * @author affogatoman <colombia2@naver.com>
+ */
+Pool.Vector2.prototype.toArray = function(){
+	return [this.x, this.z];
+};
 
 /**
  * @since 2015-02-26 (API 1)
@@ -146,7 +154,15 @@ Pool.Vector3.prototype.equals = function(x, y, z){
  */
 Pool.Vector3.prototype.toString = function(){
 	return "[" + [this.x, this.y, this.z].join(", ") + "]";
-}
+};
+
+/**
+ * @since 2015-02-26 (API 1)
+ * @author affogatoman <colombia2@naver.com>
+ */
+Pool.Vector3.prototype.toArray = function(){
+	return [this.x, this.y, this.z];
+};
 
 /**
  * @since 2015-02-24 (API 1)
@@ -323,13 +339,6 @@ Pool.Canvas.drawCircle = function(center, radius, blockId, blockDamage){
  */
 Pool.IO = {};
 
-/**
- * @since 2015-02-26 (API 1)
- * @author Choseul <chocoslime05@naver.com>
- */
-Pool.IO.Zipper = function(kirito, psycho){
-	//TODO: Implement this method!
-}
 
 /**
  * @since 2015-02-26 (API 1)
@@ -451,7 +460,7 @@ Pool.Map = {};
  */
 Pool.Map.getHighestVector = function(vec2){
 	for(var y = 128; y >= 0; y--){
-		if(Level.getTile(vect2.x, y, vec2.z) > 0){
+		if(Level.getTile(vec2.x, y, vec2.z) > 0){
 			return new Pool.Vector3(vec2.x, y, vec2.z);
 		}
 	}
