@@ -428,6 +428,31 @@ Pool.Entity.getEntitiesInRange = function(range, baseEntity){
 
 /**
  * @since 2015-02-26
+ * @author affogatoman <colombia2@naver.com>
+ */
+Pool.Map = {};
+
+/**
+ * @since 2015-02-26
+ * @author ChalkPE <amato0617@gmail.com>
+ * @param vect2 {Vector2} 중심이 되는 블럭의 x, z좌표를 담은 Vector2 객체
+ * @return {Vector3} 가장 높은 곳에 있는 블럭의 좌표를 담은 Vector3 객체
+ */
+Pool.Map.getHighestVector = function(vect2){
+	for(var y = 128; y >= 0; y--){
+		if(!(getTile(vect2.x, y, vect2.z)){
+			return new Pool.Vector3(vect2.x, y, vect2.z);
+		}
+	}
+	return null;
+};
+
+
+
+
+
+/**
+ * @since 2015-02-26
  * @author ChalkPE <amato0617@gmail.com>
  * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/hypot
  */
