@@ -428,7 +428,7 @@ Pool.Canvas.drawCircle = function(center, radius, blockId, blockDamage){
    		var x = java.lang.Math.cos(java.lang.Math.toRadians(a)) * radius;
     	var z = java.lang.Math.sin(java.lang.Math.toRadians(a)) * radius;
     	
-		Level.setTile(center.x + x, center.y, center.z + z, blockId, blockDamage);
+		Level.setTile(center.x + Math.floor(x), center.y, center.z + Math.floor(z), blockId, blockDamage);
 	}
 };
 
@@ -444,21 +444,38 @@ Pool.Canvas.drawCircle = function(center, radius, blockId, blockDamage){
 Pool.IO = {};
 
 /**
- * 문자열을 파일에 저장합니다
+ * 문자열을 파일이나 OutputStream 및 Writer에 저장합니다
  * 
  * @since 2015-02-26 (API 1)
  * @author affogatoman <colombia2@naver.com>
- * @param {String|File} path - 문자열을 저장할 파일의 경로 및 파일 객체
+ * @param {String|File|OutputStream|Writer} path - 문자열을 저장할 파일의 경로 및 파일 객체, OutputStream 및 Writer
+ * @param {String} str - 문자열을 저장할 파일의 경로 및 파일 객체
  */
-Pool.IO.saveFile = function(path, str){
+Pool.IO.saveAllLines = function(path, str){
 	try{
-		var file = path;
-		if(path instanceof String){
-			file = new java.io.File(path);
-		}
-		file.getParentFile().mkdirs();
+		var file = null;
+		var bw = null;
 		
-		var bw = new java.io.BufferedWriter(new java.io.FileWriter(file));
+		if(path instanceof java.io.File){
+			file = path;
+		}else if(path instanceof String){
+			file = new java.io.File(path);
+		}else if(path instanceof java.io.OutputStream){
+			file = null;
+			bw = new java.io.BufferedWriter(new java.io.FileWriter(new java.io.OutputStreamWriter(file)));
+		}else if(path instanceof java.io.Writer){
+			bw = path;
+		}else{
+			throw new Error("Illegal argument type");
+		}
+		
+		if(file !== null){
+			file.getParentFile().mkdirs();
+		}
+		if(bw === null){
+			bw = new java.io.BufferedWriter(new java.io.FileWriter(file));
+		}
+		
 		bw.write(str);
 		bw.close();
 	}catch(e){
@@ -467,33 +484,45 @@ Pool.IO.saveFile = function(path, str){
 };
 
 /**
- * 파일에서 문자열을 읽어옵니다
+ * 파일이나 InputStream 및 BufferedReader에서 문자열을 읽어옵니다
  * 
  * @since 2015-02-26 (API 1)
  * @author onebone <jyc0410@naver.com>
- * @param {String|File} path - 문자열을 읽을 파일의 경로 및 파일 객체
+ * @param {String|File|InputStream|BufferedReader} path - 문자열을 읽을 파일의 경로 및 파일 객체, InputStream 및 BufferedReader
  * @return {String} 파일 내의 문자열
  */
 Pool.IO.readAllLines = function(path){
 	try{
-		var file = path;
-		if(path instanceof String){
+		var file = null;
+		var br = null;
+		
+		if(path instanceof java.io.File){
+			file = path;
+		}else if(path instanceof String){
 			file = new java.io.File(path);
+		}else if(path instanceof java.io.InputStream){
+			file = null;
+			br = new java.io.BufferedReader(new java.io.FileReader(new java.io.InputStreamReader(file)));
+		}else if(path instanceof java.io.BufferedReader){
+			br = path;
+		}else{
+			throw new Error("Illegal argument type");
 		}
 		
-		if(!file.exists()){
+		if(file !== null && !file.exists()){
 			return null;
 		}
+		if(br === null){
+			new java.io.BufferedReader(new java.io.FileReader(file));
+		}
 		
-		var br = new java.io.BufferedReader(java.io.FileReader(file));
-		var sb = new java.lang.StringBuffer();
-		
-		var tmp;
+		var tmp = null, sb = new java.lang.StringBuffer();
 		while((tmp = br.readLine()) !== null){
 			sb.append(tmp);
 			sb.append("\n");
 		}
 		
+		br.close();
 		return sb.toString() + "";
 	}catch(e){
 		Pool.showError(e);
@@ -511,10 +540,15 @@ Pool.IO.readAllLines = function(path){
  */
 Pool.IO.removeFile = function(path){
 	try{
-		var file = path;
-		if(path instanceof String){
+		var file = null;
+		if(path instanceof java.io.File){
+			file = path;
+		}else if(path instanceof String){
 			file = new java.io.File(path);
+		}else{
+			throw new Error("Illegal argument type");
 		}
+		
 		return file["delete"](); //delete가 자바스크립트 키워드라...
 	}catch(e){
 		Pool.showError(e);
@@ -523,74 +557,168 @@ Pool.IO.removeFile = function(path){
 };
 
 /**
- * 주어진 파일을 다른 곳으로 복사합니다
+ * 주어진 파일이나 스트림을 다른 곳으로 복사합니다
  *
  * @since 2015-02-26 (API 1)
  * @author onebone <jyc0410@naver.com>
- * @param {String|File} path - 복사할 파일의 경로 혹은 파일 객체
+ * @author ChalkPE <amato0617@gmail.com>
+ * @param {String|File|InputStream} source - 원본 파일의 경로 혹은 파일 객체 및 InputStream
  * @param {String|File} target - 복사될 파일의 경로 혹은 파일 객체
- * @param {Boolean} deleteFile - 복사할 파일의 삭제 여부
+ * @param {Boolean} deleteSourceAfterCopy - 복사 후 원본 파일을 삭제할 지의 여부
+ * @return {Boolean} 파일 복사 성공 여부
  */
-Pool.IO.copyFile = function(path, target, deleteFile){
-	if(path instanceof String){
-		path = new java.io.File(path);
-	}
-	
-	if(target instanceof String){
-		target = new java.io.File(target);
-	}
-	
+Pool.IO.copyFile = function(source, target, deleteSourceAfterCopy){
 	try{
+		var file = null;
+		var bis = null;
+		
+		if(source instanceof java.io.File){
+			file = source;
+		}else if(source instanceof String){
+			file = new java.io.File(source);
+		}else if(source instanceof java.io.InputStream){
+			bis = new java.io.BufferedInputStream(source);
+		}else{
+			throw new Error("Illegal argument type");
+		}
+		
+		if(file !== null && !file.exists()){
+			return false;
+		}
+		
+		if(target instanceof java.io.File){
+			target = target;
+		}else if(target instanceof String){
+			target = new java.io.File(target);
+		}else{
+			throw new Error("Illegal argument type");
+		}
+		
+		if(!target.exists()){
+			return false;
+		}
 		target.getParentFile().mkdirs();
 		
-		var fis = new java.io.FileInputStream(path);
-		var fos = new java.io.FileOutputStream(target);
+		if(bis === null){
+			bis = new java.io.BufferedInputStream(new java.io.FileInputStream(file));
+		}
+		var bos = new java.io.BufferedOutputStream(new java.io.FileOutputStream(target));
 		
-		var tmp;
-		while((tmp = fis.read()) !== -1){
-			fos.write(tmp);
+		var buf = java.lang.reflect.Array.newInstance(java.lang.Byte.TYPE, 4096);
+		var count = 0;
+		
+		while((count = bis.read(buf)) >= 0){
+			bos.write(buf, 0, count);
 		}
 		
-		fis.close();
-		fos.close();
+		bis.close();
+		bos.close();
 		
-		if(deleteFile){
-			path["delete"]();
+		if(deleteSourceAfterCopy){
+			Pool.IO.removeFile(source);
 		}
+		return true;
 	}catch(e){
 		Pool.showError(e);
 		return false;
 	}
-	return true;
-}
+};
+
+/**
+ * 주어진 파일을 압축해제 합니다
+ *
+ * @since 2015-02-26 (API 1)
+ * @author affogatoman <colombia2@naver.com>
+ * @param {String|File} file - zip 파일의 경로 혹은 파일 객체
+ * @param {String} target - 압축해제될 폴더의 경로
+ */
+Pool.IO.unZip = function(file, target) {
+	try{
+		var zip = new java.util.zip.ZipFile(file);
+		var elements = zip.entries();
+		var element;
+		while(elements.hasNextElement()) {
+			element = elements.nextElement();
+			var bis = new java.jo.BufferedInputStream(zip.getInputStream(element));
+			var tar = new java.io.File(target+element.getName());
+			tar.getParentFile().mkdirs();
+			var bos = new java.io.BufferedOutputStream(new java.io.FileOutputStream(tar));
+			var read;
+			while((read = bis.read()) != -1)
+				bos.write(read);
+			bis.close();
+			bos.close();
+		}
+		zip.close();
+	}catch(e){
+		Pool.showError(e);
+	}
+};
+
+
 
 
 
 /**
  * @since 2015-02-26 (API 1)
  * @author netherTNT <canghaun@naver.com>
- * @namespace
+ * @author ChalkPE <amato0617@gmail.com>
+ * @class
  */
-Pool.Entity = {};
+Pool.Entity = function(ent){
+	if(ent instanceof Pool.Entity){
+		this.ent = ent.ent
+	}else if(typeof ent === "number"){
+		this.ent = ent;
+	}else{
+		throw new Error("Illegal argument type");
+	}
+};
 
 /**
- * 주어진 범위 내에 있는 모든 엔티티를 구합니다
+ * 플레이어의 엔티티 객체를 구합니다
  * 
  * @since 2015-02-26 (API 1)
- * @author netherTNT <canghaun@naver.com>
- * @param {Number} range
- * @param {Number} [baseEntity = Player.getEntity()] - 범위의 중심이 되는 엔티티의 엔티티 아이디
- * @returns {Array} 범위 내의 모든 엔티티
+ * @author ChalkPE <amato0617@gmail.com>
+ * @return {Pool.Entity}
  */
-Pool.Entity.getEntitiesInRange = function(range, baseEntity){
-	if(baseEntity === null || typeof baseEntity === "undefined" || baseEntity < 0){
-		baseEntity = Player.getEntity();
+Pool.Entity.getPlayer = function(){
+	return new Pool.Entity(Player.getEntity());
+};
+
+/**
+ * 엔티티가 존재하는지 확인합니다
+ * 
+ * @since 2015-02-26 (API 1)
+ * @author affogatoman <colombia2@naver.com>
+ * @param {Number} ent - 엔티티 아이디
+ * @returns {Boolean} 엔티티의 존재 여부
+ */
+Pool.Entity.isEntity = function(ent){
+	if(ent instanceof Pool.Entity){
+		ent = ent.ent; 
 	}
 	
-    return Entity.getAll().filter(function(ent){
-        return Math.hypot(Player.getX() - Entity.getX(ent), Player.getY() - Entity.getY(ent), Player.getZ() - Entity.getZ(ent)) < range;
-    });
+	if(typeof ent !== "number" || ent < 0){
+		return false;
+	}
+	
+	return Entity.getAll().indexOf(entId) >= 0;
 };
+
+/**
+ * @since 2015-02-26 (API 1)
+ * @author ChalkPE <amato0617@gmail.com>
+ */
+Pool.Entity.prototype = {};
+
+/**
+ * 엔티티의 현재 위치의 벡터를 얻습니다
+ * @return {Pool.Vector3}
+ */
+Pool.Entity.prototype.getVector = function(){
+	return new Pool.Vector3(Entity.getX(this.ent), Entity.getY(this.ent), Entity.getZ(this.ent));
+}
 
 
 
@@ -619,6 +747,28 @@ Pool.Map.getHighestVector = function(vec2){
 		}
 	}
 	return null;
+};
+
+/**
+ * 주어진 범위 내에 있는 모든 엔티티를 구합니다
+ * 
+ * @since 2015-02-26 (API 1)
+ * @author netherTNT <canghaun@naver.com>
+ * @param {Number} range
+ * @param {Number|Pool.Entity|Pool.Vector3} [base = Pool.Entity.getPlayer().getVector()] - 범위의 중심이 되는 엔티티의 엔티티 아이디 또는 좌표
+ * @returns {Array} 범위 내의 모든 엔티티
+ */
+Pool.Map.getEntitiesInRange = function(range, base){
+	var vec = null;
+	if(Pool.Entity.isEntity(base)){
+		base = new Pool.Entity(base).getVector();
+	}else{
+		base = Pool.Entity.getPlayer().getVector();
+	}
+	
+    return Entity.getAll().filter(function(ent){
+        return Math.hypot(base.x - Entity.getX(ent), base.y - Entity.getY(ent), base.z - Entity.getZ(ent)) < range;
+    });
 };
 
 
