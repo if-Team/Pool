@@ -23,14 +23,13 @@
 var Pool = {};
 
 Pool.VERSION = "0.1";
-Pool.API_VERSION = 1;
 
 //Pool.SubPackage.someMethod
 //Pool.Constructor
 
 
 /**
- * @since 2015-02-26
+ * @since 2015-02-26 (API 1)
  * @author onebone <jyc0410@naver.com>
  * @author ChalkPE <amato0617@gmail.com>
  * @param path {String | java.io.File} 서브 모듈이 저장된 소스 파일의 경로 및 파일 객체
@@ -44,8 +43,18 @@ Pool.load = function(path){
 	}
 };
 
+
 /**
- * @since 2015-02-26
+ * @since 2015-02-26 (API 1)
+ * @author onebone <jyc0410@naver.com>
+ * @return int
+*/
+Pool.getApiVersion = function(){
+	return 1;
+}
+
+/**
+ * @since 2015-02-26 (API 1)
  * @author ChalkPE <amato0617@gmail.com>
  * @param error {Error} 출력할 에러
  */
@@ -58,7 +67,7 @@ Pool.showError = function(error){
 
 
 /**
- * @since 2015-02-26
+ * @since 2015-02-26 (API 1)
  * @author IchiKaku <woni8708@naver.com>
  */
 Pool.Vector2 = function(x, z){
@@ -67,13 +76,13 @@ Pool.Vector2 = function(x, z){
 };
 
 /**
- * @since 2015-02-26
+ * @since 2015-02-26 (API 1)
  * @author IchiKaku <woni8708@naver.com>
  */
 Pool.Vector2.prototype = {};
 
 /**
- * @since 2015-02-26
+ * @since 2015-02-26 (API 1)
  * @author IchiKaku <woni8708@naver.com>
  */
 Pool.Vector2.prototype.equals = function(x, z){
@@ -84,7 +93,7 @@ Pool.Vector2.prototype.equals = function(x, z){
 };
 
 /**
- * @since 2015-02-26
+ * @since 2015-02-26 (API 1)
  * @author IchiKaku <woni8708@naver.com>
  */
 Pool.Vector2.prototype.toString = function(){
@@ -92,7 +101,7 @@ Pool.Vector2.prototype.toString = function(){
 }
 
 /**
- * @since 2015-02-26
+ * @since 2015-02-26 (API 1)
  * @author IchiKaku <woni8708@naver.com>
  */
 Pool.Vector2.prototype.set = function(x, z){
@@ -105,7 +114,7 @@ Pool.Vector2.prototype.set = function(x, z){
 };
 
 /**
- * @since 2015-02-24
+ * @since 2015-02-24 (API 1)
  * @author ChalkPE <amato0617@gmail.com>
  */
 Pool.Vector3 = function(x, y, z){
@@ -115,13 +124,13 @@ Pool.Vector3 = function(x, y, z){
 };
 
 /**
- * @since 2015-02-24
+ * @since 2015-02-24 (API 1)
  * @author ChalkPE <amato0617@gmail.com>
  */
 Pool.Vector3.prototype = {};
 
 /**
- * @since 2015-02-24
+ * @since 2015-02-24 (API 1)
  * @author ChalkPE <amato0617@gmail.com>
  */
 Pool.Vector3.prototype.equals = function(x, y, z){
@@ -132,7 +141,7 @@ Pool.Vector3.prototype.equals = function(x, y, z){
 };
 
 /**
- * @since 2015-02-24
+ * @since 2015-02-24 (API 1)
  * @author ChalkPE <amato0617@gmail.com>
  */
 Pool.Vector3.prototype.toString = function(){
@@ -140,7 +149,7 @@ Pool.Vector3.prototype.toString = function(){
 }
 
 /**
- * @since 2015-02-24
+ * @since 2015-02-24 (API 1)
  * @author ChalkPE <amato0617@gmail.com>
  * @brief 좌표를 설정합니다
  * @param x {int} X 좌표 (생략할 경우 변경하지 않습니다)
@@ -160,7 +169,7 @@ Pool.Vector3.prototype.set = function(x, y, z){
 };
 
 /**
- * @since 2015-02-26
+ * @since 2015-02-26 (API 1)
  * @author IchiKaku <woni8708@naver.com>
  * @brief 자신과 다른 좌표 사이의 거리를 구합니다
  * @param vec3 {Pool.Vector3} 거리를 구할 다른 좌표
@@ -175,13 +184,13 @@ Pool.Vector3.prototype.getDistance = function(vec3){
 
 
 /**
- * @since 2015-02-24
+ * @since 2015-02-24 (API 1)
  * @author ChalkPE <amato0617@gmail.com>
  */
 Pool.Canvas = {};
 
 /**
- * @since 2015-02-24
+ * @since 2015-02-24 (API 1)
  * @author ChalkPE <amato0617@gmail.com>
  * @param begin {Pool.Vector3} 시작점의 위치
  * @param end {Pool.Vector3} 종료점의 위치
@@ -290,7 +299,7 @@ Pool.Canvas.drawLine = function(begin, end, blockId, blockDamage){
 };
 
 /**
- * @since 2015-02-24
+ * @since 2015-02-24 (API 1)
  * @author ChalkPE <amato0617@gmail.com>
  * @author IchiKaku <woni8708@naver.com>
  * @param center {Pool.Vector3} 원의 중심
@@ -309,13 +318,13 @@ Pool.Canvas.drawCircle = function(center, radius, blockId, blockDamage){
 
 
 /**
- * @since 2015-02-26
+ * @since 2015-02-26 (API 1)
  * @author Choseul <chocoslime05@naver.com>
  */
 Pool.IO = {};
 
 /**
- * @since 2015-02-26
+ * @since 2015-02-26 (API 1)
  * @author Choseul <chocoslime05@naver.com>
  */
 Pool.IO.Zipper = function(kirito, psycho){
@@ -323,7 +332,7 @@ Pool.IO.Zipper = function(kirito, psycho){
 }
 
 /**
- * @since 2015-02-26
+ * @since 2015-02-26 (API 1)
  * @author affogatoman <colombia2@naver.com>
  * @param path {String | java.io.File} 문자열을 저장할 파일의 경로 및 파일 객체
  */
@@ -344,7 +353,7 @@ Pool.IO.saveFile = function(path, str){
 };
 
 /**
- * @since 2015-02-26
+ * @since 2015-02-26 (API 1)
  * @author onebone <jyc0410@naver.com>
  * @param path {String | java.io.File} 문자열을 읽을 파일의 경로 및 파일 객체
  * @return {String} 파일 내의 문자열
@@ -377,7 +386,7 @@ Pool.IO.readAllLines = function(path){
 };
 
 /**
- * @since 2015-02-26
+ * @since 2015-02-26 (API 1)
  * @author ChalkPE <amato0617@gmail.com>
  * @param path {String | java.io.File} 지울 파일의 경로 및 파일 객체
  * @return {boolean} 파일 삭제 성공 여부
@@ -400,13 +409,13 @@ Pool.IO.removeFile = function(path){
 
 
 /**
- * @since 2015-02-26
+ * @since 2015-02-26 (API 1)
  * @author netherTNT <canghaun@naver.com>
  */
 Pool.Entity = {};
 
 /**
- * @since 2015-02-26
+ * @since 2015-02-26 (API 1)
  * @author netherTNT <canghaun@naver.com>
  * @param range {int} 범위
  * @param baseEntity {int} 범위의 중심이 되는 엔티티의 엔티티 아이디 (기본값: 플레이어)
@@ -427,14 +436,14 @@ Pool.Entity.getEntitiesInRange = function(range, baseEntity){
 
 
 /**
- * @since 2015-02-26
+ * @since 2015-02-26 (API 1)
  * @author affogatoman <colombia2@naver.com>
  * @author IchiKaku <woni8708@naver.com>
  */
 Pool.Map = {};
 
 /**
- * @since 2015-02-26
+ * @since 2015-02-26 (API 1)
  * @author affogatoman <colombia2@naver.com>
  * @brief 주어진 평면 좌표에서 가장 높은 곳에 있는 블럭의 좌표를 구합니다
  * @param vec2 {Pool.Vector2} 중심이 되는 블럭의 평면적 좌표
@@ -454,7 +463,7 @@ Pool.Map.getHighestVector = function(vec2){
 
 
 /**
- * @since 2015-02-26
+ * @since 2015-02-26 (API 1)
  * @author ChalkPE <amato0617@gmail.com>
  * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/hypot
  */
