@@ -488,7 +488,47 @@ Pool.IO.removeFile = function(path){
 	}
 };
 
-
+/**
+ * 주어진 파일을 다른 곳으로 복사합니다
+ *
+ * @since 2015-02-26 (API 1)
+ * @author onebone <jyc0410@naver.com>
+ * @param {String|File} path - 복사할 파일의 경로 혹은 파일 객체
+ * @param {String|File} target - 복사될 파일의 경로 혹은 파일 객체
+ * @param {Boolean} deleteFile - 복사할 파일의 삭제 여부
+ */
+Pool.IO.copyFile = function(path, target, deleteFile){
+	if(path instanceof String){
+		path = new java.io.File(path);
+	}
+	
+	if(target instanceof String){
+		target = new java.io.File(target);
+	}
+	
+	try{
+		target.getParentFile().mkdirs();
+		
+		var fis = new java.io.FileInputStream(path);
+		var fos = new java.io.FileOutputStream(target);
+		
+		var tmp;
+		while((tmp = fis.read()) !== -1){
+			fos.write(tmp);
+		}
+		
+		fis.close();
+		fos.close();
+		
+		if(deleteFile){
+			path["delete"]();
+		}
+	}catch(e){
+		Pool.showError(e);
+		return false;
+	}
+	return true;
+}
 
 
 
