@@ -290,6 +290,22 @@ Pool.Vector3.prototype.subtract = function(x, y, z){
 	return new Pool.Vector3(this.x - x, this.y - y, this.z - z);
 };
 
+/**
+ * 좌표에 있는 엔티티들을 구합니다
+ * @since 2015-02-26 (API 1)
+ * @author ChalkPE <amato0617@gmail.com>
+ * @returns {Array} 이 좌표에 있는 엔티티들의 엔티티 아이디의 배열
+ *
+ */
+Pool.Vector3.prototype.getEntities = function(){
+    var that = this;
+    return Entity.getAll().filter(function(ent){
+        return that.equals(new Pool.Entity(ent).getVector());
+    });
+};
+
+
+
 
 
 /**
