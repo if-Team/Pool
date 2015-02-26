@@ -847,6 +847,19 @@ Pool.Entity.prototype.getVector = function(){
 		 Entity.setPosition(this.ent, x, y, z);
 	 }
  };
+ 
+ /**
+ * 엔티티의 스킨의 비트맵을 얻습니다
+ * 
+ * @since 2015-02-26 (API 1)
+ * @author affogatoman <colombia2@naver.com>
+ * @return {Bitmap} 엔티티 스킨의 비트맵
+ */
+ Pool.Entity.prototype.getSkinBitmap = function(){
+	if(Entity.getEntityTypeId(this.ent) >= 64)
+		return null;
+	return android.graphics.BitmapFactory.decodeStream(ModPE.openInputStreamFromTexturePack("images/" + Entity.getMobSkin(this.ent)));
+ };
 
 
 
