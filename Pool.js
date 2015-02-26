@@ -391,10 +391,10 @@ Pool.Canvas.drawLine = function(begin, end, blockId, blockDamage){
  */
 Pool.Canvas.drawCircle = function(center, radius, blockId, blockDamage){
 	for(var a = 0; a <= 360; a += 0.1){
-   		var x = Math.round(java.lang.Math.cos(java.lang.Math.toRadians(a)) * radius);
-    	var z = Math.round(java.lang.Math.sin(java.lang.Math.toRadians(a)) * radius);
+   		var x = java.lang.Math.cos(java.lang.Math.toRadians(a)) * radius;
+    	var z = java.lang.Math.sin(java.lang.Math.toRadians(a)) * radius;
     	
-		Level.setTile(center.x + x, center.y, center.z + z, blockId, blockDamage);
+		Level.setTile(center.x + Math.floor(x), center.y, center.z + Math.floor(z), blockId, blockDamage);
 	}
 };
 
