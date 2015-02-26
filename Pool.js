@@ -109,6 +109,8 @@ Pool.IO = {};
 
 Pool.Entity = {};
 
+Pool.Map = {};
+
 /**
  * @param begin {Pool.Vector3} 시작점의 위치
  * @param end {Pool.Vector3} 종료점의 위치
@@ -314,6 +316,10 @@ Pool.Entity.getEntitiesInRange = function(range, baseEntity){
     return Entity.getAll().filter(function(ent){
         return Math.hypot(Player.getX() - Entity.getX(ent), Player.getY() - Entity.getY(ent), Player.getZ() - Entity.getZ(ent)) < range;
     });
+};
+
+Pool.Map.getDistance = function(first, second) {
+	return Math.hypot(first.x - second.x, first.y - second.y, first.z - second.z);
 };
 
 
