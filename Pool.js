@@ -497,7 +497,7 @@ Pool.IO.removeFile = function(path){
  * @param {String|File} source - 원본 파일의 경로 혹은 파일 객체
  * @param {String|File} target - 복사될 파일의 경로 혹은 파일 객체
  * @param {Boolean} deleteSourceAfterCopy - 복사 후 원본 파일을 삭제할 지의 여부
- * @return {Boolean} 파일 복시 성공 여부
+ * @return {Boolean} 파일 복사 성공 여부
  */
 Pool.IO.copyFile = function(source, target, deleteSourceAfterCopy){
 	if(source instanceof String){
@@ -531,7 +531,38 @@ Pool.IO.copyFile = function(source, target, deleteSourceAfterCopy){
 		Pool.showError(e);
 		return false;
 	}
-}
+};
+
+/**
+ * 주어진 파일을 압축해제 합니다
+ *
+ * @since 2015-02-26 (API 1)
+ * @author affogatoman <colombia2@naver.com>
+ * @param {String|File} file - zip 파일의 경로 혹은 파일 객체
+ * @param {String} target - 압축해제될 폴더의 경로
+ */
+Pool.IO.unZip(file, target) {
+	try{
+		var zip = new java.util.zip.ZipFile(file);
+		var elements = zip.entries();
+		var element;
+		while(elements.hasNextElement()) {
+			element = elements.nextElement();
+			var bis = new java.jo.BufferedInputStream(zip.getInputStream(element));
+			var tar = new java.io.File(target+element.getName());
+			tar.getParentFile().mkdirs();
+			var bos = new java.io.BufferedOutputStream(new java.io.FileOutputStream(tar));
+			var read;
+			while((read = bis.read()) != -1)
+				bos.write(read);
+			bis.close();
+			bos.close();
+		}
+		zip.close();
+	}catch(e){
+		Pool.showError(e);
+	}
+};
 
 
 
