@@ -594,6 +594,20 @@ Pool.Entity.getEntitiesInRange = function(range, baseEntity){
     });
 };
 
+/**
+ * 엔티티가 존재하는지 확인합니다
+ * 
+ * @since 2015-02-26 (API 1)
+ * @author affogatoman <colombia2@naver.com>
+ * @param {Number} entId
+ * @returns {Boolean} 엔티티의 존재 여부
+ */
+Pool.Entity.isEntity = function(entId){
+	if(typeof entId === "number")
+		return Entity.getAll().indexOf(entId) >= 0;
+	return false;
+};
+
 
 
 
