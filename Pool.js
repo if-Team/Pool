@@ -736,9 +736,36 @@ Pool.IO.unZip = function(file, target) {
 		Pool.showError(e);
 	}
 };
+/*
+ * @author chalkPE <amato0617@gmaila.ccom
+ * @author IchiKaku <woni8708@naver.com>o
+*/
+Pool.Entity.EntityType = {
+    HUMAN: 0,
+    
+    CHICKEN: 10, COW: 11, PIG: 12, SHEEP: 13, WOLF: 14, VILLAGER: 15, MOOSHROOM: 16,
+    
+    ZOMBIE: 32, CREEPER: 33, SKELETON: 34, SPIDER: 35, PIGZOMBIE: 36, SLIME: 37, ENDERMAN: 38, SILVERFISH: 39,
+    
+    DROPPED_ITEM: 64, PRIMED_TNT: 65, FALLING_SAND: 66,
+    
+    ARROW: 80, SNOWBALL: 81, EGG: 82, PAINTING: 83, MINECART: 84,
+    
+    //Another name
+    PLAYER: 0, MUSHROOM_COW: 16, ZOMBIE_PIGMAN: 36, ITEM: 64, TNT: 65, SAND: 66, SNOW: 81, CART: 84
+};
 
-
-
+Pool.Entity.EntityTypeName = {
+    "0": "Player",
+    
+    "10": "Chicken", "11": "Cow", "12": "Pig", "13": "Sheep", "14": "Wolf", "15": "Villager", "16": "Mooshroom",
+    
+    "32": "Zombie", "33": "Creeper", "34": "Skeleton", "35": "Spider", "36": "PigZombie", "37": "Slime", "38": "Enderman", "39": "Silverfish",
+    
+    "64": "DroppedItem", "65": "PrimedTNT", "66": "FallingSand",
+    
+    "80": "Arrow", "81": "Snowball", "82": "Egg", "83": "Painting", "84": "Minecart"
+};
 
 
 /**
