@@ -53,6 +53,10 @@ Pool.showError = function(error){
 	clientMessage(error.name + ": " + error.message + " at line " + error.lineNumber + "\n" + error.stack);
 };
 
+
+
+
+
 /**
  * @since 2015-02-26
  * @author IchiKaku <woni8708@naver.com>
@@ -61,16 +65,36 @@ Pool.Vector2 = function(x, y){
 	this.x = Math.floor(x);
 	this.y = Math.floor(y);
 };
+
+/**
+ * @since 2015-02-26
+ * @author IchiKaku <woni8708@naver.com>
+ */
 Pool.Vector2.prototype = {};
+
+/**
+ * @since 2015-02-26
+ * @author IchiKaku <woni8708@naver.com>
+ */
 Pool.Vector2.prototype.equals = function(x, y){
 	if(x instanceof Pool.Vector2 && arguments.length === 1){
 		return x.x === this.x && x.y === this.y;
 	}
 	return Math.floor(x) === this.x && Math.floor(y) === this.y;
 };
+
+/**
+ * @since 2015-02-26
+ * @author IchiKaku <woni8708@naver.com>
+ */
 Pool.Vector2.prototype.toString = function(){
 	return "[" + [this.x, this.y].join(", ") + "]";
 }
+
+/**
+ * @since 2015-02-26
+ * @author IchiKaku <woni8708@naver.com>
+ */
 Pool.Vector2.prototype.set = function(x, y){
 	if(typeof x === "number"){
 		this.x = Math.floor(x);
@@ -89,16 +113,40 @@ Pool.Vector3 = function(x, y, z){
 	this.y = Math.floor(y);
 	this.z = Math.floor(z);
 };
+
+/**
+ * @since 2015-02-24
+ * @author ChalkPE <amato0617@gmail.com>
+ */
 Pool.Vector3.prototype = {};
+
+/**
+ * @since 2015-02-24
+ * @author ChalkPE <amato0617@gmail.com>
+ */
 Pool.Vector3.prototype.equals = function(x, y, z){
 	if(x instanceof Pool.Vector3 && arguments.length === 1){
 		return x.x === this.x && x.y === this.y && x.z === this.z
 	}
 	return Math.floor(x) === this.x && Math.floor(y) === this.y && Math.floor(z) === this.z;
 };
+
+/**
+ * @since 2015-02-24
+ * @author ChalkPE <amato0617@gmail.com>
+ */
 Pool.Vector3.prototype.toString = function(){
 	return "[" + [this.x, this.y, this.z].join(", ") + "]";
 }
+
+/**
+ * @since 2015-02-24
+ * @author ChalkPE <amato0617@gmail.com>
+ * @brief 좌표를 설정합니다
+ * @param x {int} X 좌표 (생략할 경우 변경하지 않습니다)
+ * @param y {int} Y 좌표 (생략할 경우 변경하지 않습니다)
+ * @param z {int} Z 좌표 (생략할 경우 변경하지 않습니다)
+ */
 Pool.Vector3.prototype.set = function(x, y, z){
 	if(typeof x === "number"){
 		this.x = Math.floor(x);
@@ -110,15 +158,21 @@ Pool.Vector3.prototype.set = function(x, y, z){
 		this.z = Math.floor(z);
 	}
 };
-Pool.Vector3.prototype.getDistance = function(first ssecond {
-	return Math.hypot(first.x - second.x, first.y - second.y, first.z - second.z);
+
+/**
+ * @since 2015-02-26
+ * @author IchiKaku <woni8708@naver.com>
+ * @brief 자신과 다른 좌표 사이의 거리를 구합니다
+ * @param vec3 {Pool.Vector3} 거리를 구할 다른 좌표
+ * @return {double} 자신과 vec3 사이의 거리
+ */
+Pool.Vector3.prototype.getDistance = function(vec3){
+	return Math.hypot(this.x - vec3.x, this.y - vec3.y, this.z - vec3.z);
 };
 
 
 
 
-
-Pool.Map = {};
 
 /**
  * @since 2015-02-24
