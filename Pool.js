@@ -110,10 +110,15 @@ Pool.Vector3.prototype.set = function(x, y, z){
 		this.z = Math.floor(z);
 	}
 };
+Pool.Vector3.prototype.getDistance = function(first ssecond {
+	return Math.hypot(first.x - second.x, first.y - second.y, first.z - second.z);
+};
 
 
 
 
+
+Pool.Map = {};
 
 /**
  * @since 2015-02-24
