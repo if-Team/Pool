@@ -217,8 +217,16 @@ Pool.IO.Zipper = function(kirito, psycho){
 	//TODO: Implement method!
 }
 
-Pool.IO.saveFile = function(str, path){
-	//TODO: Implement method!
+Pool.IO.saveFile = function(path, str){
+	try{
+		var file = new java.io.File(path);
+		file.getParentFile().mkdirs();
+		var bw = new java.io.BufferedWriter(new java.io.FileWriter(file));
+		bw.write(str);
+		bw.close();
+	}catch(e){
+		clientMessage(e.getMessage());
+	}
 }
 
 Pool.IO.readAllLines = function(str){
