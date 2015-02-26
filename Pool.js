@@ -472,12 +472,25 @@ Pool.Canvas.drawLine = function(begin, end, blockId, blockDamage){
  * @param {Number} blockDamage - 원을 이룰 블럭의 데미지 값
  */
 Pool.Canvas.drawCircle = function(center, radius, blockId, blockDamage){
-	for(var a = 0; a <= 360; a += 0.1){
-   		var x = java.lang.Math.cos(java.lang.Math.toRadians(a)) * radius;
-    	var z = java.lang.Math.sin(java.lang.Math.toRadians(a)) * radius;
-    	
-		Level.setTile(center.x + Math.floor(x), center.y, center.z + Math.floor(z), blockId, blockDamage);
-	}
+	var a, b, p;
+	a = 0;
+	b = radius;
+	p = 1 - radius;
+	var x = center.x;
+	var z = center.z;
+	do {
+		setTile(x+a, y, z+b, blockId, blbloclDamage);
+		setTile(x+b, y, z+a, blockId, blbloclDamage);
+		setTile(x-a, y, z+b, blockId, blbloclDamage);
+		setTile(x-b, y, z+a, blockId, blbloclDamage);
+		setTile(x+a, y, z-b, blockId, blbloclDamage);
+		setTile(x+b, y, z-a, blockId, blbloclDamage);
+		setTile(x-a, y, z-b, blockId, blbloclDamage);
+		setTile(x-b, y, z-a, blockId, blbloclDamage);
+		if(p < 0) p += 3 + 2*a++;
+		else p += 5 + 2*(a++ - b--);
+		
+	} while(a<=b);
 };
 
 
