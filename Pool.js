@@ -31,7 +31,7 @@ Pool.API_VERSION = 1;
 
 /**
  * @since 2015-02-26
- * @author onebone <yoonchul.jeong00@gmail.com>
+ * @author onebone <jyc0410@naver.com>
  * @author ChalkPE <amato0617@gmail.com>
  * @param path {String | java.io.File} 서브 모듈이 저장된 소스 파일의 경로 및 파일 객체
  */
@@ -345,7 +345,7 @@ Pool.IO.saveFile = function(path, str){
 
 /**
  * @since 2015-02-26
- * @author onebone <yoonchul.jeong00@gmail.com>
+ * @author onebone <jyc0410@naver.com>
  * @param path {String | java.io.File} 문자열을 읽을 파일의 경로 및 파일 객체
  * @return {String} 파일 내의 문자열
  */
