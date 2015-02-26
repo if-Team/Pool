@@ -14,38 +14,72 @@
  * limitations under the License.
  */
 
-
+"use strict";
 
 /**
  * @since 2015-02-24
- * @author ChalkPE <amato17@naver.com> 
+ * @author ChalkPE <amato0617@gmail.com> 
  * @author Choseul <chocoslime05@naver.com> 
  * @author IchiKaku <woni8708@naver.com> 
  */
 var Pool = {};
 
 Pool.VERSION = "0.1";
-Pool.APIVERSION = 1;
+Pool.API_VERSION = 1;
 
 //Pool.SubPackage.someMethod
 //Pool.Constructor
 
+
+/**
+ * @param path {String | java.io.File} 서브 모듈이 저장된 소스 파일의 경로 및 파일 객체
+ */
 Pool.load = function(path){
 	var content = Pool.IO.readAllLines(path);
-	eval(content);
+	try{
+		eval(content);
+	}catch(e){
+		Pool.showError(e);
+	}
+};
+
+/**
+ * @param error {Error} 출력할 에러
+ */
+Pool.showError = function(error){
+	clientMessage(error.name + ": " + error.message + " at line " + error.lineNumber + "\n" + error.stack);
+};
+
+
+Pool.Vector2 = function(x, y){
+	this.x = Math.floor(x);
+	this.y = Math.floor(y);
+};
+Pool.Vector2.prototype = {};
+Pool.Vector2.prototype.equals = function(x, y){
+	if(x instanceof Pool.Vector2 && arguments.length === 1){
+		return x.x === this.x && x.y === this.y;
+	}
+	return Math.floor(x) === this.x && Math.floor(y) === this.y;
+};
+Pool.Vector2.prototype.toString = function(){
+	return "[" + [this.x, this.y].join(", ") + "]";
 }
+Pool.Vector2.prototype.set = function(x, y){
+	if(typeof x === "number"){
+		this.x = Math.floor(x);
+	}
+	if(typeof y === "number"){
+		this.y = Math.floor(y);
+	}
+};
+
 
 Pool.Vector3 = function(x, y, z){
 	this.x = Math.floor(x);
 	this.y = Math.floor(y);
 	this.z = Math.floor(z);
 };
-Pool.Vector2 = function(x, y){
-	this.x = Math.floor(x);
-	this.y = Math.floor(y);
-};
-
-
 Pool.Vector3.prototype = {};
 Pool.Vector3.prototype.equals = function(x, y, z){
 	if(x instanceof Pool.Vector3 && arguments.length === 1){
@@ -65,25 +99,6 @@ Pool.Vector3.prototype.set = function(x, y, z){
 	}
 	if(typeof z === "number"){
 		this.z = Math.floor(z);
-	}
-};
-
-Pool.Vector2.prototype = {};
-Pool.Vector2.prototype.equals = function(x, y){
-	if(x instanceof Pool.Vector2 && arguments.length === 1){
-		return x.x === this.x && x.y === this.y;
-	}
-	return Math.floor(x) === this.x && Math.floor(y) === this.y;
-};
-Pool.Vector2.prototype.toString = function(){
-	return "[" + [this.x, this.y].join(", ") + "]";
-}
-Pool.Vector2.prototype.set = function(x, y){
-	if(typeof x === "number"){
-		this.x = Math.floor(x);
-	}
-	if(typeof y === "number"){
-		this.y = Math.floor(y);
 	}
 };
 
@@ -201,9 +216,9 @@ Pool.Canvas.drawLine3D = function(x0, y0, z0, x1, y1, z1, blockId, blockDamage){
     }while(true);
 }
 
-/*
- * @param center{Pool.Vector3} 원의 중심
-*/
+/**
+ * @param center {Pool.Vector3} 원의 중심
+ */
 Pool.Canvas.drawCircle = function(center, radius, blockId, blockDamage){
 	for(var a = 0; a <= 360; a += 0.1){
    		var x = java.lang.Math.cos(java.lang.Math.toRadians(a)) * radius;
@@ -213,54 +228,105 @@ Pool.Canvas.drawCircle = function(center, radius, blockId, blockDamage){
 	}
 };
 
+
 Pool.IO.Zipper = function(kirito, psycho){
-	//TODO: Implement method!
+	//TODO: Implement this method!
 }
 
+/**
+ * @param path {String | java.io.File} 문자열을 저장할 파일의 경로 및 파일 객체
+ */
 Pool.IO.saveFile = function(path, str){
 	try{
-		var file = new java.io.File(path);
+		var file = path;
+		if(path instanceof String){
+			file = new java.io.File(path);
+		}
 		file.getParentFile().mkdirs();
+		
 		var bw = new java.io.BufferedWriter(new java.io.FileWriter(file));
 		bw.write(str);
 		bw.close();
 	}catch(e){
-		clientMessage(e.getMessage());
+		Pool.showError(e);
 	}
-}
+};
 
-Pool.IO.readAllLines = function(str){
+/**
+ * @param path {String | java.io.File} 문자열을 읽을 파일의 경로 및 파일 객체
+ * @return {String} 파일 내의 문자열
+ */
+Pool.IO.readAllLines = function(path){
 	try{
 		var file = path;
 		if(path instanceof String){
-			br = new java.io.File(path);
+			file = new java.io.File(path);
 		}
 		
-		br = new java.io.BufferedReader(java.io.FileReader(path));
+		if(!file.exists()){
+			return null;
+		}
 		
+		var br = new java.io.BufferedReader(java.io.FileReader(file));
 		var sb = new java.lang.StringBuffer();
 		
 		var tmp;
 		while((tmp = br.readLine()) !== null){
-			sb.append(tmp + "\n");
+			sb.append(tmp);
+			sb.append("\n");
 		}
 		
-		return sb.toString()+"";
+		return sb.toString() + "";
 	}catch(e){
-		clientMessage("OH MY GOD ERROR!!!! UNBELIEVABLE!!!");
+		Pool.showError(e);
+		return null;
 	}
-	return null;
-}
+};
 
-Pool.IO.removeFile = function(str){
-	//TODO: Implement method!
-}
+/**
+ * @param path {String | java.io.File} 지울 파일의 경로 및 파일 객체
+ * @return {boolean} 파일 삭제 성공 여부
+ */
+Pool.IO.removeFile = function(path){
+	try{
+		var file = path;
+		if(path instanceof String){
+			file = new java.io.File(path);
+		}
+		return file["delete"](); //delete가 자바스크립트 키워드라...
+	}catch(e){
+		Pool.showError(e);
+		return false;
+	}
+};
 
-Pool.Entity.getEntitiesInRange = function(range){
-    return Entity.getAll().filter(function(value){
-        return Math.hypot(Player.getX()-Entity.getX(value),Player.getY()-Entity.getY(value),Player.getZ()-Entity.getZ(value)) < range;
-    }
-}
+
+/**
+ * @param range {int} 범위
+ * @param baseEntity {int} 범위의 중심이 되는 엔티티의 엔티티 아이디 (기본값: 플레이어)
+ * @returns {Array} 범위 내의 모든 엔티티
+ */
+Pool.Entity.getEntitiesInRange = function(range, baseEntity){
+	if(baseEntity === null || typeof baseEntity === "undefined" || baseEntity < 0){
+		baseEntity = Player.getEntity();
+	}
+	
+    return Entity.getAll().filter(function(ent){
+        return Math.hypot(Player.getX() - Entity.getX(ent), Player.getY() - Entity.getY(ent), Player.getZ() - Entity.getZ(ent)) < range;
+    });
+};
+
+
+Math.hypot = Math.hypot || function(){
+	var y = 0;
+	for(var i = 0; i < arguments.length; i++){
+		if(arguments[i] === Infinity || arguments[i] === -Infinity){
+			return Infinity;
+		}
+		y += arguments[i] * arguments[i];
+	}
+	return Math.sqrt(y);
+};
 
 function selectLevelHook(){
 	var scripts = net.zhuoweizhang.mcpelauncher.ScriptManager.scripts;
