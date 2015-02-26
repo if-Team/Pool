@@ -85,6 +85,9 @@ Pool.showError = function(error){
  * @class
  */
 Pool.Vector2 = function(x, z){
+	if(isNaN(x) || isNaN(y)){
+		throw new Error("누가 숫자아닌거 넣으래");
+	}
 	this.x = Math.floor(x);
 	this.z = Math.floor(z);
 };
@@ -142,10 +145,10 @@ Pool.Vector2.prototype.toArray = function(){
  * @param {Number} [z] - 생략할 경우 변경하지 않습니다
  */
 Pool.Vector2.prototype.set = function(x, z){
-	if(typeof x === "number"){
+	if(!isNaN(x)){
 		this.x = Math.floor(x);
 	}
-	if(typeof z === "number"){
+	if(!isNaN(z) === "number"){
 		this.z = Math.floor(z);
 	}
 };
@@ -173,6 +176,9 @@ Pool.Vector2.prototype.getDistance = function(vec2){
  * @class
  */
 Pool.Vector3 = function(x, y, z){
+	if(isNaN(x) || isNaN(y || isNaN(z))){
+		throw new Error("누가 숫자아닌거 넣으래");
+	}
 	this.x = Math.floor(x);
 	this.y = Math.floor(y);
 	this.z = Math.floor(z);
