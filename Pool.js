@@ -451,7 +451,7 @@ Pool.Map = {};
  */
 Pool.Map.getHighestVector = function(vec2){
 	for(var y = 128; y >= 0; y--){
-		if(Level.getTile(vect2.x, y, vec2.z) > 0){
+		if(Level.getTile(vec2.x, y, vec2.z) > 0){
 			return new Pool.Vector3(vec2.x, y, vec2.z);
 		}
 	}
