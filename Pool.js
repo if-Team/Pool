@@ -590,7 +590,7 @@ Pool.Entity.getEntitiesInRange = function(range, baseEntity){
 	}
 	
     return Entity.getAll().filter(function(ent){
-        return Math.hypot(Player.getX() - Entity.getX(ent), Player.getY() - Entity.getY(ent), Player.getZ() - Entity.getZ(ent)) < range;
+        return Math.hypot(Entity.getX(baseEntity) - Entity.getX(ent), Entity.getY(baseEntity) - Entity.getY(ent), Entity.getZ(baseEntity) - Entity.getZ(ent)) < range;
     });
 };
 
