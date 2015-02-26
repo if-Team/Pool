@@ -796,7 +796,7 @@ Pool.Entity.getPlayer = function(){
 };
 
 /*
- * 엔티티가 적대적인지 확인헙나다.
+ * 엔티티가 적대적인지 확인합니다.
  * @since 2015-2-27 (API 1)
  * @author IchiKaku <woni8708@naver.com>
  * @param {Number|Pool.Entity} ent - 엔티티 아이디 또는 객체
@@ -876,8 +876,28 @@ Pool.Entity.prototype.getVector = function(){
 	return android.graphics.BitmapFactory.decodeStream(ModPE.openInputStreamFromTexturePack("images/" + Entity.getMobSkin(this.ent)));
  };
 
-
-
+ /**
+ * 특정 엔티티를 모두 제거합니다
+ * 
+ * @since 2015-02-27 (API 1)
+ * @author Choseul <chocoslime05@naver.com>
+ * @return {Entity Type Id} 엔티티 타입 아이디
+ */
+Pool.Entity.entityRemover = function(id){
+	var e = Entity.getAll();
+	
+	e.forEach(function(ent){
+		if(id == null){
+			if(ent != getPlayerEnt()){
+				Entity.remove(ent);
+			}
+		} else if(id != null) {
+			if(Entity.getEntityTypeId(ent) == type && ent != getPlayerEnt()){
+				Entity.remove(ent);
+			}
+		}
+	});
+}
 
 
 /**
@@ -926,7 +946,6 @@ Pool.Map.getEntitiesInRange = function(range, base){
         return Math.hypot(base.x - Entity.getX(ent), base.y - Entity.getY(ent), base.z - Entity.getZ(ent)) < range;
     });
 };
-
 
 
 
