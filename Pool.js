@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  * 
- *	 http://www.apache.org/licenses/LICENSE-2.0
+ *     http://www.apache.org/licenses/LICENSE-2.0
  * 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -30,7 +30,6 @@ var Pool = {};
  * @constant
  */
 Pool.VERSION = "0.1";
-Pool.API_VERSION = 1;
 
 //Pool.SubPackage.someMethod
 //Pool.Constructor
@@ -60,7 +59,7 @@ Pool.load = function(path){
  * @return {Number}
  */
 Pool.getApiVersion = function(){
-	return Pool.API_VERSION;
+	return 1;
 }
 
 /**
@@ -86,13 +85,8 @@ Pool.showError = function(error){
  * @class
  */
 Pool.Vector2 = function(x, z){
-	if(isNaN(x) || isNaN(z)){
-		//에러를 자바스크립트에서 어떻게띄우죠
-		"Error!";
-		return;
-	}
-	this.x = x;
-	this.z = z;
+	this.x = Math.floor(x);
+	this.z = Math.floor(z);
 };
 
 /**
@@ -113,10 +107,8 @@ Pool.Vector2.prototype = {};
 Pool.Vector2.prototype.equals = function(x, z){
 	if(x instanceof Pool.Vector2){
 		return x.x === this.x && x.z === this.z;
-	}else if(!isNaN(x) && !isNaN(z)){
-		return x === this.x && z === this.z;
 	}
-	return false;
+	return Math.floor(x) === this.x && Math.floor(z) === this.z;
 };
 
 /**
@@ -151,10 +143,10 @@ Pool.Vector2.prototype.toArray = function(){
  */
 Pool.Vector2.prototype.set = function(x, z){
 	if(typeof x === "number"){
-		this.x = x;
+		this.x = Math.floor(x);
 	}
 	if(typeof z === "number"){
-		this.z = z;
+		this.z = Math.floor(z);
 	}
 };
 
@@ -181,9 +173,9 @@ Pool.Vector2.prototype.getDistance = function(vec2){
  * @class
  */
 Pool.Vector3 = function(x, y, z){
-	this.x = x;
-	this.y = y;
-	this.z = z;
+	this.x = Math.floor(x);
+	this.y = Math.floor(y);
+	this.z = Math.floor(z);
 };
 
 /**
@@ -206,7 +198,7 @@ Pool.Vector3.prototype.equals = function(x, y, z){
 	if(x instanceof Pool.Vector3){
 		return x.x === this.x && x.y === this.y && x.z === this.z
 	}
-	return x === this.x && y === this.y && z === this.z;
+	return Math.floor(x) === this.x && Math.floor(y) === this.y && Math.floor(z) === this.z;
 };
 
 
@@ -308,10 +300,10 @@ Pool.Vector3.prototype.subtract = function(x, y, z){
  *
  */
 Pool.Vector3.prototype.getEntities = function(){
-	var that = this;
-	return Entity.getAll().filter(function(ent){
-		return that.equals(new Pool.Entity(ent).getVector());
-	});
+    var that = this;
+    return Entity.getAll().filter(function(ent){
+        return that.equals(new Pool.Entity(ent).getVector());
+    });
 };
 
 
@@ -370,89 +362,89 @@ Pool.Canvas = {};
  */
 Pool.Canvas.drawLine = function(begin, end, blockId, blockDamage){
 	function drawLine2D(x0, y0, x1, y1, height, blockId, blockDamage){
-		var dx = Math.abs(x1 - x0);
-		var dy = Math.abs(y1 - y0);
-		var sx = (x0 < x1) ? 1 : -1;
-		var sy = (y0 < y1) ? 1 : -1;
-		var err = dx - dy;
-		
-		while(true){
-			Level.setTile(x0, height, y0, blockId, blockDamage);
-			
-			if((x0 == x1) && (y0 == y1)){
-				break;
-			}
-			var e2 = 2 * err;
-			if(e2 > -dy){
-				err -= dy;
-				x0 += sx;
-			}
-			if(e2 < dx){
-				err += dx;
-				y0 += sy;
-			}
-		}
+	    var dx = Math.abs(x1 - x0);
+	    var dy = Math.abs(y1 - y0);
+	    var sx = (x0 < x1) ? 1 : -1;
+	    var sy = (y0 < y1) ? 1 : -1;
+	    var err = dx - dy;
+	    
+	    while(true){
+	        Level.setTile(x0, height, y0, blockId, blockDamage);
+	        
+	        if((x0 == x1) && (y0 == y1)){
+	            break;
+	        }
+	        var e2 = 2 * err;
+	        if(e2 > -dy){
+	            err -= dy;
+	            x0 += sx;
+	        }
+	        if(e2 < dx){
+	            err += dx;
+	            y0 += sy;
+	        }
+	    }
 	}
 
 	function drawLine3D(x0, y0, z0, x1, y1, z1, blockId, blockDamage){
-		var x0i = Math.floor(x0);
-		var y0i = Math.floor(y0);
-		var z0i = Math.floor(z0);
-		
-		var x1i = Math.floor(x1);
-		var y1i = Math.floor(y1);
-		var z1i = Math.floor(z1);
-		
-		var sx = (x1i > x0i) ? 1 : (x1i < x0i) ? -1 : 0;
-		var sy = (y1i > y0i) ? 1 : (y1i < y0i) ? -1 : 0;
-		var sz = (z1i > z0i) ? 1 : (z1i < z0i) ? -1 : 0;
-		
-		var x = x0i;
-		var y = y0i;
-		var z = z0i;
-		
-		var xp = x0i + (x1i > x0i ? 1 : 0);
-		var yp = y0i + (y1i > y0i ? 1 : 0);
-		var zp = z0i + (z1i > z0i ? 1 : 0);
-		
-		var vx = (x1 === x0) ? 1 : x1 - x0;
-		var vy = (y1 === y0) ? 1 : y1 - y0;
-		var vz = (z1 === z0) ? 1 : z1 - z0;
-		
-		var vxvy = vx * vy;
-		var vxvz = vx * vz;
-		var vyvz = vy * vz;
-		
-		var errx = (xp - x0) * vyvz;
-		var erry = (yp - y0) * vxvz;
-		var errz = (zp - z0) * vxvy;
-		
-		var derrx = sx * vyvz;
-		var derry = sy * vxvz;
-		var derrz = sz * vxvy;
+	    var x0i = Math.floor(x0);
+	    var y0i = Math.floor(y0);
+	    var z0i = Math.floor(z0);
+	    
+	    var x1i = Math.floor(x1);
+	    var y1i = Math.floor(y1);
+	    var z1i = Math.floor(z1);
+	    
+	    var sx = (x1i > x0i) ? 1 : (x1i < x0i) ? -1 : 0;
+	    var sy = (y1i > y0i) ? 1 : (y1i < y0i) ? -1 : 0;
+	    var sz = (z1i > z0i) ? 1 : (z1i < z0i) ? -1 : 0;
+	    
+	    var x = x0i;
+	    var y = y0i;
+	    var z = z0i;
+	    
+	    var xp = x0i + (x1i > x0i ? 1 : 0);
+	    var yp = y0i + (y1i > y0i ? 1 : 0);
+	    var zp = z0i + (z1i > z0i ? 1 : 0);
+	    
+	    var vx = (x1 === x0) ? 1 : x1 - x0;
+	    var vy = (y1 === y0) ? 1 : y1 - y0;
+	    var vz = (z1 === z0) ? 1 : z1 - z0;
+	    
+	    var vxvy = vx * vy;
+	    var vxvz = vx * vz;
+	    var vyvz = vy * vz;
+	    
+	    var errx = (xp - x0) * vyvz;
+	    var erry = (yp - y0) * vxvz;
+	    var errz = (zp - z0) * vxvy;
+	    
+	    var derrx = sx * vyvz;
+	    var derry = sy * vxvz;
+	    var derrz = sz * vxvy;
 
-		do{
-			Level.setTile(x, y, z, blockId, blockDamage);
-			
-			if(x === x1i && y === y1i && z === z1i){
-				break;
-			}
-			
-			var xr = Math.abs(errx);
-			var yr = Math.abs(erry);
-			var zr = Math.abs(errz);
-			
-			if(sx !== 0 && (sy === 0 || xr < yr) && (sz === 0 || xr < zr)){
-				x += sx;
-				errx += derrx;
-			}else if(sy !== 0 && (sz === 0 || yr < zr)){
-				y += sy;
-				erry += derry;
-			}else if(sz !== 0){
-				z += sz;
-				errz += derrz;
-			}
-		}while(true);
+	    do{
+	        Level.setTile(x, y, z, blockId, blockDamage);
+	        
+	        if(x === x1i && y === y1i && z === z1i){
+	            break;
+	        }
+	        
+	        var xr = Math.abs(errx);
+	        var yr = Math.abs(erry);
+	        var zr = Math.abs(errz);
+	        
+	        if(sx !== 0 && (sy === 0 || xr < yr) && (sz === 0 || xr < zr)){
+	            x += sx;
+	            errx += derrx;
+	        }else if(sy !== 0 && (sz === 0 || yr < zr)){
+	            y += sy;
+	            erry += derry;
+	        }else if(sz !== 0){
+	            z += sz;
+	            errz += derrz;
+	        }
+	    }while(true);
 	}
 	
 	if(begin.equals(end)){ //Point
@@ -516,8 +508,8 @@ Pool.Canvas.drawCircle = function(center, radius, blockId, blockDamage){
 Pool.Canvas.drawEllipse = function(center, radius, squashX, squashZ, blockId, blockDamage){
 	for(var a = 0; a <= 360; a++){
    		var x = java.lang.Math.cos(java.lang.Math.toRadians(a)) * radius * squashX;
-		var z = java.lang.Math.sin(java.lang.Math.toRadians(a)) * radius * squashZ;
-		
+    	var z = java.lang.Math.sin(java.lang.Math.toRadians(a)) * radius * squashZ;
+    	
 		Level.setTile(center.x + Math.floor(x), center.y, center.z + Math.floor(z), blockId, blockDamage);
 	}
 };
@@ -771,30 +763,30 @@ Pool.Entity = function(ent){
  * @author IchiKaku <woni8708@naver.com>
  */
 Pool.Entity.EntityType = {
-	HUMAN: 0,
-	
-	CHICKEN: 10, COW: 11, PIG: 12, SHEEP: 13, WOLF: 14, VILLAGER: 15, MOOSHROOM: 16,
-	
-	ZOMBIE: 32, CREEPER: 33, SKELETON: 34, SPIDER: 35, PIGZOMBIE: 36, SLIME: 37, ENDERMAN: 38, SILVERFISH: 39,
-	
-	DROPPED_ITEM: 64, PRIMED_TNT: 65, FALLING_SAND: 66,
-	
-	ARROW: 80, SNOWBALL: 81, EGG: 82, PAINTING: 83, MINECART: 84,
-	
-	//Another name
-	PLAYER: 0, MUSHROOM_COW: 16, ZOMBIE_PIGMAN: 36, ITEM: 64, TNT: 65, SAND: 66, SNOW: 81, CART: 84
+    HUMAN: 0,
+    
+    CHICKEN: 10, COW: 11, PIG: 12, SHEEP: 13, WOLF: 14, VILLAGER: 15, MOOSHROOM: 16,
+    
+    ZOMBIE: 32, CREEPER: 33, SKELETON: 34, SPIDER: 35, PIGZOMBIE: 36, SLIME: 37, ENDERMAN: 38, SILVERFISH: 39,
+    
+    DROPPED_ITEM: 64, PRIMED_TNT: 65, FALLING_SAND: 66,
+    
+    ARROW: 80, SNOWBALL: 81, EGG: 82, PAINTING: 83, MINECART: 84,
+    
+    //Another name
+    PLAYER: 0, MUSHROOM_COW: 16, ZOMBIE_PIGMAN: 36, ITEM: 64, TNT: 65, SAND: 66, SNOW: 81, CART: 84
 };
 
 Pool.Entity.EntityTypeName = {
-	"0": "Player",
-	
-	"10": "Chicken", "11": "Cow", "12": "Pig", "13": "Sheep", "14": "Wolf", "15": "Villager", "16": "Mooshroom",
-	
-	"32": "Zombie", "33": "Creeper", "34": "Skeleton", "35": "Spider", "36": "PigZombie", "37": "Slime", "38": "Enderman", "39": "Silverfish",
-	
-	"64": "DroppedItem", "65": "PrimedTNT", "66": "FallingSand",
-	
-	"80": "Arrow", "81": "Snowball", "82": "Egg", "83": "Painting", "84": "Minecart"
+    "0": "Player",
+    
+    "10": "Chicken", "11": "Cow", "12": "Pig", "13": "Sheep", "14": "Wolf", "15": "Villager", "16": "Mooshroom",
+    
+    "32": "Zombie", "33": "Creeper", "34": "Skeleton", "35": "Spider", "36": "PigZombie", "37": "Slime", "38": "Enderman", "39": "Silverfish",
+    
+    "64": "DroppedItem", "65": "PrimedTNT", "66": "FallingSand",
+    
+    "80": "Arrow", "81": "Snowball", "82": "Egg", "83": "Painting", "84": "Minecart"
 };
 
 /**
@@ -809,12 +801,12 @@ Pool.Entity.getPlayer = function(){
 };
 
 /*
- * 엔티티가 적대적인지 확인합니다.
- * @since 2015-2-27 (API 1)
- * @author IchiKaku <woni8708@naver.com>
+ * 엔티티가 적대적인지 확인합니다.
+ * @since 2015-2-27 (API 1)
+ * @author IchiKaku <woni8708@naver.com>
  * @author affogatoman <colombia2@naver.com>
- * @param {Number|Pool.Entity} ent - 엔티티 아이디 또는 객체
- * @return {Boolean} - 엔티티와 플레이어의 적대관계여부
+ * @param {Number|Pool.Entity} ent - 엔티티 아이디 또는 객체
+ * @return {Boolean} - 엔티티와 플레이어의 적대관계여부
 */
 Pool.Entity.isMob = function(ent){
 	if(ent instanceof Pool.Entity){
@@ -823,29 +815,6 @@ Pool.Entity.isMob = function(ent){
 	
 	return Entity.getEntityTypeId(ent) >= 32 && Entity.getEntityTypeId(ent) <= 39;
 };
-
- /**
- * 특정 엔티티를 모두 제거합니다
- * 
- * @since 2015-02-27 (API 1)
- * @author Choseul <chocoslime05@naver.com>
- * @return {Entity Type Id} 엔티티 타입 아이디
- */
-Pool.Entity.entityRemover = function(id){
-	var e = Entity.getAll();
-	
-	e.forEach(function(ent){
-		if(id == null){
-			if(ent != getPlayerEnt()){
-				Entity.remove(ent);
-			}
-		} else if(id != null) {
-			if(Entity.getEntityTypeId(ent) == type && ent != getPlayerEnt()){
-				Entity.remove(ent);
-			}
-		}
-	});
-}
 
 /**
  * 엔티티가 존재하는지 확인합니다
@@ -893,7 +862,9 @@ Pool.Entity.prototype.getVector = function(){
  Pool.Entity.prototype.moveTo = function(x, y, z){
 	 if(x instanceof Pool.Vector3){
 		 Entity.setPosition(this.ent, x.x, x.y, x.z);
-	 }else if(typeof x === "number" && typeof y === "number" && typeof z === "number"){
+	 }
+	 
+	 if(typeof x === "number" && typeof y === "number" && typeof z === "number"){
 		 Entity.setPosition(this.ent, x, y, z);
 	 }
  };
@@ -910,6 +881,29 @@ Pool.Entity.prototype.getVector = function(){
 		return null;
 	return android.graphics.BitmapFactory.decodeStream(ModPE.openInputStreamFromTexturePack("images/" + Entity.getMobSkin(this.ent)));
  };
+
+ /**
+ * 특정 엔티티를 모두 제거합니다
+ * 
+ * @since 2015-02-27 (API 1)
+ * @author Choseul <chocoslime05@naver.com>
+ * @return {Entity Type Id} 엔티티 타입 아이디
+ */
+Pool.Entity.entityRemover = function(id){
+	var e = Entity.getAll();
+	
+	e.forEach(function(ent){
+		if(id == null){
+			if(ent != getPlayerEnt()){
+				Entity.remove(ent);
+			}
+		} else if(id != null) {
+			if(Entity.getEntityTypeId(ent) == type && ent != getPlayerEnt()){
+				Entity.remove(ent);
+			}
+		}
+	});
+}
 
 
 /**
@@ -954,9 +948,9 @@ Pool.Map.getEntitiesInRange = function(range, base){
 		base = Pool.Entity.getPlayer().getVector();
 	}
 	
-	return Entity.getAll().filter(function(ent){
-		return Math.hypot(base.x - Entity.getX(ent), base.y - Entity.getY(ent), base.z - Entity.getZ(ent)) < range;
-	});
+    return Entity.getAll().filter(function(ent){
+        return Math.hypot(base.x - Entity.getX(ent), base.y - Entity.getY(ent), base.z - Entity.getZ(ent)) < range;
+    });
 };
 
 
@@ -1038,8 +1032,8 @@ Math.hypot = Math.hypot || function(){
  */
 function selectLevelHook(){
 	var scripts = net.zhuoweizhang.mcpelauncher.ScriptManager.scripts;
-	var ScriptableObject = org.mozilla.javascript.ScriptableObject;
-
+    var ScriptableObject = org.mozilla.javascript.ScriptableObject;
+    
 	for(var i = 0; i < scripts.size(); i++) {
 		var scope = scripts.get(i).scope;
 		if(!ScriptableObject.hasProperty(scope, "Pool")){
@@ -1047,4 +1041,3 @@ function selectLevelHook(){
 		}
 	}
 }
-
