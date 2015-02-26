@@ -241,13 +241,13 @@ Pool.Vector3.prototype.toArray = function(){
  * @param {Number} [z] - 생략할 경우 변경하지 않습니다
  */
 Pool.Vector3.prototype.set = function(x, y, z){
-	if(typeof x === "number"){
+	if(!isNaN(x) && typeof x == "number"){
 		this.x = Math.floor(x);
 	}
-	if(typeof y === "number"){
+	if(!isNaN(y) && typeof y == "number"){
 		this.y = Math.floor(y);
 	}
-	if(typeof z === "number"){
+	if(!isNaN(z) && typeof z == "number"){
 		this.z = Math.floor(z);
 	}
 };
