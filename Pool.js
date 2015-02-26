@@ -585,7 +585,7 @@ Pool.Entity = {};
  * @returns {Array} 범위 내의 모든 엔티티
  */
 Pool.Entity.getEntitiesInRange = function(range, baseEntity){
-	if(baseEntity === null || typeof baseEntity === "undefined" || baseEntity < 0){
+	if(!Pool.Entity.isEntity(baseEntity)){
 		baseEntity = Player.getEntity();
 	}
 	
