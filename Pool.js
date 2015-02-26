@@ -759,7 +759,10 @@ Pool.Entity.EntityTypeName = {
     
     "E80": "Arrow", "E81": "Snowball", "E82": "Egg", "E83": "Painting", "E84": "Minecart"
 };
-/*
+
+/**
+ * 엔티티의 이름을 구합니다
+ *
  *@since 2015-2-27 (API 1)
  *@author Ichikaku <woni8708@naver.ccom
  *@param {number} ent - 엔티티 아이디
