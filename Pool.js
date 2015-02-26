@@ -434,14 +434,15 @@ Pool.Map = {};
 
 /**
  * @since 2015-02-26
- * @author ChalkPE <amato0617@gmail.com>
- * @param vect2 {Vector2} 중심이 되는 블럭의 x, z좌표를 담은 Vector2 객체
- * @return {Vector3} 가장 높은 곳에 있는 블럭의 좌표를 담은 Vector3 객체
+ * @author affogatoman <colombia2@naver.com>
+ * @brief 주어진 평면 좌표에서 가장 높은 곳에 있는 블럭의 좌표를 구합니다
+ * @param vec2 {Pool.Vector2} 중심이 되는 블럭의 평면적 좌표
+ * @return {Pool.Vector3} 가장 높은 곳에 있는 블럭의 좌표
  */
-Pool.Map.getHighestVector = function(vect2){
+Pool.Map.getHighestVector = function(vec2){
 	for(var y = 128; y >= 0; y--){
-		if(!(getTile(vect2.x, y, vect2.z)){
-			return new Pool.Vector3(vect2.x, y, vect2.z);
+		if(Level.getTile(vect2.x, y, vec2.z) > 0){
+			return new Pool.Vector3(vec2.x, y, vec2.z);
 		}
 	}
 	return null;
