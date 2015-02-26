@@ -256,7 +256,39 @@ Pool.Vector3.prototype.getDistance = function(vec3){
 	return Math.hypot(this.x - vec3.x, this.y - vec3.y, this.z - vec3.z);
 };
 
+/**
+ * 좌표에 대하여 더합니다
+ *
+ * @since 2015-02-26 (API 1)
+ * @author onebone <jyc0410@naver.com>
+ * @param {Number|Pool.Vector3} x
+ * @param {Number} y
+ * @param {Number} z
+ * @return {Pool.Vector3} 결과 값
+ */
+Pool.Vector3.prototype.add = function(x, y, z){
+	if(x instanceof  Pool.Vector3){
+		return new Pool.Vector3(this.x + x.x, this.y + x.y, this.z + x.z);
+	}
+	return new Pool.Vector3(this.x + x, this.y + y, this.z + z);
+};
 
+/**
+ * 좌표에 대하여 뺍니다
+ * 
+ * @since 2015-02-26 (API 1)
+ * @author onebone <jyc0410@naver.com>
+ * @param {Number|Pool.Vector3} x
+ * @param {Number} y
+ * @param {Number} z
+ * @return {Pool.Vector3} 결과 값
+*/
+Pool.Vector3.prototype.subtract = function(x, y, z){
+	if(x instanceof  Pool.Vector3){
+		return new Pool.Vector3(this.x - x.x, this.y - x.y, this.z - x.z);
+	}
+	return new Pool.Vector3(this.x - x, this.y - y, this.z - z);
+};
 
 
 
