@@ -769,9 +769,9 @@ Pool.Entity.EntityTypeName = {
  *@return {String} 엔티티의 이름
 */
 
-Pool.Entity.getName(ent) {
+Pool.Entity.getName = function(ent){
 	return Pool.Entity.EntityTypeName["E"+Entity.getEntityTypeId(ent)];
-}
+};
 
 /**
  * 플레이어의 엔티티 객체를 구합니다
@@ -786,6 +786,7 @@ Pool.Entity.getPlayer = function(){
 
 /*
  * 엔티티가 적대적인지 확인합니다.
+ *
  * @since 2015-2-27 (API 1)
  * @author IchiKaku <woni8708@naver.com>
  * @author affogatoman <colombia2@naver.com>
