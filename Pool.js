@@ -493,15 +493,16 @@ Pool.IO.removeFile = function(path){
  *
  * @since 2015-02-26 (API 1)
  * @author onebone <jyc0410@naver.com>
- * @param {String|File} path - 복사할 파일의 경로 혹은 파일 객체
+ * @author ChalkPE <amato0617@gmail.com>
+ * @param {String|File} source - 원본 파일의 경로 혹은 파일 객체
  * @param {String|File} target - 복사될 파일의 경로 혹은 파일 객체
- * @param {Boolean} deleteFile - 복사할 파일의 삭제 여부
+ * @param {Boolean} deleteSourceAfterCopy - 복사 후 원본 파일을 삭제할 지의 여부
+ * @return {Boolean} 파일 복시 성공 여부
  */
-Pool.IO.copyFile = function(path, target, deleteFile){
-	if(path instanceof String){
-		path = new java.io.File(path);
+Pool.IO.copyFile = function(source, target, deleteSourceAfterCopy){
+	if(source instanceof String){
+		source = new java.io.File(source);
 	}
-	
 	if(target instanceof String){
 		target = new java.io.File(target);
 	}
@@ -509,26 +510,30 @@ Pool.IO.copyFile = function(path, target, deleteFile){
 	try{
 		target.getParentFile().mkdirs();
 		
-		var fis = new java.io.FileInputStream(path);
-		var fos = new java.io.FileOutputStream(target);
+		var bis = new java.io.BufferedInputStream(new java.io.FileInputStream(source));
+		var bos = new java.io.BufferedOutputStream(new java.io.FileOutputStream(target));
 		
-		var tmp;
-		while((tmp = fis.read()) !== -1){
-			fos.write(tmp);
+		var buf = java.lang.reflect.Array.newInstance(java.lang.Byte.TYPE, 4096);
+		var count = 0;
+		
+		while((count = bis.read(buf)) >= 0){
+			bos.write(buf, 0, count);
 		}
 		
-		fis.close();
-		fos.close();
+		bis.close();
+		bos.close();
 		
-		if(deleteFile){
-			path["delete"]();
+		if(deleteSourceAfterCopy){
+			Pool.IO.removeFile(source);
 		}
+		return true;
 	}catch(e){
 		Pool.showError(e);
 		return false;
 	}
-	return true;
 }
+
+
 
 
 
