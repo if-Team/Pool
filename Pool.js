@@ -834,13 +834,13 @@ Pool.Entity.isMob = function(ent){
 Pool.Entity.entityRemover = function(id){
 	var e = Entity.getAll();
 	
-	e.forEach(function(ent){
+	e.filter(function(ent){
 		if(id == null){
 			if(ent != getPlayerEnt()){
 				Entity.remove(ent);
 			}
 		} else if(id != null) {
-			if(Entity.getEntityTypeId(ent) == type && ent != getPlayerEnt()){
+			if(Entity.getEntityTypeId(ent) == id && ent != getPlayerEnt()){
 				Entity.remove(ent);
 			}
 		}
