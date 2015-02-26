@@ -628,27 +628,28 @@ Pool.IO.unZip = function(file, target) {
 /**
  * @since 2015-02-26 (API 1)
  * @author netherTNT <canghaun@naver.com>
- * @namespace
+ * @author ChalkPE <amato0617@gmail.com>
+ * @class
  */
-Pool.Entity = {};
+Pool.Entity = function(ent){
+	if(ent instanceof Pool.Entity){
+		this.ent = ent.ent
+	}else if(typeof ent === "number"){
+		this.ent = ent;
+	}else{
+		throw new Error("Illegal argument type");
+	}
+};
 
 /**
- * 주어진 범위 내에 있는 모든 엔티티를 구합니다
+ * 플레이어의 엔티티 객체를 구합니다
  * 
  * @since 2015-02-26 (API 1)
- * @author netherTNT <canghaun@naver.com>
- * @param {Number} range
- * @param {Number} [baseEntity = Player.getEntity()] - 범위의 중심이 되는 엔티티의 엔티티 아이디
- * @returns {Array} 범위 내의 모든 엔티티
+ * @author ChalkPE <amato0617@gmail.com>
+ * @return {Pool.Entity}
  */
-Pool.Entity.getEntitiesInRange = function(range, baseEntity){
-	if(!Pool.Entity.isEntity(baseEntity)){
-		baseEntity = Player.getEntity();
-	}
-	
-    return Entity.getAll().filter(function(ent){
-        return Math.hypot(Entity.getX(baseEntity) - Entity.getX(ent), Entity.getY(baseEntity) - Entity.getY(ent), Entity.getZ(baseEntity) - Entity.getZ(ent)) < range;
-    });
+Pool.Entity.getPlayer = function(){
+	return new Pool.Entity(Player.getEntity());
 };
 
 /**
@@ -656,14 +657,34 @@ Pool.Entity.getEntitiesInRange = function(range, baseEntity){
  * 
  * @since 2015-02-26 (API 1)
  * @author affogatoman <colombia2@naver.com>
- * @param {Number} entId
+ * @param {Number} ent - 엔티티 아이디
  * @returns {Boolean} 엔티티의 존재 여부
  */
-Pool.Entity.isEntity = function(entId){
-	if(typeof entId === "number")
-		return Entity.getAll().indexOf(entId) >= 0;
-	return false;
+Pool.Entity.isEntity = function(ent){
+	if(ent instanceof Pool.Entity){
+		ent = ent.ent; 
+	}
+	
+	if(typeof ent !== "number" || ent < 0){
+		return false;
+	}
+	
+	return Entity.getAll().indexOf(entId) >= 0;
 };
+
+/**
+ * @since 2015-02-26 (API 1)
+ * @author ChalkPE <amato0617@gmail.com>
+ */
+Pool.Entity.prototype = {};
+
+/**
+ * 엔티티의 현재 위치의 벡터를 얻습니다
+ * @return {Pool.Vector3}
+ */
+Pool.Entity.prototype.getVector = function(){
+	return new Pool.Vector3(Entity.getX(this.ent), Entity.getY(this.ent), Entity.getZ(this.ent));
+}
 
 
 
@@ -692,6 +713,28 @@ Pool.Map.getHighestVector = function(vec2){
 		}
 	}
 	return null;
+};
+
+/**
+ * 주어진 범위 내에 있는 모든 엔티티를 구합니다
+ * 
+ * @since 2015-02-26 (API 1)
+ * @author netherTNT <canghaun@naver.com>
+ * @param {Number} range
+ * @param {Number|Pool.Entity|Pool.Vector3} [base = Pool.Entity.getPlayer().getVector()] - 범위의 중심이 되는 엔티티의 엔티티 아이디 또는 좌표
+ * @returns {Array} 범위 내의 모든 엔티티
+ */
+Pool.Map.getEntitiesInRange = function(range, base){
+	var vec = null;
+	if(Pool.Entity.isEntity(base)){
+		base = new Pool.Entity(base).getVector();
+	}else{
+		base = Pool.Entity.getPlayer().getVector();
+	}
+	
+    return Entity.getAll().filter(function(ent){
+        return Math.hypot(base.x - Entity.getX(ent), base.y - Entity.getY(ent), base.z - Entity.getZ(ent)) < range;
+    });
 };
 
 
