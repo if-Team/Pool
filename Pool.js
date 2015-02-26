@@ -749,16 +749,26 @@ Pool.Entity.EntityType = {
 };
 
 Pool.Entity.EntityTypeName = {
-    "0": "Player",
+    "E0": "Player",
     
-    "10": "Chicken", "11": "Cow", "12": "Pig", "13": "Sheep", "14": "Wolf", "15": "Villager", "16": "Mooshroom",
+    "E10": "Chicken", "E11": "ECow", "E12": "Pig", "E13": "Sheep", "E14": "Wolf", "E15": "Villager", "E16": "Mooshroom",
     
-    "32": "Zombie", "33": "Creeper", "34": "Skeleton", "35": "Spider", "36": "PigZombie", "37": "Slime", "38": "Enderman", "39": "Silverfish",
+    "E32": "Zombie", "E33": "ECreeper", "E34": "Skeleton", "E35": "Spider", "E36": "PigZombie", "E37": "Slime", "E38": "Enderman", "39": "Silverfish",
     
-    "64": "DroppedItem", "65": "PrimedTNT", "66": "FallingSand",
+    "E64": "DroppedItem", "E65": "PrimedTNT", "E66": "FallingSand",
     
-    "80": "Arrow", "81": "Snowball", "82": "Egg", "83": "Painting", "84": "Minecart"
+    "E80": "Arrow", "E81": "Snowball", "E82": "Egg", "E83": "Painting", "E84": "Minecart"
 };
+/*
+ *@since 2015-2-27 (API 1)
+ *@author Ichikaku <woni8708@naver.ccom
+ *@param {number} ent - 엔티티 아이디
+ *@return {String} 엔티티의 이름
+*/
+
+Pool.Entity.getName(ent) {
+	return Pool.Entity.EntityTypeName["E"+Entity.getEntityTypeId(ent)];
+}
 
 /**
  * 플레이어의 엔티티 객체를 구합니다
