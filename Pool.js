@@ -429,12 +429,13 @@ Pool.Entity.getEntitiesInRange = function(range, baseEntity){
 /**
  * @since 2015-02-26
  * @author affogatoman <colombia2@naver.com>
+ * @author IchiKaku <woni8708@naver.com>
  */
 Pool.Map = {};
 
 /**
  * @since 2015-02-26
- * @author ChalkPE <amato0617@gmail.com>
+ * @author affogatoman <colombia2@naver.com>
  * @param vect2 {Vector2} 중심이 되는 블럭의 x, z좌표를 담은 Vector2 객체
  * @return {Vector3} 가장 높은 곳에 있는 블럭의 좌표를 담은 Vector3 객체
  */
