@@ -19,9 +19,16 @@
 /**
  * @since 2015-02-24
  * @author ChalkPE <amato0617@gmail.com>
+ * @file Common utilized library for ModPE
+ * @namespace
  */
 var Pool = {};
 
+/**
+ * @since 2015-02-24
+ * @author ChalkPE <amato0617@gmail.com>
+ * @constant
+ */
 Pool.VERSION = "0.1";
 Pool.API_VERSION = 1;
 
@@ -30,10 +37,12 @@ Pool.API_VERSION = 1;
 
 
 /**
+ * 서브 모듈을 불러옵니다
+ * 
  * @since 2015-02-26
  * @author onebone <yoonchul.jeong00@gmail.com>
  * @author ChalkPE <amato0617@gmail.com>
- * @param path {String | java.io.File} 서브 모듈이 저장된 소스 파일의 경로 및 파일 객체
+ * @param {String|File} path 서브 모듈이 저장된 소스 파일의 경로 및 파일 객체
  */
 Pool.load = function(path){
 	var content = Pool.IO.readAllLines(path);
@@ -45,9 +54,11 @@ Pool.load = function(path){
 };
 
 /**
+ * 에러를 출력합니다
+ * 
  * @since 2015-02-26
  * @author ChalkPE <amato0617@gmail.com>
- * @param error {Error} 출력할 에러
+ * @param {Error} error 출력할 에러
  */
 Pool.showError = function(error){
 	clientMessage(error.name + ": " + error.message + " at line " + error.lineNumber + "\n" + error.stack);
@@ -58,8 +69,11 @@ Pool.showError = function(error){
 
 
 /**
+ * 2차원 좌표의 래퍼 클래스입니다
+ * 
  * @since 2015-02-26
  * @author IchiKaku <woni8708@naver.com>
+ * @class
  */
 Pool.Vector2 = function(x, z){
 	this.x = Math.floor(x);
@@ -73,8 +87,13 @@ Pool.Vector2 = function(x, z){
 Pool.Vector2.prototype = {};
 
 /**
+ * 주어진 좌표와 동일한 객체인지 비교합니다
+ * 
  * @since 2015-02-26
  * @author IchiKaku <woni8708@naver.com>
+ * @param {Number|Pool.Vector2} x
+ * @param {Number} y
+ * @return {Boolean} 동일 여부
  */
 Pool.Vector2.prototype.equals = function(x, z){
 	if(x instanceof Pool.Vector2 && arguments.length === 1){
@@ -84,14 +103,19 @@ Pool.Vector2.prototype.equals = function(x, z){
 };
 
 /**
+ * 좌표의 문자열 표현을 구합니다
+ * 
  * @since 2015-02-26
  * @author IchiKaku <woni8708@naver.com>
+ * @return {String} 좌표의 문자열 표현
  */
 Pool.Vector2.prototype.toString = function(){
 	return "[" + [this.x, this.z].join(", ") + "]";
 }
 
 /**
+ * 좌표를 설정합니다
+ * 
  * @since 2015-02-26
  * @author IchiKaku <woni8708@naver.com>
  */
@@ -104,9 +128,16 @@ Pool.Vector2.prototype.set = function(x, z){
 	}
 };
 
+
+
+
+
 /**
+ * 3차원 좌표의 래퍼 클래스입니다
+ * 
  * @since 2015-02-24
  * @author ChalkPE <amato0617@gmail.com>
+ * @class
  */
 Pool.Vector3 = function(x, y, z){
 	this.x = Math.floor(x);
@@ -121,8 +152,14 @@ Pool.Vector3 = function(x, y, z){
 Pool.Vector3.prototype = {};
 
 /**
+ * 주어진 좌표와 동일한 객체인지 비교합니다
+ * 
  * @since 2015-02-24
  * @author ChalkPE <amato0617@gmail.com>
+ * @param {Number|Pool.Vector2} x
+ * @param {Number} y
+ * @param {Number} z
+ * @return {Boolean} 동일 여부
  */
 Pool.Vector3.prototype.equals = function(x, y, z){
 	if(x instanceof Pool.Vector3 && arguments.length === 1){
@@ -132,20 +169,24 @@ Pool.Vector3.prototype.equals = function(x, y, z){
 };
 
 /**
+ * 좌표의 문자열 표현을 구합니다
+ * 
  * @since 2015-02-24
  * @author ChalkPE <amato0617@gmail.com>
+ * @return {String} 좌표의 문자열 표현
  */
 Pool.Vector3.prototype.toString = function(){
 	return "[" + [this.x, this.y, this.z].join(", ") + "]";
 }
 
 /**
+ * 좌표를 변경합니다
+ * 
  * @since 2015-02-24
  * @author ChalkPE <amato0617@gmail.com>
- * @brief 좌표를 설정합니다
- * @param x {int} X 좌표 (생략할 경우 변경하지 않습니다)
- * @param y {int} Y 좌표 (생략할 경우 변경하지 않습니다)
- * @param z {int} Z 좌표 (생략할 경우 변경하지 않습니다)
+ * @param {Number} [x] - 생략할 경우 변경하지 않습니다
+ * @param {Number} [y] - 생략할 경우 변경하지 않습니다
+ * @param {Number} [z] - 생략할 경우 변경하지 않습니다
  */
 Pool.Vector3.prototype.set = function(x, y, z){
 	if(typeof x === "number"){
@@ -160,11 +201,12 @@ Pool.Vector3.prototype.set = function(x, y, z){
 };
 
 /**
+ * 다른 좌표와의 거리를 구합니다
+ * 
  * @since 2015-02-26
  * @author IchiKaku <woni8708@naver.com>
- * @brief 자신과 다른 좌표 사이의 거리를 구합니다
- * @param vec3 {Pool.Vector3} 거리를 구할 다른 좌표
- * @return {double} 자신과 vec3 사이의 거리
+ * @param {Pool.Vector3} vec3
+ * @return {Number} 자신과 vec3 사이의 거리
  */
 Pool.Vector3.prototype.getDistance = function(vec3){
 	return Math.hypot(this.x - vec3.x, this.y - vec3.y, this.z - vec3.z);
@@ -177,16 +219,19 @@ Pool.Vector3.prototype.getDistance = function(vec3){
 /**
  * @since 2015-02-24
  * @author ChalkPE <amato0617@gmail.com>
+ * @namespace
  */
 Pool.Canvas = {};
 
 /**
+ * 두 좌표를 잇는 선을 그립니다
+ * 
  * @since 2015-02-24
  * @author ChalkPE <amato0617@gmail.com>
- * @param begin {Pool.Vector3} 시작점의 위치
- * @param end {Pool.Vector3} 종료점의 위치
- * @param blockId {int} 선을 이룰 블럭의 ID 값
- * @param blockDamage {int} 선을 이룰 블럭의 데미지 값
+ * @param {Pool.Vector3} begin - 시작점의 좌표
+ * @param {Pool.Vector3} end - 종료점의 좌표
+ * @param {Number} blockId - 선을 이룰 블럭의 ID 값
+ * @param {Number} blockDamage - 선을 이룰 블럭의 데미지 값
  * @see Bresenham's line algorithm
  */
 Pool.Canvas.drawLine = function(begin, end, blockId, blockDamage){
@@ -290,16 +335,21 @@ Pool.Canvas.drawLine = function(begin, end, blockId, blockDamage){
 };
 
 /**
+ * 주어진 좌표를 중심으로 원을 그립니다
+ * 
  * @since 2015-02-24
  * @author ChalkPE <amato0617@gmail.com>
  * @author IchiKaku <woni8708@naver.com>
- * @param center {Pool.Vector3} 원의 중심
+ * @param {Pool.Vector3} center - 원의 중심점의 좌표
+ * @param {Number} radius - 원의 반지름
+ * @param {Number} blockId - 원을 이룰 블럭의 ID 값
+ * @param {Number} blockDamage - 원을 이룰 블럭의 데미지 값
  */
 Pool.Canvas.drawCircle = function(center, radius, blockId, blockDamage){
 	for(var a = 0; a <= 360; a += 0.1){
    		var x = java.lang.Math.cos(java.lang.Math.toRadians(a)) * radius;
     	var z = java.lang.Math.sin(java.lang.Math.toRadians(a)) * radius;
-
+    	
 		Level.setTile(center.x + x, center.y, center.z + z, blockId, blockDamage);
 	}
 };
@@ -311,6 +361,7 @@ Pool.Canvas.drawCircle = function(center, radius, blockId, blockDamage){
 /**
  * @since 2015-02-26
  * @author Choseul <chocoslime05@naver.com>
+ * @namespace
  */
 Pool.IO = {};
 
@@ -323,9 +374,11 @@ Pool.IO.Zipper = function(kirito, psycho){
 }
 
 /**
+ * 문자열을 파일에 저장합니다
+ * 
  * @since 2015-02-26
  * @author affogatoman <colombia2@naver.com>
- * @param path {String | java.io.File} 문자열을 저장할 파일의 경로 및 파일 객체
+ * @param {String|File} path - 문자열을 저장할 파일의 경로 및 파일 객체
  */
 Pool.IO.saveFile = function(path, str){
 	try{
@@ -344,9 +397,11 @@ Pool.IO.saveFile = function(path, str){
 };
 
 /**
+ * 파일에서 문자열을 읽어옵니다
+ * 
  * @since 2015-02-26
  * @author onebone <yoonchul.jeong00@gmail.com>
- * @param path {String | java.io.File} 문자열을 읽을 파일의 경로 및 파일 객체
+ * @param {String|File} path - 문자열을 읽을 파일의 경로 및 파일 객체
  * @return {String} 파일 내의 문자열
  */
 Pool.IO.readAllLines = function(path){
@@ -377,10 +432,12 @@ Pool.IO.readAllLines = function(path){
 };
 
 /**
+ * 주어진 파일을 삭제합니다
+ * 
  * @since 2015-02-26
  * @author ChalkPE <amato0617@gmail.com>
- * @param path {String | java.io.File} 지울 파일의 경로 및 파일 객체
- * @return {boolean} 파일 삭제 성공 여부
+ * @param {String|File} path - 삭제할 파일의 경로 및 파일 객체
+ * @return {Boolean} 파일 삭제 성공 여부
  */
 Pool.IO.removeFile = function(path){
 	try{
@@ -402,14 +459,17 @@ Pool.IO.removeFile = function(path){
 /**
  * @since 2015-02-26
  * @author netherTNT <canghaun@naver.com>
+ * @namespace
  */
 Pool.Entity = {};
 
 /**
+ * 주어진 범위 내에 있는 모든 엔티티를 구합니다
+ * 
  * @since 2015-02-26
  * @author netherTNT <canghaun@naver.com>
- * @param range {int} 범위
- * @param baseEntity {int} 범위의 중심이 되는 엔티티의 엔티티 아이디 (기본값: 플레이어)
+ * @param {Number} range
+ * @param {Number} [baseEntity = Player.getEntity()] - 범위의 중심이 되는 엔티티의 엔티티 아이디
  * @returns {Array} 범위 내의 모든 엔티티
  */
 Pool.Entity.getEntitiesInRange = function(range, baseEntity){
@@ -430,14 +490,16 @@ Pool.Entity.getEntitiesInRange = function(range, baseEntity){
  * @since 2015-02-26
  * @author affogatoman <colombia2@naver.com>
  * @author IchiKaku <woni8708@naver.com>
+ * @namespace
  */
 Pool.Map = {};
 
 /**
+ * 주어진 평면 좌표에서 가장 높은 곳에 있는 블럭의 좌표를 구합니다
+ * 
  * @since 2015-02-26
  * @author affogatoman <colombia2@naver.com>
- * @brief 주어진 평면 좌표에서 가장 높은 곳에 있는 블럭의 좌표를 구합니다
- * @param vec2 {Pool.Vector2} 중심이 되는 블럭의 평면적 좌표
+ * @param {Pool.Vector2} vec2 - 중심이 되는 블럭의 평면적 좌표
  * @return {Pool.Vector3} 가장 높은 곳에 있는 블럭의 좌표
  */
 Pool.Map.getHighestVector = function(vec2){
@@ -456,6 +518,7 @@ Pool.Map.getHighestVector = function(vec2){
 /**
  * @since 2015-02-26
  * @author ChalkPE <amato0617@gmail.com>
+ * @memberof Math
  * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/hypot
  */
 Math.hypot = Math.hypot || function(){
@@ -474,6 +537,8 @@ Math.hypot = Math.hypot || function(){
 
 
 /**
+ * 맵에 입장할 때 라이브러리를 등록합니다
+ * 
  * @since 2015-02-24
  * @author ChalkPE <amato0617@gmail.com>
  */
