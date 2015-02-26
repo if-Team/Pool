@@ -794,7 +794,21 @@ Pool.Entity = function(ent){
 Pool.Entity.getPlayer = function(){
 	return new Pool.Entity(Player.getEntity());
 };
+/*
+ * 엔티티가 적대적인지 확인헙나다.
+ * @since 2015-2-27 (API 1)
+ * @author IchiKaku <woni8708@naver.com>
+ * @param {number}number ent - 엔티티 아이디
+ * @return {Boolean} - 엔티티와 플레이어의 적대관계여부
+*/
 
+Pool.Entity.isMob = function(ent) {
+	var a;
+	for(a = 32; a<=39; a++) {
+		if(ent == a) retunr true;
+	}
+	return false;
+}
 /**
  * 엔티티가 존재하는지 확인합니다
  * 
