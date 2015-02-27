@@ -1021,6 +1021,43 @@ Pool.Utils.callScriptMethod = function(){
 
 
 /**
+ * @since 2015-02-27 (API 1)
+ * @author affogatoman <colombia2@naver.com>
+ * @namespace
+ */
+Pool.Player = {};
+
+/**
+ * 특정 아이템의 갯수의 총합을 구합니다
+ * @since 2015-02-27 (API 1)
+ * @author affogatoman <colombia2@naver.com>
+ * @param {Number} itemId
+ * @param {Number} itemDam
+ * @return {Number} 아이템의 갯수
+ */
+Pool.Player.getItemCount(itemId, itemDam){
+	var result = 0;
+	
+	if(typeof itemDam === "number"){
+		itemDam = itemDam;
+	}else{
+		itemDam = 0;
+	}
+	
+	for(var count = 9; count <= 44; count++){
+		if(Player.getInventorySlot(count) === itemId && Player.getInventorySlotData(count) === itemDam){
+			result += Player.getInventorySlotCount(count);
+		}
+	}
+	
+	return result;
+};
+
+
+
+
+
+/**
  * @since 2015-02-26 (API 1)
  * @author ChalkPE <amato0617@gmail.com>
  * @memberof Math
