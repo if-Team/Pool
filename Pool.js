@@ -904,6 +904,22 @@ Pool.Entity.prototype.isHostileMob = function(ent){
 };
 
 /**
+ * 엔티티가 생명체인지 확인합니다.
+ *
+ * @since 2015-02-28 (API 1)
+ * @author netherTNT <canghaun@naver.com>
+ * @param {Number|Pool.Entity} ent - 엔티티 아이디 또는 객체
+ * @return {Boolean} - 엔티티의 생명체 여부
+ */
+Pool.Entity.prototype.isCreature = function(ent){
+	if(ent instanceof Pool.Entity){
+		ent = ent.ent;
+	}
+	
+	return Entity.getEntityTypeId(ent) < 64;
+}
+
+/**
  * 엔티티의 아이디를 얻습니다
  *
  * @since 2015-02-27 (API 1)
