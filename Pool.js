@@ -106,7 +106,7 @@ Pool.Vector2.prototype = {};
  * @since 2015-02-26 (API 1)
  * @author IchiKaku <woni8708@naver.com>
  * @param {Number|Pool.Vector2} x
- * @param {Number} y
+ * @param {Number} z
  * @return {Boolean} 동일 여부
  */
 Pool.Vector2.prototype.equals = function(x, z){
@@ -780,11 +780,11 @@ Pool.Entity.EntityTypeName = {
 /**
  * 엔티티의 이름을 구합니다
  *
- *@since 2015-02-27 (API 1)
- *@author Ichikaku <woni8708@naver.ccom
- *@param {Number} ent - 이름을 구할 엔티티의 엔티티 아이디
- *@return {String} 엔티티의 이름
-*/
+ * @since 2015-02-27 (API 1)
+ * @author Ichikaku <woni8708@naver.ccom
+ * @param {Number} ent - 이름을 구할 엔티티의 엔티티 아이디
+ * @return {String} 엔티티의 이름
+ */
 
 Pool.Entity.getName = function(ent){
 	return Pool.Entity.EntityTypeName["E" + Entity.getEntityTypeId(ent)];
@@ -886,7 +886,7 @@ Pool.Entity.prototype.moveTo = function(x, y, z){
 	return android.graphics.BitmapFactory.decodeStream(ModPE.openInputStreamFromTexturePack("images/" + Entity.getMobSkin(this.ent)));
  };
  
-/*
+/**
  * 엔티티가 적대적인지 확인합니다.
  *
  * @since 2015-02-27 (API 1)
