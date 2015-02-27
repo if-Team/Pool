@@ -916,7 +916,7 @@ Pool.Entity.prototype.isCreature = function(ent){
 		ent = ent.ent;
 	}
 	
-	return Entity.getEntityTypeId(ent) < 64;
+	return Pool.Entity.isEntity(ent) && Entity.getEntityTypeId(ent) < 64;
 }
 
 /**
