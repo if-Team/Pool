@@ -943,8 +943,9 @@ Pool.Map.getHighestVector = function(vec2){
  * @returns {Array} 범위 내의 모든 엔티티
  */
 Pool.Map.getEntitiesInRange = function(range, base){
-	var vec = null;
-	if(Pool.Entity.isEntity(base)){
+	if(base instanceof Pool.Vector3){
+		base = base;
+	}else if(Pool.Entity.isEntity(base)){
 		base = new Pool.Entity(base).getVector();
 	}else{
 		base = Pool.Entity.getPlayer().getVector();
