@@ -82,12 +82,14 @@ Pool.showError = function(error){
  * 
  * @since 2015-02-26 (API 1)
  * @author IchiKaku <woni8708@naver.com>
+ * @author ChalkPE <amato0617@gmail.com>
  * @class
  */
 Pool.Vector2 = function(x, z){
-	if(isNaN(x) || isNaN(y)){
-		throw new Error("누가 숫자아닌거 넣으래");
+	if(typeof x !== "number" || isNaN(x) || typeof y !== "number" || isNaN(y) || typeof z !== "number" || isNaN(z)){
+		throw new Error("argument must be a number");
 	}
+	
 	this.x = Math.floor(x);
 	this.z = Math.floor(z);
 };
@@ -145,10 +147,10 @@ Pool.Vector2.prototype.toArray = function(){
  * @param {Number} [z] - 생략할 경우 변경하지 않습니다
  */
 Pool.Vector2.prototype.set = function(x, z){
-	if(!isNaN(x) && typeof x == "number"){
+	if(typeof x === "number" && !isNaN(x)){
 		this.x = Math.floor(x);
 	}
-	if(!isNaN(z) && typeof z == "number"){
+	if(typeof z === "number" && !isNaN(z)){
 		this.z = Math.floor(z);
 	}
 };
@@ -162,8 +164,12 @@ Pool.Vector2.prototype.set = function(x, z){
  * @return {Number} 자신과 vec2 사이의 거리
  */
 Pool.Vector2.prototype.getDistance = function(vec2){
+	if(!(vec2 instanceof Pool.Vector2)){
+		throw new Error("argument must be a Vector2");
+	}
 	return Math.hypot(this.x - vec2.x, this.z - vec2.z);
 };
+
 
 
 
@@ -176,9 +182,10 @@ Pool.Vector2.prototype.getDistance = function(vec2){
  * @class
  */
 Pool.Vector3 = function(x, y, z){
-	if(isNaN(x) || isNaN(y || isNaN(z))){
-		throw new Error("누가 숫자아닌거 넣으래");
+	if(typeof x !== "number" || isNaN(x) || typeof y !== "number" || isNaN(y) || typeof z !== "number" || isNaN(z)){
+		throw new Error("argument must be a number");
 	}
+	
 	this.x = Math.floor(x);
 	this.y = Math.floor(y);
 	this.z = Math.floor(z);
@@ -206,8 +213,6 @@ Pool.Vector3.prototype.equals = function(x, y, z){
 	}
 	return Math.floor(x) === this.x && Math.floor(y) === this.y && Math.floor(z) === this.z;
 };
-
-
 
 /**
  * 좌표의 문자열 표현을 구합니다
@@ -241,13 +246,13 @@ Pool.Vector3.prototype.toArray = function(){
  * @param {Number} [z] - 생략할 경우 변경하지 않습니다
  */
 Pool.Vector3.prototype.set = function(x, y, z){
-	if(!isNaN(x) && typeof x == "number"){
+	if(typeof x === "number" && !isNaN(x)){
 		this.x = Math.floor(x);
 	}
-	if(!isNaN(y) && typeof y == "number"){
+	if(typeof y === "number" && !isNaN(y)){
 		this.y = Math.floor(y);
 	}
-	if(!isNaN(z) && typeof z == "number"){
+	if(typeof z === "number" && !isNaN(z)){
 		this.z = Math.floor(z);
 	}
 };
@@ -261,6 +266,9 @@ Pool.Vector3.prototype.set = function(x, y, z){
  * @return {Number} 자신과 vec3 사이의 거리
  */
 Pool.Vector3.prototype.getDistance = function(vec3){
+	if(!(vec3 instanceof Pool.Vector3)){
+		throw new Error("argument must be a Vector3");
+	}
 	return Math.hypot(this.x - vec3.x, this.y - vec3.y, this.z - vec3.z);
 };
 
@@ -292,7 +300,7 @@ Pool.Vector3.prototype.add = function(x, y, z){
  * @return {Pool.Vector3} 결과 값
 */
 Pool.Vector3.prototype.subtract = function(x, y, z){
-	if(x instanceof  Pool.Vector3){
+	if(x instanceof Pool.Vector3){
 		return new Pool.Vector3(this.x - x.x, this.y - x.y, this.z - x.z);
 	}
 	return new Pool.Vector3(this.x - x, this.y - y, this.z - z);
@@ -311,6 +319,9 @@ Pool.Vector3.prototype.getEntities = function(){
         return that.equals(new Pool.Entity(ent).getVector());
     });
 };
+
+
+
 
 
 /**
@@ -501,6 +512,7 @@ Pool.IO = {};
  * 
  * @since 2015-02-26 (API 1)
  * @author affogatoman <colombia2@naver.com>
+ * @author ChalkPE <amato0617@gmail.com>
  * @param {String|File|OutputStream|Writer} path - 문자열을 저장할 파일의 경로 및 파일 객체, OutputStream 및 Writer
  * @param {String} str - 문자열을 저장할 파일의 경로 및 파일 객체
  */
@@ -541,6 +553,7 @@ Pool.IO.saveAllLines = function(path, str){
  * 
  * @since 2015-02-26 (API 1)
  * @author onebone <jyc0410@naver.com>
+ * @author ChalkPE <amato0617@gmail.com>
  * @param {String|File|InputStream|BufferedReader} path - 문자열을 읽을 파일의 경로 및 파일 객체, InputStream 및 BufferedReader
  * @return {String} 파일 내의 문자열
  */
@@ -647,9 +660,6 @@ Pool.IO.copyFile = function(source, target, deleteSourceAfterCopy){
 			throw new Error("Illegal argument type");
 		}
 		
-		if(!target.exists()){
-			return false;
-		}
 		target.getParentFile().mkdirs();
 		
 		if(bis === null){
@@ -667,8 +677,8 @@ Pool.IO.copyFile = function(source, target, deleteSourceAfterCopy){
 		bis.close();
 		bos.close();
 		
-		if(deleteSourceAfterCopy){
-			Pool.IO.removeFile(source);
+		if(file !== null && deleteSourceAfterCopy){
+			Pool.IO.removeFile(file);
 		}
 		return true;
 	}catch(e){
@@ -678,29 +688,31 @@ Pool.IO.copyFile = function(source, target, deleteSourceAfterCopy){
 };
 
 /**
- * 주어진 파일을 압축해제 합니다
+ * 주어진 압축 파일을 압축 해제 합니다
  *
  * @since 2015-02-26 (API 1)
  * @author affogatoman <colombia2@naver.com>
+ * @author ChalkPE <amato0617@gmail.com>
  * @param {String|File} file - zip 파일의 경로 혹은 파일 객체
- * @param {String} target - 압축해제될 폴더의 경로
+ * @param {String|File} target - 압축을 풀 폴더의 경로
  */
 Pool.IO.unZip = function(file, target) {
 	try{
 		var zip = new java.util.zip.ZipFile(file);
 		var elements = zip.entries();
 		var element;
+		
+		if(target instanceof java.io.File){
+			target = target;
+		}else if(target instanceof String){
+			target = new java.io.File(target);
+		}else{
+			throw new Error("Illegal argument type");
+		}
+		
 		while(elements.hasNextElement()) {
 			element = elements.nextElement();
-			var bis = new java.jo.BufferedInputStream(zip.getInputStream(element));
-			var tar = new java.io.File(target+element.getName());
-			tar.getParentFile().mkdirs();
-			var bos = new java.io.BufferedOutputStream(new java.io.FileOutputStream(tar));
-			var read;
-			while((read = bis.read()) != -1)
-				bos.write(read);
-			bis.close();
-			bos.close();
+			Pool.IO.copyFile(zip.getInputStream(element), new java.io.File(target, element.getName()));
 		}
 		zip.close();
 	}catch(e){
@@ -729,7 +741,7 @@ Pool.Entity = function(ent){
 };
 
 /**
- * @since 2015-2-27 (API 1)
+ * @since 2015-02-27 (API 1)
  * @author ChalkPE <amato0617@gmail.com>
  * @author IchiKaku <woni8708@naver.com>
  */
@@ -748,12 +760,17 @@ Pool.Entity.EntityType = {
     PLAYER: 0, MUSHROOM_COW: 16, ZOMBIE_PIGMAN: 36, ITEM: 64, TNT: 65, SAND: 66, SNOW: 81, CART: 84
 };
 
+/**
+ * @since 2015-02-27 (API 1)
+ * @author ChalkPE <amato0617@gmail.com>
+ * @author IchiKaku <woni8708@naver.com>
+ */
 Pool.Entity.EntityTypeName = {
     "E0": "Player",
     
-    "E10": "Chicken", "E11": "ECow", "E12": "Pig", "E13": "Sheep", "E14": "Wolf", "E15": "Villager", "E16": "Mooshroom",
+    "E10": "Chicken", "E11": "Cow", "E12": "Pig", "E13": "Sheep", "E14": "Wolf", "E15": "Villager", "E16": "Mooshroom",
     
-    "E32": "Zombie", "E33": "ECreeper", "E34": "Skeleton", "E35": "Spider", "E36": "PigZombie", "E37": "Slime", "E38": "Enderman", "39": "Silverfish",
+    "E32": "Zombie", "E33": "Creeper", "E34": "Skeleton", "E35": "Spider", "E36": "PigZombie", "E37": "Slime", "E38": "Enderman", "39": "Silverfish",
     
     "E64": "DroppedItem", "E65": "PrimedTNT", "E66": "FallingSand",
     
@@ -763,14 +780,14 @@ Pool.Entity.EntityTypeName = {
 /**
  * 엔티티의 이름을 구합니다
  *
- *@since 2015-2-27 (API 1)
+ *@since 2015-02-27 (API 1)
  *@author Ichikaku <woni8708@naver.ccom
- *@param {number} ent - 엔티티 아이디
+ *@param {Number} ent - 이름을 구할 엔티티의 엔티티 아이디
  *@return {String} 엔티티의 이름
 */
 
 Pool.Entity.getName = function(ent){
-	return Pool.Entity.EntityTypeName["E"+Entity.getEntityTypeId(ent)];
+	return Pool.Entity.EntityTypeName["E" + Entity.getEntityTypeId(ent)];
 };
 
 /**
@@ -782,23 +799,6 @@ Pool.Entity.getName = function(ent){
  */
 Pool.Entity.getPlayer = function(){
 	return new Pool.Entity(Player.getEntity());
-};
-
-/*
- * 엔티티가 적대적인지 확인합니다.
- *
- * @since 2015-2-27 (API 1)
- * @author IchiKaku <woni8708@naver.com>
- * @author affogatoman <colombia2@naver.com>
- * @param {Number|Pool.Entity} ent - 엔티티 아이디 또는 객체
- * @return {Boolean} - 엔티티와 플레이어의 적대관계여부
-*/
-Pool.Entity.isMob = function(ent){
-	if(ent instanceof Pool.Entity){
-		ent = ent.ent;
-	}
-	
-	return Entity.getEntityTypeId(ent) >= 32 && Entity.getEntityTypeId(ent) <= 39;
 };
 
 /**
@@ -814,7 +814,7 @@ Pool.Entity.isEntity = function(ent){
 		ent = ent.ent; 
 	}
 	
-	if(typeof ent !== "number" || ent < 0){
+	if(ent === null || typeof ent !== "number" || ent < 0){
 		return false;
 	}
 	
@@ -826,24 +826,19 @@ Pool.Entity.isEntity = function(ent){
  * 
  * @since 2015-02-27 (API 1)
  * @author Choseul <chocoslime05@naver.com>
- * @return {Entity Type Id} 엔티티 타입 아이디
+ * @author ChalkPE <amato0617@gmail.com>
+ * @param {Number} [id] - 제거할 엔티티 타입, 생략할 경우 플레이어가 아닌 모든 엔티티
  */
-Pool.Entity.entityRemover = function(id){
-	var e = Entity.getAll();
+Pool.Entity.removeSpecificEntity = function(id){
+	var player = Player.getEntity();
+	var removeAll = id === null || typeof id !== "number" || (typeof id === "number" && id < 0);
 	
-	e.filter(function(ent){
-		if(id == null){
-			if(ent != getPlayerEnt()){
-				Entity.remove(ent);
-			}
-		} else if(id != null) {
-			if(Entity.getEntityTypeId(ent) == id && ent != getPlayerEnt()){
-				Entity.remove(ent);
-			}
+	Entity.getAll().forEach(function(ent){
+		if(ent !== player && (removeAll || Entity.getEntityTypeId(ent) === id)){
+			Entity.remove(ent);
 		}
 	});
-}
-
+};
 
 /**
  * @since 2015-02-26 (API 1)
@@ -868,16 +863,16 @@ Pool.Entity.prototype.getVector = function(){
  * @param {Number} y
  * @param {Number} z
  */
- Pool.Entity.prototype.moveTo = function(x, y, z){
-	 if(x instanceof Pool.Vector3){
-		 Entity.setPosition(this.ent, x.x, x.y, x.z);
-	 }
-	 
-	 if(typeof x === "number" && typeof y === "number" && typeof z === "number"){
-		 Entity.setPosition(this.ent, x, y, z);
-	 }
- };
- 
+Pool.Entity.prototype.moveTo = function(x, y, z){
+	if(x instanceof Pool.Vector3){
+		Entity.setPosition(this.ent, x.x, x.y, x.z);
+	}
+	
+	if(typeof x === "number" && typeof y === "number" && typeof z === "number"){
+		Entity.setPosition(this.ent, x, y, z);
+	}
+};
+
 /**
  * 엔티티의 스킨의 비트맵을 얻습니다
  * 
@@ -890,6 +885,27 @@ Pool.Entity.prototype.getVector = function(){
 		return null;
 	return android.graphics.BitmapFactory.decodeStream(ModPE.openInputStreamFromTexturePack("images/" + Entity.getMobSkin(this.ent)));
  };
+ 
+/*
+ * 엔티티가 적대적인지 확인합니다.
+ *
+ * @since 2015-02-27 (API 1)
+ * @author IchiKaku <woni8708@naver.com>
+ * @author affogatoman <colombia2@naver.com>
+ * @param {Number|Pool.Entity} ent - 엔티티 아이디 또는 객체
+ * @return {Boolean} - 엔티티의 적대 관계 여부
+ */
+Pool.Entity.prototype.isHostileMob = function(ent){
+	if(ent instanceof Pool.Entity){
+ 		ent = ent.ent;
+ 	}
+ 	
+ 	return 32 <= Entity.getEntityTypeId(ent) && Entity.getEntityTypeId(ent) < 64;
+};
+
+
+
+
 
 /**
  * @since 2015-02-26 (API 1)
@@ -921,6 +937,7 @@ Pool.Map.getHighestVector = function(vec2){
  * 
  * @since 2015-02-26 (API 1)
  * @author netherTNT <canghaun@naver.com>
+ * @author ChalkPE <amato0617@gmail.com>
  * @param {Number} range
  * @param {Number|Pool.Entity|Pool.Vector3} [base = Pool.Entity.getPlayer().getVector()] - 범위의 중심이 되는 엔티티의 엔티티 아이디 또는 좌표
  * @returns {Array} 범위 내의 모든 엔티티
@@ -941,6 +958,7 @@ Pool.Map.getEntitiesInRange = function(range, base){
 
 
 
+
 /**
  * @since 2015-02-26 (API 1)
  * @author onebone <jyc0410@naver.com>
@@ -956,10 +974,12 @@ Pool.Map.getEntitiesInRange = function(range, base){
   * @param {String|File} path - 파일의 경로
   */
 Pool.Utils.loadScript = function(path){
-	var file = path;
-	
-	if(file instanceof String){
-		file = new java.io.File(file);
+	if(path instanceof java.io.File){
+		path = path;
+	}else if(path instanceof String){
+		path = new java.io.File(path);
+	}else{
+		throw new Error("Illegal argument type");
 	}
 	
 	try{
@@ -977,7 +997,7 @@ Pool.Utils.loadScript = function(path){
  * @param {String} functionName - 함수의 이름
  * @param {...Object} args - 함수에 전달할 인자
  */
-Pool.Utils.launchEvent = function(){
+Pool.Utils.callScriptMethod = function(){
 	var args = Array.slice(arguments);
 	var functionName = args.shift();
 	
