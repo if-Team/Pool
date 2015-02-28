@@ -1084,9 +1084,16 @@ Pool.Player.moveTo = function(player, x, y, z){
 	Entity.remove(snowball)
 };
 
-
-
-
+/**
+ * 플레이어의 체력을 구합니다.
+ *
+ * @since 2015-02-28 (API 1)
+ * @author Choseul <chocoslime05@naver.com>
+ * @return {Number} player_health
+ */
+Pool.Player.getHealth = function(){
+	return Entity.getHealth(getPlayerEnt());
+};
 
 /**
  * @since 2015-02-26 (API 1)
