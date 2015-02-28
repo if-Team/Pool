@@ -341,6 +341,7 @@ Pool.Canvas = {};
  * @param {Number} blockId - 선을 이룰 블럭의 ID 값
  * @param {Number} blockDamage - 선을 이룰 블럭의 데미지 값
  * @see Bresenham's line algorithm
+ * @todo 반복문을 빠져나오지 못하는 오류 해결
  */
 Pool.Canvas.drawLine = function(begin, end, blockId, blockDamage){
 	function drawLine2D(x0, y0, x1, y1, height, blockId, blockDamage){
@@ -1045,6 +1046,7 @@ Pool.Player = {};
 
 /**
  * 특정 아이템의 갯수의 총합을 구합니다
+ *
  * @since 2015-02-27 (API 1)
  * @author affogatoman <colombia2@naver.com>
  * @param {Number} itemId
@@ -1067,6 +1069,19 @@ Pool.Player.getItemCount(itemId, itemDam){
 	}
 	
 	return result;
+};
+
+/**
+ * 플레이어를 이동합니다
+ *
+ * @since 2015-02-28 (API 1)
+ * @author ChalkPE <amato0617@gmail.com>
+ * @param {Number} player
+ */
+Pool.Player.moveTo = function(player, x, y, z){
+	var snowball = Level.spawnMob(x, y, z, Pool.Entity.EntityType.SNOWBALL);
+	Entity.rideAnimal(player, snowball);
+	Entity.remove(snowball)
 };
 
 
