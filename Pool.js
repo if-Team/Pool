@@ -984,6 +984,16 @@ Pool.Map.getEntitiesInRange = function(range, base){
     });
 };
 
+/**
+ * 엔티티가 플레이어인지 체크합니다.
+ *
+ * @since 2015-02-29 (API 1)
+ * @author Choseul <c체크hocoslime05@naver.com>
+ * @pram {Boolean}반환 엔티티가 플레이어인지 체크. 플레이어면 true, 아니면 반환
+ */
+Pool.Entity.isPlayer(ent){
+	return Player.isPlayer(ent);
+}
 
 
 
@@ -1098,7 +1108,7 @@ Pool.Player.getHealth = function(){
 /**
  * 플레이어가 들고 있던 아이템의 아이디를 구합니다.
  *
- * @since 2015-02-28 (API 1)
+ * @since 2015-02-29 (API 1)
  * @author Choseul <chocoslime05@naver.com>
  * @return {Number} 플레이어가 들고 있던 아이템의 아이디
  */
@@ -1109,7 +1119,7 @@ Pool.Player.getHoldingItem = function(){
 /**
  * 플레이어가 들고 있던 아이템의 갯수를 구합니다.
  *
- * @since 2015-02-28 (API 1)
+ * @since 2015-02-29 (API 1)
  * @author Choseul <chocoslime05@naver.com>
  * @return {Number} 플레이어가 들고 있던 아이템의 갯수
  */
@@ -1120,7 +1130,7 @@ Pool.Player.getHoldingItemCount = function(){
 /**
  * 플레이어가 들고 있던 아이템의 데미지를 구합니다.
  *
- * @since 2015-02-28 (API 1)
+ * @since 2015-02-29 (API 1)
  * @author Choseul <chocoslime05@naver.com>
  * @return {Number} 플레이어가 들고 있던 아이템의 데미지
  */
