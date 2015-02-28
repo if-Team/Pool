@@ -1089,10 +1089,43 @@ Pool.Player.moveTo = function(player, x, y, z){
  *
  * @since 2015-02-28 (API 1)
  * @author Choseul <chocoslime05@naver.com>
- * @return {Number} player_health
+ * @return {Number} 플레이어의 체력
  */
 Pool.Player.getHealth = function(){
 	return Entity.getHealth(getPlayerEnt());
+};
+
+/**
+ * 플레이어가 들고 있던 아이템의 아이디를 구합니다.
+ *
+ * @since 2015-02-28 (API 1)
+ * @author Choseul <chocoslime05@naver.com>
+ * @return {Number} 플레이어가 들고 있던 아이템의 아이디
+ */
+Pool.Player.getHoldingItem = function(){
+	return Player.getCarriedItem();
+};
+
+/**
+ * 플레이어가 들고 있던 아이템의 갯수를 구합니다.
+ *
+ * @since 2015-02-28 (API 1)
+ * @author Choseul <chocoslime05@naver.com>
+ * @return {Number} 플레이어가 들고 있던 아이템의 갯수
+ */
+Pool.Player.getHoldingItemCount = function(){
+	return Player.getCarriedItemCount();
+};
+
+/**
+ * 플레이어가 들고 있던 아이템의 데미지를 구합니다.
+ *
+ * @since 2015-02-28 (API 1)
+ * @author Choseul <chocoslime05@naver.com>
+ * @return {Number} 플레이어가 들고 있던 아이템의 데미지
+ */
+Pool.Player.getHoldingItemDamage = function(){
+	return Player.getCarriedItemDamage();
 };
 
 /**
