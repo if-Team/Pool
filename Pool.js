@@ -1117,7 +1117,7 @@ Pool.Player = {};
 Pool.Player.getItemCount(itemId, itemDam){
 	var result = 0;
 	
-	if(!isNaN(itemDam) || typeof itemDam !== "number"){
+	if(isNaN(itemDam) || typeof itemDam !== "number"){
 		itemDam = 0;
 	}
 	
@@ -1142,7 +1142,7 @@ Pool.Player.getItemCount(itemId, itemDam){
  */
 Pool.Player.removeItem(id, damage, count){
 	var cc = count;
-	if(!isNaN(damage) || typeof damage !== "number"){
+	if(isNaN(damage) || typeof damage !== "number"){
 		damage = 0;
 	}
 	
