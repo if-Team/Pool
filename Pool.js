@@ -1017,6 +1017,12 @@ Pool.Map.getEntitiesInRange = function(range, base){
 Pool.Map.setShapedTiles = function(pattern, direction, declaration, x, y, z){
 	if(typeof pattern !== "string" || typeof direction !== "string" || !Array.isArray(declaration))
 		return;
+		
+	if(x instanceof Pool.Vector3){
+		y = x.y;
+		z = x.z;
+		x = x.x;
+	}
 	
 	for(var cur = 0; cur < pattern.length; cur++){
 		if(pattern.charAt(cur) === "-" || declaration.indexOf(pattern.charAt(cur)) < 0)
