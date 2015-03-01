@@ -888,13 +888,13 @@ Pool.Entity.prototype.moveTo = function(x, y, z){
  };
  
 /**
- * 엔티티가 적대적인지 확인합니다.
+ * 엔티티가 적대적인지 확인합니다.
  *
- * @since 2015-02-27 (API 1)
- * @author IchiKaku <woni8708@naver.com>
+ * @since 2015-02-27 (API 1)
+ * @author IchiKaku <woni8708@naver.com>
  * @author affogatoman <colombia2@naver.com>
- * @param {Number|Pool.Entity} ent - 엔티티 아이디 또는 객체
- * @return {Boolean} - 엔티티의 적대 관계 여부
+ * @param {Number|Pool.Entity} ent - 엔티티 아이디 또는 객체
+ * @return {Boolean} - 엔티티의 적대 관계 여부
  */
 Pool.Entity.prototype.isHostileMob = function(ent){
 	if(ent instanceof Pool.Entity){
@@ -905,12 +905,12 @@ Pool.Entity.prototype.isHostileMob = function(ent){
 };
 
 /**
- * 엔티티가 생명체인지 확인합니다.
+ * 엔티티가 생명체인지 확인합니다.
  *
- * @since 2015-02-28 (API 1)
- * @author netherTNT <canghaun@naver.com>
- * @param {Number|Pool.Entity} ent - 엔티티 아이디 또는 객체
- * @return {Boolean} - 엔티티의 생명체 여부
+ * @since 2015-02-28 (API 1)
+ * @author netherTNT <canghaun@naver.com>
+ * @param {Number|Pool.Entity} ent - 엔티티 아이디 또는 객체
+ * @return {Boolean} - 엔티티의 생명체 여부
  */
 Pool.Entity.prototype.isCreature = function(ent){
 	if(ent instanceof Pool.Entity){
@@ -921,14 +921,29 @@ Pool.Entity.prototype.isCreature = function(ent){
 }
 
 /**
- * 엔티티의 아이디를 얻습니다
+ * 엔티티의 아이디를 얻습니다
  *
- * @since 2015-02-27 (API 1)
+ * @since 2015-02-27 (API 1)
  * @author affogatoman <colombia2@naver.com>
- * @return {Number} 엔티티 아이디
+ * @return {Number} 엔티티 아이디
  */
 Pool.Entity.prototype.getId = function(){
     return this.ent;
+};
+
+/**
+ * 엔티티가 플레이어인지 체크합니다.
+ *
+ * @since 2015-02-29 (API 1)
+ * @author Choseul <chocoslime05@naver.com>
+ * @param {Number|Pool.Entity} ent
+ * @return {Boolean} 엔티티의 플레이어 여부
+ */
+Pool.Entity.isPlayer(ent){
+	if(ent instanceof Pool.Entity)
+		ent = ent.ent;
+	
+	return Pool.Entity.isEntity(ent) && Player.isPlayer(ent);
 };
 
 
@@ -982,6 +997,52 @@ Pool.Map.getEntitiesInRange = function(range, base){
     return Entity.getAll().filter(function(ent){
         return Math.hypot(base.x - Entity.getX(ent), base.y - Entity.getY(ent), base.z - Entity.getZ(ent)) < range;
     });
+};
+
+/**
+ * 문자열의 모양에 따라 블럭을 설치합니다
+ *
+ * @since 2015-03-01 (API 1)
+ * @author affogatoman <colombia2@naver.com>
+ * @param {String} pattern
+ * @param {String} direction
+ * @param {Array} declaration
+ * @param {Number|Pool.Vector3} x
+ * @param {Number} y
+ * @param {Number} z
+ * @example
+ * Pool.Map.setShapedTiles("G-S", "x+", ["G", 2, 0, "S", 1, 0], 1, 1, 1);
+ * //x축 방향으로 (1, 1, 1)좌표 부터 잔디, 공기, 돌 순으로 블럭이 설치됩니다
+ */
+Pool.Map.setShapedTiles = function(pattern, direction, declaration, x, y, z){
+	if(typeof pattern !== "string" || typeof direction !== "string" || !Array.isArray(declaration))
+		return;
+		
+	if(x instanceof Pool.Vector3){
+		y = x.y;
+		z = x.z;
+		x = x.x;
+	}
+	
+	for(var cur = 0; cur < pattern.length; cur++){
+		if(pattern.charAt(cur) === "-" || declaration.indexOf(pattern.charAt(cur)) < 0)
+			continue;
+		
+		switch(direction){
+			case "x+":
+				setTile(x+cur, y, z, declaration[declaration.indexOf(pattern.charAt(cur))+1], declaration[declaration.indexOf(pattern.charAt(cur))+2]);
+				break;
+			case "x-":
+				setTile(x-cur, y, z, declaration[declaration.indexOf(pattern.charAt(cur))+1], declaration[declaration.indexOf(pattern.charAt(cur))+2]);
+				break;
+			case "z+":
+				setTile(x, y, z+cur, declaration[declaration.indexOf(pattern.charAt(cur))+1], declaration[declaration.indexOf(pattern.charAt(cur))+2]);
+				break;
+			case "z-":
+				setTile(x, y, z-cur, declaration[declaration.indexOf(pattern.charAt(cur))+1], declaration[declaration.indexOf(pattern.charAt(cur))+2]);
+				break;
+		}
+	}
 };
 
 
@@ -1056,9 +1117,7 @@ Pool.Player = {};
 Pool.Player.getItemCount(itemId, itemDam){
 	var result = 0;
 	
-	if(typeof itemDam === "number"){
-		itemDam = itemDam;
-	}else{
+	if(!isNaN(itemDam) || typeof itemDam !== "number"){
 		itemDam = 0;
 	}
 	
@@ -1069,6 +1128,33 @@ Pool.Player.getItemCount(itemId, itemDam){
 	}
 	
 	return result;
+};
+
+/**
+ * 특정 아이템을 갯수만큼 없애줘요!
+ *
+ * @since 2015-03-01 (API 1)
+ * @author 우유맛비누 <nno88551@naver.com>
+ * @param {Number} itemId
+ * @param {Number} itemDam
+ * @param {Number} count
+ * @return {boolean} 아이템 제거 성공여부
+ */
+Pool.Player.removeItem(itemId, itemDam, count){
+	var cc = 0;
+	if(!isNaN(itemDam) || typeof itemDam !== "number"){
+		itemDam = 0;
+	}
+	
+	for(var count = 9; count <= 44; count++){
+		if(Player.getInventorySlot(count) === itemId && Player.getInventorySlotData(count) === itemDam){
+			var cc = Player.getInventorySlotCount(count);
+			Player.addItemInventory(itemId, itemDam, -count);//순서가 이게 맞나;;
+			if((count - cc) <= 0) return true;
+		}
+	}
+	
+	return (count - cc) != count;
 };
 
 /**
@@ -1087,9 +1173,49 @@ Pool.Player.moveTo = function(player, x, y, z){
 	Entity.remove(snowball)
 };
 
+/**
+ * 플레이어의 체력을 구합니다.
+ *
+ * @since 2015-02-28 (API 1)
+ * @author Choseul <chocoslime05@naver.com>
+ * @return {Number} 플레이어의 체력
+ */
+Pool.Player.getHealth = function(){
+	return Entity.getHealth(getPlayerEnt());
+};
 
+/**
+ * 플레이어가 들고 있던 아이템의 아이디를 구합니다.
+ *
+ * @since 2015-02-29 (API 1)
+ * @author Choseul <chocoslime05@naver.com>
+ * @return {Number} 플레이어가 들고 있던 아이템의 아이디
+ */
+Pool.Player.getHoldingItem = function(){
+	return Player.getCarriedItem();
+};
 
+/**
+ * 플레이어가 들고 있던 아이템의 갯수를 구합니다.
+ *
+ * @since 2015-02-29 (API 1)
+ * @author Choseul <chocoslime05@naver.com>
+ * @return {Number} 플레이어가 들고 있던 아이템의 갯수
+ */
+Pool.Player.getHoldingItemCount = function(){
+	return Player.getCarriedItemCount();
+};
 
+/**
+ * 플레이어가 들고 있던 아이템의 데미지를 구합니다.
+ *
+ * @since 2015-02-29 (API 1)
+ * @author Choseul <chocoslime05@naver.com>
+ * @return {Number} 플레이어가 들고 있던 아이템의 데미지
+ */
+Pool.Player.getHoldingItemDamage = function(){
+	return Player.getCarriedItemDamage();
+};
 
 /**
  * @since 2015-02-26 (API 1)
