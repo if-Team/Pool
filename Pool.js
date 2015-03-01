@@ -1077,6 +1077,9 @@ Pool.Player.getItemCount(itemId, itemDam){
  * @since 2015-02-28 (API 1)
  * @author ChalkPE <amato0617@gmail.com>
  * @param {Number} player
+ * @param {Number} x
+ * @param {Number} y
+ * @param {Number} z
  */
 Pool.Player.moveTo = function(player, x, y, z){
 	var snowball = Level.spawnMob(x, y, z, Pool.Entity.EntityType.SNOWBALL);
