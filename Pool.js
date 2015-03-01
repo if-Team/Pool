@@ -1140,17 +1140,18 @@ Pool.Player.getItemCount(itemId, itemDam){
  * @param {Number} count
  * @return {boolean} 아이템 제거 성공여부
  */
-Pool.Player.removeItem(itemId, itemDam, count){
-	var cc = 0;
-	if(!isNaN(itemDam) || typeof itemDam !== "number"){
-		itemDam = 0;
+Pool.Player.removeItem(id, damage, count){
+	var cc = count;
+	if(!isNaN(damage) || typeof damage !== "number"){
+		damage = 0;
 	}
 	
 	for(var count = 9; count <= 44; count++){
-		if(Player.getInventorySlot(count) === itemId && Player.getInventorySlotData(count) === itemDam){
-			var cc = Player.getInventorySlotCount(count);
-			Player.addItemInventory(itemId, itemDam, -count);//순서가 이게 맞나;;
-			if((count - cc) <= 0) return true;
+		if(Player.getInventorySlot(count) === id && Player.getInventorySlotData(count) === damage){
+			var k = Player.getInventorySlotCount(count);
+			Player.addItemInventory(id, -cc, damage);
+			cc -= k;
+			if(cc <= 0) return true;
 		}
 	}
 	
