@@ -888,13 +888,13 @@ Pool.Entity.prototype.moveTo = function(x, y, z){
  };
  
 /**
- * 엔티티가 적대적인지 확인합니다.
+ * 엔티티가 적대적인지 확인합니다.
  *
- * @since 2015-02-27 (API 1)
- * @author IchiKaku <woni8708@naver.com>
+ * @since 2015-02-27 (API 1)
+ * @author IchiKaku <woni8708@naver.com>
  * @author affogatoman <colombia2@naver.com>
- * @param {Number|Pool.Entity} ent - 엔티티 아이디 또는 객체
- * @return {Boolean} - 엔티티의 적대 관계 여부
+ * @param {Number|Pool.Entity} ent - 엔티티 아이디 또는 객체
+ * @return {Boolean} - 엔티티의 적대 관계 여부
  */
 Pool.Entity.prototype.isHostileMob = function(ent){
 	if(ent instanceof Pool.Entity){
@@ -905,12 +905,12 @@ Pool.Entity.prototype.isHostileMob = function(ent){
 };
 
 /**
- * 엔티티가 생명체인지 확인합니다.
+ * 엔티티가 생명체인지 확인합니다.
  *
- * @since 2015-02-28 (API 1)
- * @author netherTNT <canghaun@naver.com>
- * @param {Number|Pool.Entity} ent - 엔티티 아이디 또는 객체
- * @return {Boolean} - 엔티티의 생명체 여부
+ * @since 2015-02-28 (API 1)
+ * @author netherTNT <canghaun@naver.com>
+ * @param {Number|Pool.Entity} ent - 엔티티 아이디 또는 객체
+ * @return {Boolean} - 엔티티의 생명체 여부
  */
 Pool.Entity.prototype.isCreature = function(ent){
 	if(ent instanceof Pool.Entity){
@@ -921,11 +921,11 @@ Pool.Entity.prototype.isCreature = function(ent){
 }
 
 /**
- * 엔티티의 아이디를 얻습니다
+ * 엔티티의 아이디를 얻습니다
  *
- * @since 2015-02-27 (API 1)
+ * @since 2015-02-27 (API 1)
  * @author affogatoman <colombia2@naver.com>
- * @return {Number} 엔티티 아이디
+ * @return {Number} 엔티티 아이디
  */
 Pool.Entity.prototype.getId = function(){
     return this.ent;
@@ -1117,9 +1117,7 @@ Pool.Player = {};
 Pool.Player.getItemCount(itemId, itemDam){
 	var result = 0;
 	
-	if(typeof itemDam === "number"){
-		itemDam = itemDam;
-	}else{
+	if(!isNaN(itemDam) || typeof itemDam !== "number"){
 		itemDam = 0;
 	}
 	
@@ -1130,6 +1128,33 @@ Pool.Player.getItemCount(itemId, itemDam){
 	}
 	
 	return result;
+};
+
+/**
+ * 특정 아이템을 갯수만큼 없애줘요!
+ *
+ * @since 2015-03-01 (API 1)
+ * @author 우유맛비누 <nno88551@naver.com>
+ * @param {Number} itemId
+ * @param {Number} itemDam
+ * @param {Number} count
+ * @return {boolean} 아이템 제거 성공여부
+ */
+Pool.Player.removeItem(itemId, itemDam, count){
+	var cc = 0;
+	if(!isNaN(itemDam) || typeof itemDam !== "number"){
+		itemDam = 0;
+	}
+	
+	for(var count = 9; count <= 44; count++){
+		if(Player.getInventorySlot(count) === itemId && Player.getInventorySlotData(count) === itemDam){
+			var cc = Player.getInventorySlotCount(count);
+			Player.addItemInventory(itemId, itemDam, -count);//순서가 이게 맞나;;
+			if((count - cc) <= 0) return true;
+		}
+	}
+	
+	return (count - cc) != count;
 };
 
 /**
