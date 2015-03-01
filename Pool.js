@@ -1218,6 +1218,38 @@ Pool.Player.getHoldingItemDamage = function(){
 	return Player.getCarriedItemDamage();
 };
 
+
+
+
+
+/**
+ * @since 2015-02-26 (API 1)
+ * @author 우유맛비누 <nno88551@naver.com>
+ * @class
+ */
+Pool.Item = function(id, damage, count){
+	this.id = (!isNaN(id) && typeof id === "number") ? id & 0xffff : 0;
+	this.damage = (!isNaN(damage) && typeof damage === "number") ? damage & 0xffff : 0;
+	this.count = parseInt(count);
+};
+Pool.Item.prototype = {};
+Pool.Item.prototype.getId = function(){
+	return this.id;
+};
+Pool.Item.prototype.getDamage = function(){
+	return this.id;
+};
+Pool.Item.prototype.setDamage = function(damage){
+	this.damage = (!isNaN(damage) && typeof damage === "number") ? damage & 0xffff : 0;
+};
+Pool.Item.prototype.getCount = function(){
+	return this.id;
+};
+Pool.Item.prototype.setCount = function(count){
+	this.count = parseInt(count);
+};
+
+
 /**
  * @since 2015-02-26 (API 1)
  * @author ChalkPE <amato0617@gmail.com>
