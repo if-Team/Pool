@@ -931,6 +931,21 @@ Pool.Entity.prototype.getId = function(){
     return this.ent;
 };
 
+/**
+ * 엔티티가 플레이어인지 체크합니다.
+ *
+ * @since 2015-02-29 (API 1)
+ * @author Choseul <chocoslime05@naver.com>
+ * @param {Number|Pool.Entity} ent
+ * @return {Boolean} 엔티티의 플레이어 여부
+ */
+Pool.Entity.isPlayer(ent){
+	if(ent instanceof Pool.Entity)
+		ent = ent.ent;
+	
+	return Pool.Entity.isEntity(ent) && Player.isPlayer(ent);
+};
+
 
 
 
@@ -985,15 +1000,45 @@ Pool.Map.getEntitiesInRange = function(range, base){
 };
 
 /**
- * 엔티티가 플레이어인지 체크합니다.
+ * 문자열의 모양에 따라 블럭을 설치합니다
  *
- * @since 2015-02-29 (API 1)
- * @author Choseul <c체크hocoslime05@naver.com>
- * @pram {Boolean}반환 엔티티가 플레이어인지 체크. 플레이어면 true, 아니면 반환
+ * @since 2015-03-01 (API 1)
+ * @author affogatoman <colombia2@naver.com>
+ * @param {String} pattern
+ * @param {String} direction
+ * @param {Array} declaration
+ * @param {Number|Pool.Vector3} x
+ * @param {Number} y
+ * @param {Number} z
+ * @example
+ * Pool.Map.setShapedTiles("G-S", "x+", ["G", 2, 0, "S", 1, 0], 1, 1, 1);
+ * //x축 방향으로 (1, 1, 1)좌표 부터 잔디, 공기, 돌 순으로 블럭이 설치됩니다
  */
-Pool.Entity.isPlayer(ent){
-	return Player.isPlayer(ent);
-}
+Pool.Map.setShapedTiles = function(pattern, direction, declaration, x, y, z){
+	if(typeof pattern !== "string" || typeof direction !== "string" || !Array.isArray(declaration))
+		return;
+	
+	for(var cur = 0; cur < pattern.length; cur++){
+		if(pattern.charAt(cur) === "-" || declaration.indexOf(pattern.charAt(cur)) < 0)
+			continue;
+		
+		switch(direction){
+			case "x+":
+				setTile(x+cur, y, z, declaration[declaration.indexOf(pattern.charAt(cur))+1], declaration[declaration.indexOf(pattern.charAt(cur))+2]);
+				break;
+			case "x-":
+				setTile(x-cur, y, z, declaration[declaration.indexOf(pattern.charAt(cur))+1], declaration[declaration.indexOf(pattern.charAt(cur))+2]);
+				break;
+			case "z+":
+				setTile(x, y, z+cur, declaration[declaration.indexOf(pattern.charAt(cur))+1], declaration[declaration.indexOf(pattern.charAt(cur))+2]);
+				break;
+			case "z-":
+				setTile(x, y, z-cur, declaration[declaration.indexOf(pattern.charAt(cur))+1], declaration[declaration.indexOf(pattern.charAt(cur))+2]);
+				break;
+		}
+	}
+};
+
 
 
 
