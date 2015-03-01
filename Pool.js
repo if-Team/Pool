@@ -1223,7 +1223,7 @@ Pool.Player.getHoldingItemDamage = function(){
 
 
 /**
- * @since 2015-02-26 (API 1)
+ * @since 2015-03-01 (API 1)
  * @author 우유맛비누 <nno88551@naver.com>
  * @class
  */
@@ -1232,19 +1232,64 @@ Pool.Item = function(id, damage, count){
 	this.damage = (!isNaN(damage) && typeof damage === "number") ? damage & 0xffff : 0;
 	this.count = parseInt(count);
 };
+
+/**
+ * @since 2015-03-01 (API 1)
+ * @author 우유맛비누 <nno88551@naver.com>
+ */
 Pool.Item.prototype = {};
+
+/**
+ * 현재 아이템의 아이디를 알려줍니다
+ *
+ * @since 2015-03-01 (API 1)
+ * @author 우유맛비누 <nno88551@naver.com>
+ * @return {Number} 아이템 아이디
+ */
 Pool.Item.prototype.getId = function(){
 	return this.id;
 };
+
+/**
+ * 현재 아이템의 데미지값을 알려줍니다
+ *
+ * @since 2015-03-01 (API 1)
+ * @author 우유맛비누 <nno88551@naver.com>
+ * @return {Number} 아이템 데미지
+ */
 Pool.Item.prototype.getDamage = function(){
-	return this.id;
+	return this.damage;
 };
+
+/**
+ * 아이템의 데미지를 설정합니다
+ *
+ * @since 2015-03-01 (API 1)
+ * @author 우유맛비누 <nno88551@naver.com>
+ * @param {Number} damage
+ */
 Pool.Item.prototype.setDamage = function(damage){
 	this.damage = (!isNaN(damage) && typeof damage === "number") ? damage & 0xffff : 0;
 };
+
+/**
+ * 현재 아이템의 갯수를 리턴합니다!
+ *
+ * @since 2015-03-01 (API 1)
+ * @author 우유맛비누 <nno88551@naver.com>
+ * @return {Number} 갯수
+ */
 Pool.Item.prototype.getCount = function(){
-	return this.id;
+	return this.count;
 };
+
+/**
+ * 아이템의 갯수를 정합니다
+ *
+ * @since 2015-03-01 (API 1)
+ * @author 우유맛비누 <nno88551@naver.com>
+ * @param {Number} count
+ */
 Pool.Item.prototype.setCount = function(count){
 	this.count = parseInt(count);
 };
