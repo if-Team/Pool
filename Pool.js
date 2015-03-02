@@ -52,7 +52,7 @@ Pool.VERSION = "0.1";
 
 
 
-/* =========================== README ===========================
+/* --------------------------- README ---------------------------
  * 코드를 작성하기 전에 아래 내용을 꼭 숙지하시기 바랍니다.
  * 
  * 1. 작성한 코드에는 반드시 JSDoc 형식의 주석을 달아야 합니다.
@@ -80,7 +80,7 @@ Pool.VERSION = "0.1";
  * 7. catch 블럭의 오류 객체의 이름은 e이며, 오류 메세지는 영어로 작성해 주세요.
  * 
  * 8. for each 문이나 with 문은 사용하지 마시고, ABC.delete()는 ABC["delete"]()로 바꿔 주세요.
- * ==============================================================
+ * --------------------------------------------------------------
  */
 
 
@@ -1242,6 +1242,20 @@ Pool.Player.getHoldingItemCount = function(){
  */
 Pool.Player.getHoldingItemDamage = function(){
 	return Player.getCarriedItemDamage();
+};
+
+/**
+ * 모든 플레이어의 배열을 구합니다
+ * 
+ * @since 2015-03-02 (API 1)
+ * @author netherTNT <canghaun@naver.com>
+ * @returns {Array} 모든 플레이어
+ */
+
+Pool.Player.getAll = function(){
+	return Entity.getAll().filter(function(ent){
+		return Player.isPlayer(ent);
+	});
 };
 
 
