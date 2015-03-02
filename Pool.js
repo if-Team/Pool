@@ -17,22 +17,74 @@
 "use strict";
 
 /**
- * @since 2015-02-24
+ * @since 2015-02-24 (API 1)
  * @author ChalkPE <amato0617@gmail.com>
  * @file Common utilized library for ModPE
+ * @copyright 2015 if(Team);
+ * @license Apache-2.0
  * @namespace
  */
 var Pool = {};
 
 /**
- * @since 2015-02-24
+ * @since 2015-02-24 (API 1)
  * @author ChalkPE <amato0617@gmail.com>
  * @constant
  */
 Pool.VERSION = "0.1";
 
-//Pool.SubPackage.someMethod
-//Pool.Constructor
+
+
+
+
+/**
+ * 엔티티 아이디
+ * @typedef {Number} EntityId
+ */
+
+/**
+ * 엔티티 타입 아이디
+ * @typedef {Number} EntityTypeId
+ * @example 좀비의 엔티티 타입 아이디는 32
+ */
+
+
+
+
+
+/* =========================== README ===========================
+ * 코드를 작성하기 전에 아래 내용을 꼭 숙지하시기 바랍니다.
+ * 
+ * 1. 작성한 코드에는 반드시 JSDoc 형식의 주석을 달아야 합니다.
+ *    - 필수 태그는 @since, @author입니다.
+ *    - 설명은 한국어, 존댓말로 작성해 주시고, XX합니다로 문장을 끝내 주세요.
+ *    - 메서드의 설명은 아래 규칙을 따라 주세요.
+ *      * getXXX : XXX를 구합니다
+ *      * setXXX : XXX를 설정합니다
+ *      * isXXX : XXX인지 확인합니다
+ *    
+ * 2. 다른 사람이 작성한 코드를 편집하기 전 작성자와 상의해 주세요.
+ *    - 코드를 많이 수정했다면 @author 태그에 자신을 추가하세요.
+ *    
+ * 3. 새로운 객체를 추가할 때에는 적절한 위치에 작성해 주세요.
+ *    - 생성자 : Pool.Constructor
+ *    - 메서드 : Pool.SubPackage.someMethod
+ * 
+ * 4. 클래스나 네임스페이스의 경계에는 다섯 줄의 간격을 유지해 주세요.
+ *    - 같은 클래스나 네임스페이스의 멤버들의 경계에는 한 줄의 간격을 유지해 주세요.
+ * 
+ * 5. 클래스나 네임스페이스에는 PascalCase를 사용해 주시고, 메서드나 프로퍼티에는 camelCase를 사용해 주세요.
+ * 
+ * 6. K&R 코드 스타일을 사용해 주세요.
+ * 
+ * 7. catch 블럭의 오류 객체의 이름은 e이며, 오류 메세지는 영어로 작성해 주세요.
+ * 
+ * 8. for each 문이나 with 문은 사용하지 마시고, ABC.delete()는 ABC["delete"]()로 바꿔 주세요.
+ * ==============================================================
+ */
+
+
+
 
 
 /**
@@ -730,6 +782,7 @@ Pool.IO.unZip = function(file, target) {
  * @author netherTNT <canghaun@naver.com>
  * @author ChalkPE <amato0617@gmail.com>
  * @class
+ * @param {EntityId} ent
  */
 Pool.Entity = function(ent){
 	if(ent instanceof Pool.Entity){
@@ -795,7 +848,7 @@ Pool.Entity.EntityTypeName = {
  *
  * @since 2015-02-27 (API 1)
  * @author Ichikaku <woni8708@naver.ccom
- * @param {Number} ent - 이름을 구할 엔티티의 엔티티 아이디
+ * @param {EntityId} ent
  * @return {String} 엔티티의 이름
  */
 
@@ -819,7 +872,7 @@ Pool.Entity.getPlayer = function(){
  * 
  * @since 2015-02-26 (API 1)
  * @author affogatoman <colombia2@naver.com>
- * @param {Number} ent - 엔티티 아이디
+ * @param {EntityId} ent
  * @returns {Boolean} - 엔티티의 존재 여부
  */
 Pool.Entity.isEntity = function(ent){
@@ -834,13 +887,30 @@ Pool.Entity.isEntity = function(ent){
 	return Entity.getAll().indexOf(entId) >= 0;
 };
 
+
+/**
+ * 엔티티가 플레이어인지 확인합니다
+ *
+ * @since 2015-02-29 (API 1)
+ * @author Choseul <chocoslime05@naver.com>
+ * @param {EntityId|Pool.Entity} ent
+ * @return {Boolean} 엔티티의 플레이어 여부
+ */
+Pool.Entity.isPlayer = function(ent){
+	if(ent instanceof Pool.Entity){
+		ent = ent.ent;
+	}
+	
+	return Pool.Entity.isEntity(ent) && Player.isPlayer(ent);
+};
+
  /**
  * 특정 엔티티를 모두 제거합니다
  * 
  * @since 2015-02-27 (API 1)
  * @author Choseul <chocoslime05@naver.com>
  * @author ChalkPE <amato0617@gmail.com>
- * @param {Number} [id] - 제거할 엔티티 타입, 생략할 경우 플레이어가 아닌 모든 엔티티
+ * @param {EntityTypeId} [id] - 제거할 엔티티 타입, 생략할 경우 플레이어가 아닌 모든 엔티티
  */
 Pool.Entity.removeSpecificEntity = function(id){
 	var player = Player.getEntity();
@@ -858,6 +928,50 @@ Pool.Entity.removeSpecificEntity = function(id){
  * @author ChalkPE <amato0617@gmail.com>
  */
 Pool.Entity.prototype = {};
+
+/**
+ * 엔티티의 아이디를 얻습니다
+ *
+ * @since 2015-02-27 (API 1)
+ * @author affogatoman <colombia2@naver.com>
+ * @return {EntityId}
+ */
+Pool.Entity.prototype.getId = function(){
+    return this.ent;
+};
+
+/**
+ * 엔티티가 생명체인지 확인합니다
+ *
+ * @since 2015-02-28 (API 1)
+ * @author netherTNT <canghaun@naver.com>
+ * @param {EntityId|Pool.Entity} ent - 엔티티 아이디 또는 객체
+ * @return {Boolean} - 엔티티의 생명체 여부
+ */
+Pool.Entity.prototype.isCreature = function(ent){
+	if(ent instanceof Pool.Entity){
+		ent = ent.ent;
+	}
+	
+	return Pool.Entity.isEntity(ent) && Entity.getEntityTypeId(ent) < 64;
+};
+
+/**
+ * 엔티티가 적대적인지 확인합니다
+ *
+ * @since 2015-02-27 (API 1)
+ * @author IchiKaku <woni8708@naver.com>
+ * @author affogatoman <colombia2@naver.com>
+ * @param {EntityId|Pool.Entity} ent - 엔티티 아이디 또는 객체
+ * @return {Boolean} - 엔티티의 적대 관계 여부
+ */
+Pool.Entity.prototype.isHostileMob = function(ent){
+	if(ent instanceof Pool.Entity){
+ 		ent = ent.ent;
+ 	}
+ 	
+ 	return 32 <= Entity.getEntityTypeId(ent) && Entity.getEntityTypeId(ent) < 64;
+};
 
 /**
  * 엔티티의 현재 위치의 벡터를 얻습니다
@@ -898,65 +1012,6 @@ Pool.Entity.prototype.moveTo = function(x, y, z){
 		return null;
 	return android.graphics.BitmapFactory.decodeStream(ModPE.openInputStreamFromTexturePack("images/" + Entity.getMobSkin(this.ent)));
  };
- 
-/**
- * 엔티티가 적대적인지 확인합니다.
- *
- * @since 2015-02-27 (API 1)
- * @author IchiKaku <woni8708@naver.com>
- * @author affogatoman <colombia2@naver.com>
- * @param {Number|Pool.Entity} ent - 엔티티 아이디 또는 객체
- * @return {Boolean} - 엔티티의 적대 관계 여부
- */
-Pool.Entity.prototype.isHostileMob = function(ent){
-	if(ent instanceof Pool.Entity){
- 		ent = ent.ent;
- 	}
- 	
- 	return 32 <= Entity.getEntityTypeId(ent) && Entity.getEntityTypeId(ent) < 64;
-};
-
-/**
- * 엔티티가 생명체인지 확인합니다.
- *
- * @since 2015-02-28 (API 1)
- * @author netherTNT <canghaun@naver.com>
- * @param {Number|Pool.Entity} ent - 엔티티 아이디 또는 객체
- * @return {Boolean} - 엔티티의 생명체 여부
- */
-Pool.Entity.prototype.isCreature = function(ent){
-	if(ent instanceof Pool.Entity){
-		ent = ent.ent;
-	}
-	
-	return Pool.Entity.isEntity(ent) && Entity.getEntityTypeId(ent) < 64;
-}
-
-/**
- * 엔티티의 아이디를 얻습니다
- *
- * @since 2015-02-27 (API 1)
- * @author affogatoman <colombia2@naver.com>
- * @return {Number} 엔티티 아이디
- */
-Pool.Entity.prototype.getId = function(){
-    return this.ent;
-};
-
-/**
- * 엔티티가 플레이어인지 체크합니다.
- *
- * @since 2015-02-29 (API 1)
- * @author Choseul <chocoslime05@naver.com>
- * @param {Number|Pool.Entity} ent
- * @return {Boolean} 엔티티의 플레이어 여부
- */
-Pool.Entity.isPlayer(ent){
-	if(ent instanceof Pool.Entity)
-		ent = ent.ent;
-	
-	return Pool.Entity.isEntity(ent) && Player.isPlayer(ent);
-};
 
 
 
@@ -994,7 +1049,7 @@ Pool.Map.getHighestVector = function(vec2){
  * @author netherTNT <canghaun@naver.com>
  * @author ChalkPE <amato0617@gmail.com>
  * @param {Number} range
- * @param {Number|Pool.Entity|Pool.Vector3} [base = Pool.Entity.getPlayer().getVector()] - 범위의 중심이 되는 엔티티의 엔티티 아이디 또는 좌표
+ * @param {EntityId|Pool.Entity|Pool.Vector3} [base = Pool.Entity.getPlayer().getVector()] - 범위의 중심이 되는 엔티티의 엔티티 아이디 또는 좌표
  * @returns {Array} 범위 내의 모든 엔티티
  */
 Pool.Map.getEntitiesInRange = function(range, base){
@@ -1027,8 +1082,9 @@ Pool.Map.getEntitiesInRange = function(range, base){
  * //x축 방향으로 (1, 1, 1)좌표 부터 잔디, 공기, 돌 순으로 블럭이 설치됩니다
  */
 Pool.Map.setShapedTiles = function(pattern, direction, declaration, x, y, z){
-	if(typeof pattern !== "string" || typeof direction !== "string" || !Array.isArray(declaration))
+	if(typeof pattern !== "string" || typeof direction !== "string" || !Array.isArray(declaration)){
 		return;
+	}
 		
 	if(x instanceof Pool.Vector3){
 		y = x.y;
@@ -1037,24 +1093,231 @@ Pool.Map.setShapedTiles = function(pattern, direction, declaration, x, y, z){
 	}
 	
 	for(var cur = 0; cur < pattern.length; cur++){
-		if(pattern.charAt(cur) === "-" || declaration.indexOf(pattern.charAt(cur)) < 0)
+		if(pattern.charAt(cur) === "-" || declaration.indexOf(pattern.charAt(cur)) < 0){
 			continue;
+		}
 		
 		switch(direction){
 			case "x+":
-				setTile(x+cur, y, z, declaration[declaration.indexOf(pattern.charAt(cur))+1], declaration[declaration.indexOf(pattern.charAt(cur))+2]);
+				Level.setTile(x+cur, y, z, declaration[declaration.indexOf(pattern.charAt(cur))+1], declaration[declaration.indexOf(pattern.charAt(cur))+2]);
 				break;
 			case "x-":
-				setTile(x-cur, y, z, declaration[declaration.indexOf(pattern.charAt(cur))+1], declaration[declaration.indexOf(pattern.charAt(cur))+2]);
+				Level.setTile(x-cur, y, z, declaration[declaration.indexOf(pattern.charAt(cur))+1], declaration[declaration.indexOf(pattern.charAt(cur))+2]);
 				break;
 			case "z+":
-				setTile(x, y, z+cur, declaration[declaration.indexOf(pattern.charAt(cur))+1], declaration[declaration.indexOf(pattern.charAt(cur))+2]);
+				Level.setTile(x, y, z+cur, declaration[declaration.indexOf(pattern.charAt(cur))+1], declaration[declaration.indexOf(pattern.charAt(cur))+2]);
 				break;
 			case "z-":
-				setTile(x, y, z-cur, declaration[declaration.indexOf(pattern.charAt(cur))+1], declaration[declaration.indexOf(pattern.charAt(cur))+2]);
+				Level.setTile(x, y, z-cur, declaration[declaration.indexOf(pattern.charAt(cur))+1], declaration[declaration.indexOf(pattern.charAt(cur))+2]);
 				break;
 		}
 	}
+};
+
+
+
+
+
+/**
+ * @since 2015-02-27 (API 1)
+ * @author affogatoman <colombia2@naver.com>
+ * @namespace
+ */
+Pool.Player = {};
+
+/**
+ * 플레이어의 인벤토리에서 특정 아이템의 총 개수을 구합니다
+ *
+ * @since 2015-02-27 (API 1)
+ * @author affogatoman <colombia2@naver.com>
+ * @param {Number} itemId
+ * @param {Number} itemDam
+ * @return {Number} 아이템의 갯수
+ */
+Pool.Player.getItemCount = function(itemId, itemDam){
+	var result = 0;
+	
+	if(isNaN(itemDam) || typeof itemDam !== "number"){
+		itemDam = 0;
+	}
+	
+	for(var count = 9; count <= 44; count++){
+		if(Player.getInventorySlot(count) === itemId && Player.getInventorySlotData(count) === itemDam){
+			result += Player.getInventorySlotCount(count);
+		}
+	}
+	
+	return result;
+};
+
+/**
+ * 플레이어의 인벤토리에서 특정 아이템을 주어진 만큼 제거합니다
+ *
+ * @since 2015-03-01 (API 1)
+ * @author 우유맛비누 <nno88551@naver.com>
+ * @param {Number} itemId
+ * @param {Number} itemDam
+ * @param {Number} count
+ * @return {Boolean} 아이템 제거 성공 여부
+ */
+Pool.Player.removeItem = function(id, damage, count){
+	var cc = count;
+	if(typeof damage !== "number" || isNaN(damage)){
+		damage = 0;
+	}
+	
+	for(var count = 9; count <= 44; count++){
+		if(Player.getInventorySlot(count) === id && Player.getInventorySlotData(count) === damage){
+			var k = Player.getInventorySlotCount(count);
+			Player.addItemInventory(id, -cc, damage);
+			cc -= k;
+			if(cc <= 0) return true;
+		}
+	}
+	
+	return (count - cc) != count;
+};
+
+/**
+ * 플레이어를 간접적인 방법을 사용해 특정 좌표로 이동합니다
+ *
+ * @since 2015-02-28 (API 1)
+ * @author ChalkPE <amato0617@gmail.com>
+ * @param {EntityId} player
+ * @param {Number|Pool.Vector3} x
+ * @param {Number} y
+ * @param {Number} z
+ */
+Pool.Player.moveTo = function(player, x, y, z){
+	if(x instanceof Pool.Vector3){
+		y = x.y;
+		z = x.z;
+		x = x.x;
+	}
+	
+	var snowball = Level.spawnMob(x, y, z, Pool.Entity.TYPE_SNOWBALL);
+	Entity.rideAnimal(player, snowball);
+	Entity.remove(snowball)
+};
+
+/**
+ * 플레이어의 체력을 구합니다.
+ *
+ * @since 2015-02-28 (API 1)
+ * @author Choseul <chocoslime05@naver.com>
+ * @return {Number} 플레이어의 체력
+ */
+Pool.Player.getHealth = function(){
+	return Entity.getHealth(Player.getEntity());
+};
+
+/**
+ * 플레이어가 들고 있던 아이템의 아이디를 구합니다.
+ *
+ * @since 2015-02-29 (API 1)
+ * @author Choseul <chocoslime05@naver.com>
+ * @return {Number} 플레이어가 들고 있던 아이템의 아이디
+ */
+Pool.Player.getHoldingItem = function(){
+	return Player.getCarriedItem();
+};
+
+/**
+ * 플레이어가 들고 있던 아이템의 갯수를 구합니다.
+ *
+ * @since 2015-02-29 (API 1)
+ * @author Choseul <chocoslime05@naver.com>
+ * @return {Number} 플레이어가 들고 있던 아이템의 갯수
+ */
+Pool.Player.getHoldingItemCount = function(){
+	return Player.getCarriedItemCount();
+};
+
+/**
+ * 플레이어가 들고 있던 아이템의 데미지를 구합니다.
+ *
+ * @since 2015-02-29 (API 1)
+ * @author Choseul <chocoslime05@naver.com>
+ * @return {Number} 플레이어가 들고 있던 아이템의 데미지
+ */
+Pool.Player.getHoldingItemDamage = function(){
+	return Player.getCarriedItemDamage();
+};
+
+
+
+
+
+/**
+ * @since 2015-03-01 (API 1)
+ * @author 우유맛비누 <nno88551@naver.com>
+ * @class
+ */
+Pool.Item = function(id, damage, count){
+	this.id = (typeof id === "number" && !isNaN(id)) ? id & 0xffff : 0;
+	this.damage = (typeof damage === "number" && !isNaN(damage)) ? damage & 0xffff : 0;
+	this.count = parseInt(count);
+};
+
+/**
+ * @since 2015-03-01 (API 1)
+ * @author 우유맛비누 <nno88551@naver.com>
+ */
+Pool.Item.prototype = {};
+
+/**
+ * 아이템의 아이디를 구합니다
+ *
+ * @since 2015-03-01 (API 1)
+ * @author 우유맛비누 <nno88551@naver.com>
+ * @return {Number} 아이템 아이디
+ */
+Pool.Item.prototype.getId = function(){
+	return this.id;
+};
+
+/**
+ * 아이템의 데미지 값을 구합니다
+ *
+ * @since 2015-03-01 (API 1)
+ * @author 우유맛비누 <nno88551@naver.com>
+ * @return {Number} 아이템 데미지
+ */
+Pool.Item.prototype.getDamage = function(){
+	return this.damage;
+};
+
+/**
+ * 아이템의 데미지를 설정합니다
+ *
+ * @since 2015-03-01 (API 1)
+ * @author 우유맛비누 <nno88551@naver.com>
+ * @param {Number} damage
+ */
+Pool.Item.prototype.setDamage = function(damage){
+	this.damage = (typeof damage === "number" && !isNaN(damage)) ? damage & 0xffff : 0;
+};
+
+/**
+ * 아이템의 개수를 구합니다
+ *
+ * @since 2015-03-01 (API 1)
+ * @author 우유맛비누 <nno88551@naver.com>
+ * @return {Number} 개수
+ */
+Pool.Item.prototype.getCount = function(){
+	return this.count;
+};
+
+/**
+ * 아이템의 개수를 설정합니다
+ *
+ * @since 2015-03-01 (API 1)
+ * @author 우유맛비누 <nno88551@naver.com>
+ * @param {Number} count
+ */
+Pool.Item.prototype.setCount = function(count){
+	this.count = parseInt(count);
 };
 
 
@@ -1111,203 +1374,6 @@ Pool.Utils.callScriptMethod = function(){
 
 
 /**
- * @since 2015-02-27 (API 1)
- * @author affogatoman <colombia2@naver.com>
- * @namespace
- */
-Pool.Player = {};
-
-/**
- * 특정 아이템의 갯수의 총합을 구합니다
- *
- * @since 2015-02-27 (API 1)
- * @author affogatoman <colombia2@naver.com>
- * @param {Number} itemId
- * @param {Number} itemDam
- * @return {Number} 아이템의 갯수
- */
-Pool.Player.getItemCount(itemId, itemDam){
-	var result = 0;
-	
-	if(isNaN(itemDam) || typeof itemDam !== "number"){
-		itemDam = 0;
-	}
-	
-	for(var count = 9; count <= 44; count++){
-		if(Player.getInventorySlot(count) === itemId && Player.getInventorySlotData(count) === itemDam){
-			result += Player.getInventorySlotCount(count);
-		}
-	}
-	
-	return result;
-};
-
-/**
- * 특정 아이템을 갯수만큼 없애줘요!
- *
- * @since 2015-03-01 (API 1)
- * @author 우유맛비누 <nno88551@naver.com>
- * @param {Number} itemId
- * @param {Number} itemDam
- * @param {Number} count
- * @return {boolean} 아이템 제거 성공여부
- */
-Pool.Player.removeItem(id, damage, count){
-	var cc = count;
-	if(isNaN(damage) || typeof damage !== "number"){
-		damage = 0;
-	}
-	
-	for(var count = 9; count <= 44; count++){
-		if(Player.getInventorySlot(count) === id && Player.getInventorySlotData(count) === damage){
-			var k = Player.getInventorySlotCount(count);
-			Player.addItemInventory(id, -cc, damage);
-			cc -= k;
-			if(cc <= 0) return true;
-		}
-	}
-	
-	return (count - cc) != count;
-};
-
-/**
- * 플레이어를 이동합니다
- *
- * @since 2015-02-28 (API 1)
- * @author ChalkPE <amato0617@gmail.com>
- * @param {Number} player
- * @param {Number} x
- * @param {Number} y
- * @param {Number} z
- */
-Pool.Player.moveTo = function(player, x, y, z){
-	var snowball = Level.spawnMob(x, y, z, Pool.Entity.TYPE_SNOWBALL);
-	Entity.rideAnimal(player, snowball);
-	Entity.remove(snowball)
-};
-
-/**
- * 플레이어의 체력을 구합니다.
- *
- * @since 2015-02-28 (API 1)
- * @author Choseul <chocoslime05@naver.com>
- * @return {Number} 플레이어의 체력
- */
-Pool.Player.getHealth = function(){
-	return Entity.getHealth(getPlayerEnt());
-};
-
-/**
- * 플레이어가 들고 있던 아이템의 아이디를 구합니다.
- *
- * @since 2015-02-29 (API 1)
- * @author Choseul <chocoslime05@naver.com>
- * @return {Number} 플레이어가 들고 있던 아이템의 아이디
- */
-Pool.Player.getHoldingItem = function(){
-	return Player.getCarriedItem();
-};
-
-/**
- * 플레이어가 들고 있던 아이템의 갯수를 구합니다.
- *
- * @since 2015-02-29 (API 1)
- * @author Choseul <chocoslime05@naver.com>
- * @return {Number} 플레이어가 들고 있던 아이템의 갯수
- */
-Pool.Player.getHoldingItemCount = function(){
-	return Player.getCarriedItemCount();
-};
-
-/**
- * 플레이어가 들고 있던 아이템의 데미지를 구합니다.
- *
- * @since 2015-02-29 (API 1)
- * @author Choseul <chocoslime05@naver.com>
- * @return {Number} 플레이어가 들고 있던 아이템의 데미지
- */
-Pool.Player.getHoldingItemDamage = function(){
-	return Player.getCarriedItemDamage();
-};
-
-
-
-
-
-/**
- * @since 2015-03-01 (API 1)
- * @author 우유맛비누 <nno88551@naver.com>
- * @class
- */
-Pool.Item = function(id, damage, count){
-	this.id = (!isNaN(id) && typeof id === "number") ? id & 0xffff : 0;
-	this.damage = (!isNaN(damage) && typeof damage === "number") ? damage & 0xffff : 0;
-	this.count = parseInt(count);
-};
-
-/**
- * @since 2015-03-01 (API 1)
- * @author 우유맛비누 <nno88551@naver.com>
- */
-Pool.Item.prototype = {};
-
-/**
- * 현재 아이템의 아이디를 알려줍니다
- *
- * @since 2015-03-01 (API 1)
- * @author 우유맛비누 <nno88551@naver.com>
- * @return {Number} 아이템 아이디
- */
-Pool.Item.prototype.getId = function(){
-	return this.id;
-};
-
-/**
- * 현재 아이템의 데미지값을 알려줍니다
- *
- * @since 2015-03-01 (API 1)
- * @author 우유맛비누 <nno88551@naver.com>
- * @return {Number} 아이템 데미지
- */
-Pool.Item.prototype.getDamage = function(){
-	return this.damage;
-};
-
-/**
- * 아이템의 데미지를 설정합니다
- *
- * @since 2015-03-01 (API 1)
- * @author 우유맛비누 <nno88551@naver.com>
- * @param {Number} damage
- */
-Pool.Item.prototype.setDamage = function(damage){
-	this.damage = (!isNaN(damage) && typeof damage === "number") ? damage & 0xffff : 0;
-};
-
-/**
- * 현재 아이템의 갯수를 리턴합니다!
- *
- * @since 2015-03-01 (API 1)
- * @author 우유맛비누 <nno88551@naver.com>
- * @return {Number} 갯수
- */
-Pool.Item.prototype.getCount = function(){
-	return this.count;
-};
-
-/**
- * 아이템의 갯수를 정합니다
- *
- * @since 2015-03-01 (API 1)
- * @author 우유맛비누 <nno88551@naver.com>
- * @param {Number} count
- */
-Pool.Item.prototype.setCount = function(count){
-	this.count = parseInt(count);
-};
-
-
-/**
  * @since 2015-02-26 (API 1)
  * @author ChalkPE <amato0617@gmail.com>
  * @memberof Math
@@ -1329,9 +1395,9 @@ Math.hypot = Math.hypot || function(){
 
 
 /**
- * 맵에 입장할 때 라이브러리를 등록합니다
+ * 맵에 입장할 때마다 라이브러리를 등록합니다
  * 
- * @since 2015-02-24
+ * @since 2015-02-24 (API 1)
  * @author ChalkPE <amato0617@gmail.com>
  */
 function selectLevelHook(){
