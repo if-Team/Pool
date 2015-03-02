@@ -45,7 +45,7 @@ Pool.VERSION = "0.1";
 /**
  * 엔티티 타입 아이디
  * @typedef {Number} EntityTypeId
- * @example 좀비의 엔티티 타입 아이디는 32
+ * @example Cow: 11, Zombie: 32
  */
 
 
@@ -80,6 +80,9 @@ Pool.VERSION = "0.1";
  * 7. catch 블럭의 오류 객체의 이름은 e이며, 오류 메세지는 영어로 작성해 주세요.
  * 
  * 8. for each 문이나 with 문은 사용하지 마시고, ABC.delete()는 ABC["delete"]()로 바꿔 주세요.
+ * 
+ * 9. ModPE 메서드의 경우 OOP 메서드를 사용해 주세요.
+ *    - bl_spawnMob -> Level.spawnMob, setTile -> Level.setTile, getPlayerEnt -> Player.getEntity 등
  * --------------------------------------------------------------
  */
 
@@ -153,7 +156,7 @@ Pool.Vector2 = function(x, z){
 Pool.Vector2.prototype = {};
 
 /**
- * 주어진 좌표와 동일한 객체인지 비교합니다
+ * 주어진 평면 좌표와 동일한 객체인지 비교합니다
  * 
  * @since 2015-02-26 (API 1)
  * @author IchiKaku <woni8708@naver.com>
@@ -169,7 +172,7 @@ Pool.Vector2.prototype.equals = function(x, z){
 };
 
 /**
- * 좌표의 문자열 표현을 구합니다
+ * 평면 좌표의 문자열 표현을 구합니다
  * 
  * @since 2015-02-26 (API 1)
  * @author IchiKaku <woni8708@naver.com>
@@ -180,7 +183,7 @@ Pool.Vector2.prototype.toString = function(){
 };
 
 /**
- * 좌표의 배열을 구합니다
+ * 평면 좌표의 배열을 구합니다
  * 
  * @since 2015-02-26 (API 1)
  * @author affogatoman <colombia2@naver.com>
@@ -208,7 +211,7 @@ Pool.Vector2.prototype.set = function(x, z){
 };
 
 /**
- * 다른 좌표와의 거리를 구합니다
+ * 다른 평면 좌표와의 거리를 구합니다
  * 
  * @since 2015-02-26 (API 1)
  * @author ChalkPE <amato0617@gmail.com>
@@ -250,7 +253,7 @@ Pool.Vector3 = function(x, y, z){
 Pool.Vector3.prototype = {};
 
 /**
- * 주어진 좌표와 동일한 객체인지 비교합니다
+ * 주어진 입체 좌표와 동일한 객체인지 비교합니다
  * 
  * @since 2015-02-24 (API 1)
  * @author ChalkPE <amato0617@gmail.com>
@@ -267,7 +270,7 @@ Pool.Vector3.prototype.equals = function(x, y, z){
 };
 
 /**
- * 좌표의 문자열 표현을 구합니다
+ * 입체 좌표의 문자열 표현을 구합니다
  * 
  * @since 2015-02-24 (API 1)
  * @author ChalkPE <amato0617@gmail.com>
@@ -278,7 +281,7 @@ Pool.Vector3.prototype.toString = function(){
 };
 
 /**
- * 좌표의 배열을 구합니다
+ * 입체 좌표의 배열을 구합니다
  * 
  * @since 2015-02-26 (API 1)
  * @author affogatoman <colombia2@naver.com>
@@ -310,7 +313,7 @@ Pool.Vector3.prototype.set = function(x, y, z){
 };
 
 /**
- * 다른 좌표와의 거리를 구합니다
+ * 다른 입체 좌표와의 거리를 구합니다
  * 
  * @since 2015-02-26 (API 1)
  * @author IchiKaku <woni8708@naver.com>
@@ -384,7 +387,7 @@ Pool.Vector3.prototype.getEntities = function(){
 Pool.Canvas = {};
 
 /**
- * 두 좌표를 잇는 선을 그립니다
+ * 두 입체 좌표를 잇는 선을 그립니다
  * 
  * @since 2015-02-24 (API 1)
  * @author ChalkPE <amato0617@gmail.com>
@@ -496,7 +499,7 @@ Pool.Canvas.drawLine = function(begin, end, blockId, blockDamage){
 };
 
 /**
- * 주어진 좌표를 중심으로 원을 그립니다
+ * 주어진 입체 좌표를 중심으로 원을 그립니다
  * 
  * @since 2015-02-24 (API 1)
  * @author ChalkPE <amato0617@gmail.com>
@@ -507,25 +510,30 @@ Pool.Canvas.drawLine = function(begin, end, blockId, blockDamage){
  * @param {Number} blockDamage - 원을 이룰 블럭의 데미지 값
  */
 Pool.Canvas.drawCircle = function(center, radius, blockId, blockDamage){
-	var a, b, p;
-	a = 0;
-	b = radius;
-	p = 1 - radius;
+	var a = 0;
+	var b = radius;
+	var p = 1 - radius;
+	
 	var x = center.x;
 	var z = center.z;
-	do {
-		setTile(x+a, y, z+b, blockId, blbloclDamage);
-		setTile(x+b, y, z+a, blockId, blbloclDamage);
-		setTile(x-a, y, z+b, blockId, blbloclDamage);
-		setTile(x-b, y, z+a, blockId, blbloclDamage);
-		setTile(x+a, y, z-b, blockId, blbloclDamage);
-		setTile(x+b, y, z-a, blockId, blbloclDamage);
-		setTile(x-a, y, z-b, blockId, blbloclDamage);
-		setTile(x-b, y, z-a, blockId, blbloclDamage);
-		if(p < 0) p += 3 + 2*a++;
-		else p += 5 + 2*(a++ - b--);
+	
+	do{
+		Level.setTile(x + a, y, z + b, blockId, blbloclDamage);
+		Level.setTile(x + b, y, z + a, blockId, blbloclDamage);
+		Level.setTile(x - a, y, z + b, blockId, blbloclDamage);
+		Level.setTile(x - b, y, z + a, blockId, blbloclDamage);
+		Level.setTile(x + a, y, z - b, blockId, blbloclDamage);
+		Level.setTile(x + b, y, z - a, blockId, blbloclDamage);
+		Level.setTile(x - a, y, z - b, blockId, blbloclDamage);
+		Level.setTile(x - b, y, z - a, blockId, blbloclDamage);
 		
-	} while(a<=b);
+		if(p < 0){
+			p += 3 + 2 * a++;
+		}else{
+			p += 5 + 2 * (a++ - b--);
+		}
+		
+	}while(a <= b);
 };
 
 /**
@@ -1413,6 +1421,7 @@ Math.hypot = Math.hypot || function(){
  * 
  * @since 2015-02-24 (API 1)
  * @author ChalkPE <amato0617@gmail.com>
+ * @static
  */
 function selectLevelHook(){
 	var scripts = net.zhuoweizhang.mcpelauncher.ScriptManager.scripts;

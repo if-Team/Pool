@@ -22,4 +22,4 @@
  
   Yeah, I know. Please point out my mistakes with issues or commit comment, I'll be very appreciative of it.
   
-**This project is under Apache License verseion 2. Please read LICENSE file in project root directory.**
+**This project is under Apache License 2.0. Please read LICENSE file in project root directory.**
