@@ -1230,6 +1230,19 @@ Pool.Player.getHoldingItemDamage = function(){
 	return Player.getCarriedItemDamage();
 };
 
+/**
+ * 모든 플레이어의 배열을 구합니다
+ * 
+ * @since 2015-03-02 (API 1)
+ * @author netherTNT <canghaun@naver.com>
+ * @returns {Array} 모든 플레이어
+ */
+
+Pool.Player.getAll = function(){
+	return Entity.getAll().filter(function(ent){
+		return Player.isPlayer(ent);
+	});
+}
 
 
 
