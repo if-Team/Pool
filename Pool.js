@@ -807,32 +807,20 @@ Pool.Entity = function(ent){
  * @author ChalkPE <amato0617@gmail.com>
  * @author IchiKaku <woni8708@naver.com>
  */
-Pool.Entity.TYPE_HUMAN = 0;
-Pool.Entity.TYPE_PLAYER = 0;
-Pool.Entity.TYPE_CHICKEN = 10;
-Pool.Entity.TYPE_COW = 11;
-Pool.Entity.TYPE_PIG = 12;
-Pool.Entity.TYPE_SHEEP = 13;
-Pool.Entity.TYPE_WOLF = 14;
-Pool.Entity.TYPE_VILLAGER = 15;
-Pool.Entity.TYPE_MUSHROOM_COW = 16;
-Pool.Entity.TYPE_ZOMBIE = 32;
-Pool.Entity.TYPE_CREEPER = 33;
-Pool.Entity.TYPE_SKELETON = 34;
-Pool.Entity.TYPE_SPIDER = 35;
-Pool.Entity.TYPE_PIGMAN = 36;
-Pool.Entity.TYPE_PIGZOMBIE = 36;
-Pool.Entity.TYPE_SLIME = 37;
-Pool.Entity.TYPE_ENDERMAN = 38;
-Pool.Entity.TYPE_SILVERFISH = 39;
-Pool.Entity.TYPE_DROPPED_ITEM = 64;
-Pool.Entity.TYPE_PRIMED_TNT = 65;
-Pool.Entity.TYPE_FALLING_SAND = 66;
-Pool.Entity.TYPE_ARROW = 80;
-Pool.Entity.TYPE_SNOWBALL = 81;
-Pool.Entity.TYPE_EGG = 82;
-Pool.Entity.TYPE_PAINTING = 83;
-Pool.Entity.TYPE_MINECART = 84;
+Pool.Entity.EntityType = {
+    HUMAN: 0,
+    
+    CHICKEN: 10, COW: 11, PIG: 12, SHEEP: 13, WOLF: 14, VILLAGER: 15, MOOSHROOM: 16,
+    
+    ZOMBIE: 32, CREEPER: 33, SKELETON: 34, SPIDER: 35, PIGZOMBIE: 36, SLIME: 37, ENDERMAN: 38, SILVERFISH: 39,
+    
+    DROPPED_ITEM: 64, PRIMED_TNT: 65, FALLING_SAND: 66,
+    
+    ARROW: 80, SNOWBALL: 81, EGG: 82, PAINTING: 83, MINECART: 84,
+    
+    //Another name
+    PLAYER: 0, MUSHROOM_COW: 16, ZOMBIE_PIGMAN: 36, ITEM: 64, TNT: 65, SAND: 66, SNOW: 81, CART: 84
+};
 
 /**
  * @since 2015-02-27 (API 1)
@@ -1203,7 +1191,7 @@ Pool.Player.moveTo = function(player, x, y, z){
 		x = x.x;
 	}
 	
-	var snowball = Level.spawnMob(x, y, z, Pool.Entity.TYPE_SNOWBALL);
+	var snowball = Level.spawnMob(x, y, z, Pool.Entity.EntityType.SNOWBALL);
 	Entity.rideAnimal(player, snowball);
 	Entity.remove(snowball)
 };
