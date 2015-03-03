@@ -1239,7 +1239,6 @@ Pool.Player.getHoldingItemCount = function(){
 Pool.Player.getHoldingItemDamage = function(){
 	return Player.getCarriedItemDamage();
 };
-};
 
 /**
  * 플레이어가 들고 있는 아이템을 구합니다
