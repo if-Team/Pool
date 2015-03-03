@@ -1214,7 +1214,7 @@ Pool.Player.getHealth = function(){
  * @author Choseul <chocoslime05@naver.com>
  * @return {Number} 플레이어가 들고 있는 아이템의 아이디
  */
-Pool.Player.getHoldingItem = function(){
+Pool.Player.getHoldingItemId = function(){
 	return Player.getCarriedItem();
 };
 
@@ -1238,6 +1238,18 @@ Pool.Player.getHoldingItemCount = function(){
  */
 Pool.Player.getHoldingItemDamage = function(){
 	return Player.getCarriedItemDamage();
+};
+};
+
+/**
+ * 플레이어가 들고 있는 아이템을 구합니다
+ *
+ * @since 2015-03-04 (API 1)
+ * @author 우유맛비누 <nno88551@naver.com>
+ * @return {Pool.Item} 플레이어가 들고 있는 아이템
+ */
+Pool.Player.getHoldingItem = function(){
+	return new Pool.Item(Player.getCarriedItem(), Player.getCarriedItemDamage(), Player.getCarriedItemCount());
 };
 
 /**
