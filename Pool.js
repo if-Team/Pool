@@ -1398,6 +1398,42 @@ Pool.Utils.callScriptMethod = function(){
 
 
 /**
+ * @since 2015-03-04 (API 1)
+ * @author CodeInside <scgtdy7151@gmail.com>
+ * @namespace
+ */
+Pool.Math = {};
+
+/**
+ * 0부터 주어진 자연수까지의 랜덤한 값을 출력합니다
+ * 
+ * @since 2015-03-04 (API 1)
+ * @author CodeInside <scgtdy7151@gmail.com>
+ * @param {Number} int - 자연수
+ */
+Pool.Math.random = function(int){
+	if(parseInt(int) == int && int > 0 && Math.floor(int) === int) {
+		return Math.random() * int;
+	}else {
+		throw new Error("Illegal argument type");
+	}
+};
+
+/**
+ * -1나 1을 출력합니다
+ * 
+ * @since 2015-03-04 (API 1)
+ * @author CodeInside <scgtdy7151@gmail.com>
+ */
+Pool.Math.randomPM = function(){
+	Math.random() >= 0.5 ? return 1 : return -1;
+};
+
+
+
+
+
+/**
  * @since 2015-02-26 (API 1)
  * @author ChalkPE <amato0617@gmail.com>
  * @memberof Math
