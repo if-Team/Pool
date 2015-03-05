@@ -1405,15 +1405,15 @@ Pool.Utils.callScriptMethod = function(){
 Pool.Math = {};
 
 /**
- * 0부터 주어진 자연수까지의 랜덤한 값을 출력합니다
+ * 0부터 주어진 수까지의 랜덤한 값을 출력합니다
  * 
  * @since 2015-03-04 (API 1)
  * @author CodeInside <scgtdy7151@gmail.com>
- * @param {Number} int - 자연수
+ * @param {Number} a
  */
-Pool.Math.random = function(int){
-	if(parseInt(int) == int && int > 0 && Math.floor(int) === int) {
-		return Math.random() * int;
+Pool.Math.random = function(a){
+	if(typeof a === "number" || parseInt(a) == a) {
+		return Math.random() * a;
 	}else {
 		throw new Error("Illegal argument type");
 	}
@@ -1427,6 +1427,117 @@ Pool.Math.random = function(int){
  */
 Pool.Math.randomPM = function(){
 	Math.random() >= 0.5 ? return 1 : return -1;
+};
+
+/**
+ * 배열의 평균을 구합니다
+ * 
+ * @since 2015-03-05 (API 1)
+ * @author CodeInside <scgtdy7151@gmail.com>
+ * @param {Array} obj - 숫자 혹은 숫자가 포함된 배열
+ */
+Pool.Math.avgArray = function(obj) {
+	if(typeof obj == "object") {
+		var temp = 0;
+		var temp1 = 0;
+		for(var e in obj) {
+			if(typeof(obj[e]) === "number" || parseInt(obj) == obj) {
+				temp += obj[e];
+				temp1++;
+			}
+		}
+		return temp / temp1;
+	}else if(typeof obj === "number" || parsrInt(obj) == obj){
+		return obj;
+	}else
+		throw new Error("Illegal argument type");
+};
+
+/**
+ * 두수의 산술기하평균을 구합니다
+ * 
+ * @since 2015-03-05 (API 1)
+ * @author CodeInside <scgtdy7151@gmail.com>
+ * @param {Number} a
+ * @param {Number} b
+ */
+Pool.Math.avgAG = function(a, b) {
+	if((typeof a === "number" || parseInt(a) == a) && (typeof b === "number" || parseInt(b) == b)
+		return Math.sqrt(a * b);
+	else
+		throw new Error("Illegal argument type");
+};
+
+/**
+ * 주어진 자연수의 팩토리얼을 구합니다
+ * 
+ * @since 2015-03-05 (API 1)
+ * @author CodeInside <scgtdy7151@gmail.com>
+ * @param {Number} n - 자연수
+ */
+ Pool.Math.fct = function(n) {
+	if(Math.floor(n) != n || Math.abs(n) != n)
+		throw new Error("Illegal argument type");
+	else {
+		var temp = 1;
+		for(var e = n; e > 0; e--)
+			temp = temp * e;
+		return temp;
+	}
+};
+
+/**
+ * 주어진 수를 주어진 소수자리에서 반올림합니다
+ * 
+ * @since 2015-03-05 (API 1)
+ * @author CodeInside <scgtdy7151@gmail.com>
+ * @param {Number} a
+ * @param {Number} b - 소숫점 자리수(자연수)
+ */
+MathCI.roundCut = function(a, b) {
+	if((typeof a === "number" || parseInt(a) == a) && parseInt(b) == b){
+	var temp = 1;
+	for(var e = b; e > 0; e--)
+		temp = temp * 10;
+	return Math.ceil(a * temp) / temp;
+	}else
+		throw new Error("Illegal argument type");
+};
+
+/**
+ * 주어진 수를 주어진 소수자리에서 내림합니다
+ * 
+ * @since 2015-03-05 (API 1)
+ * @author CodeInside <scgtdy7151@gmail.com>
+ * @param {Number} a
+ * @param {Number} b - 소숫점 자리수(자리수)
+ */
+MathCI.floorCut = function(a, b) {
+	if((typeof a === "number" || parseInt(a) == a) && parseInt(b) == b){
+	var temp = 1;
+	for(var e = b; e > 0; e--)
+		temp = temp * 10;
+	return Math.floor(a * temp) / temp;
+	}else
+		throw new Error("Illegal argument type");
+};
+
+/**
+ * 주어진 수를 주어진 소수자리에서 올림합니다
+ * 
+ * @since 2015-03-05 (API 1)
+ * @author CodeInside <scgtdy7151@gmail.com>
+ * @param {Number} a
+ * @param {Number} b - 소숫점 자리수(자연수)
+ */
+MathCI.ceilCut = function(a, b) {
+	if((typeof a === "number" || parseInt(a) == a) && parseInt(b) == b){
+	var temp = 1;
+	for(var e = b; e > 0; e--)
+		temp = temp * 10;
+	return Math.round(a * temp) / temp;
+	}else
+		throw new Error("Illegal argument type");
 };
 
 
