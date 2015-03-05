@@ -1405,14 +1405,15 @@ Pool.Utils.callScriptMethod = function(){
 Pool.Math = {};
 
 /**
- * 0부터 주어진 자연수까지의 랜덤한 값을 출력합니다
+ * 0부터 주어진 수까지의 랜덤한 값을 출력합니다
  * 
  * @since 2015-03-04 (API 1)
  * @author CodeInside <scgtdy7151@gmail.com>
- * @param {Number} ntr*/
-Pool.Math.random = function(ntr){
-	if(parsentr(ntr) == ntr && ntr > 0 && Math.floor(ntr) === ntr) {
-		return Math.random() * ntr;
+ * @param {Number} a
+ */
+Pool.Math.random = function(a){
+	if(parseInt(a) == a) {
+		return Math.random() * a;
 	}else {
 		throw new Error("Illegal argument type");
 	}
@@ -1465,6 +1466,24 @@ Pool.Math.avgAG = function(a, b) {
 		return Math.sqrt(a * b);
 	else
 		throw new Error("Illegal argument type");
+};
+
+/**
+ * 주어진 자연수의 팩토리얼을 구합니다
+ * 
+ * @since 2015-03-05 (API 1)
+ * @author CodeInside <scgtdy7151@gmail.com>
+ * @param {Number} n - 자연수
+ */
+ Pool.Math.fct = function(n) {
+	if(Math.floor(n) != n || Math.abs(n) != n)
+		throw new Error("Illegal argument type");
+	else {
+		var temp = 1;
+		for(var e = n; e > 0; e--)
+			temp = temp * e;
+		return temp;
+	}
 };
 
 
