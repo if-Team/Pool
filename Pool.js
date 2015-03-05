@@ -1434,23 +1434,26 @@ Pool.Math.randomPM = function(){
  * 
  * @since 2015-03-05 (API 1)
  * @author CodeInside <scgtdy7151@gmail.com>
- * @param {Array} obj - 숫자 혹은 숫자가 포함된 배열
+ * @author ChalkPE <amato0617@gmail.com>
+ * @param {Number|Array} array - 숫자 혹은 숫자가 포함된 배열
  */
-Pool.Math.avgArray = function(obj) {
-	if(typeof obj == "object") {
-		var temp = 0;
-		var temp1 = 0;
-		for(var e in obj) {
-			if(typeof(obj[e]) === "number" || parseInt(obj) == obj) {
-				temp += obj[e];
-				temp1++;
-			}
+Pool.Math.avgArray = function(array){
+	if(!Array.isArray(array)){
+		if(typeof array === "number"){
+			return array;
+		}else{
+			throw new Error("Illegal argument type");
 		}
-		return temp / temp1;
-	}else if(typeof obj === "number" || parsrInt(obj) == obj){
-		return obj;
-	}else
-		throw new Error("Illegal argument type");
+	}
+	var sum = 0;
+	var count = 0;
+	array.forEach(function(num){
+		if(typeof num === "number" && isFinite(num) && !isNaN(num)) {
+			sum += num;
+			count++;
+		}
+	});
+	return sum / count;
 };
 
 /**
@@ -1492,7 +1495,7 @@ Pool.Math.avgAG = function(a, b) {
  * @since 2015-03-05 (API 1)
  * @author CodeInside <scgtdy7151@gmail.com>
  * @param {Number} a
- * @param {Number} b - 소숫점 자리수(자연수)
+ * @param {Number} b - 소숫점 자리수 (자연수)
  */
 MathCI.roundCut = function(a, b) {
 	if((typeof a === "number" || parseInt(a) == a) && parseInt(b) == b){
@@ -1510,7 +1513,7 @@ MathCI.roundCut = function(a, b) {
  * @since 2015-03-05 (API 1)
  * @author CodeInside <scgtdy7151@gmail.com>
  * @param {Number} a
- * @param {Number} b - 소숫점 자리수(자리수)
+ * @param {Number} b - 소숫점 자리수 (자리수)
  */
 MathCI.floorCut = function(a, b) {
 	if((typeof a === "number" || parseInt(a) == a) && parseInt(b) == b){
@@ -1528,7 +1531,7 @@ MathCI.floorCut = function(a, b) {
  * @since 2015-03-05 (API 1)
  * @author CodeInside <scgtdy7151@gmail.com>
  * @param {Number} a
- * @param {Number} b - 소숫점 자리수(자연수)
+ * @param {Number} b - 소숫점 자리수 (자연수)
  */
 MathCI.ceilCut = function(a, b) {
 	if((typeof a === "number" || parseInt(a) == a) && parseInt(b) == b){
