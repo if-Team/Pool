@@ -1497,8 +1497,8 @@ Pool.Math.avgAG = function(a, b) {
  * @param {Number} a
  * @param {Number} b - 소숫점 자리수 (자연수)
  */
-MathCI.roundCut = function(a, b) {
-	if((typeof a === "number" || parseInt(a) == a) && parseInt(b) == b){
+Pool.Math.roundCut = function(a, b) {
+	if(!isNaN(Number(a)) && isFinite(Number(a)) && !isNaN(Number(b)) && isFinite(Number(b)) && Math.floor(b) == b){
 	var temp = 1;
 	for(var e = b; e > 0; e--)
 		temp = temp * 10;
@@ -1515,7 +1515,7 @@ MathCI.roundCut = function(a, b) {
  * @param {Number} a
  * @param {Number} b - 소숫점 자리수 (자리수)
  */
-MathCI.floorCut = function(a, b) {
+ Pool.Math.floorCut = function(a, b) {
 	if((typeof a === "number" || parseInt(a) == a) && parseInt(b) == b){
 	var temp = 1;
 	for(var e = b; e > 0; e--)
@@ -1533,7 +1533,7 @@ MathCI.floorCut = function(a, b) {
  * @param {Number} a
  * @param {Number} b - 소숫점 자리수 (자연수)
  */
-MathCI.ceilCut = function(a, b) {
+Pool.Math.ceilCut = function(a, b) {
 	if((typeof a === "number" || parseInt(a) == a) && parseInt(b) == b){
 	var temp = 1;
 	for(var e = b; e > 0; e--)
