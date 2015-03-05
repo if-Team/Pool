@@ -1465,7 +1465,7 @@ Pool.Math.avgArray = function(array){
  * @param {Number} b
  */
 Pool.Math.avgAG = function(a, b) {
-	if((typeof a === "number" || parseInt(a) == a) && (typeof b === "number" || parseInt(b) == b)
+	if(!isNaN(Number(a)) && isFinite(Number(a)) && !isNaN(Number(b)) && isFinite(Number(b)))
 		return Math.sqrt(a * b);
 	else
 		throw new Error("Illegal argument type");
@@ -1479,13 +1479,13 @@ Pool.Math.avgAG = function(a, b) {
  * @param {Number} n - 자연수
  */
  Pool.Math.fct = function(n) {
-	if(Math.floor(n) != n || Math.abs(n) != n)
-		throw new Error("Illegal argument type");
-	else {
-		var temp = 1;
+	if(Math.floor(n) == n && Math.abs(n) == n && isFinite(Number(n)))
+		var sum = 1;
 		for(var e = n; e > 0; e--)
-			temp = temp * e;
-		return temp;
+			sum = sum * e;
+		return sum;
+	else {
+		throw new Error("Illegal argument type");
 	}
 };
 
