@@ -1409,11 +1409,10 @@ Pool.Math = {};
  * 
  * @since 2015-03-04 (API 1)
  * @author CodeInside <scgtdy7151@gmail.com>
- * @param {Number} int - 자연수
- */
-Pool.Math.random = function(int){
-	if(parseInt(int) == int && int > 0 && Math.floor(int) === int) {
-		return Math.random() * int;
+ * @param {Number} ntr*/
+Pool.Math.random = function(ntr){
+	if(parsentr(ntr) == ntr && ntr > 0 && Math.floor(ntr) === ntr) {
+		return Math.random() * ntr;
 	}else {
 		throw new Error("Illegal argument type");
 	}
@@ -1427,6 +1426,45 @@ Pool.Math.random = function(int){
  */
 Pool.Math.randomPM = function(){
 	Math.random() >= 0.5 ? return 1 : return -1;
+};
+
+/**
+ * 배열의 평균을 구합니다
+ * 
+ * @since 2015-03-05 (API 1)
+ * @author CodeInside <scgtdy7151@gmail.com>
+ * @param {Array} obj - 숫자 혹은 숫자가 포함된 배열
+ */
+Pool.Math.avgArray = function(obj) {
+	if(typeof obj == "object") {
+		var temp = 0;
+		var temp1 = 0;
+		for(var e in obj) {
+			if(typeof(obj[e]) === "number" || parseInt(obj) == obj) {
+				temp += obj[e];
+				temp1++;
+			}
+		}
+		return temp / temp1;
+	}else if(typeof obj === "number" || parsrInt(obj) == obj){
+		return obj;
+	}else
+		throw new Error("Illegal argument type");
+};
+
+/**
+ * 두수의 산술기하평균을 구합니다
+ * 
+ * @since 2015-03-05 (API 1)
+ * @author CodeInside <scgtdy7151@gmail.com>
+ * @param {Number} a
+ * @param {Number} b
+ */
+Pool.Math.avgAG = function(a, b) {
+	if((typeof a === "number" || parseInt(a) == a) && (typeof b === "number" || parseInt(b) == b)
+		return Math.sqrt(a * b);
+	else
+		throw new Error("Illegal argument type");
 };
 
 
