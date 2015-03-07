@@ -1499,10 +1499,7 @@ Pool.Math.avgAG = function(a, b) {
  */
 Pool.Math.roundCut = function(a, b) {
 	if(!isNaN(Number(a)) && isFinite(Number(a)) && !isNaN(Number(b)) && isFinite(Number(b)) && Math.floor(b) == b){
-	var temp = 1;
-	for(var e = b; e > 0; e--)
-		temp = temp * 10;
-	return Math.ceil(a * temp) / temp;
+		return Math.round(a*Math.pow(10, b))/Math.pow(10, b);
 	}else
 		throw new Error("Illegal argument type");
 };
@@ -1517,10 +1514,7 @@ Pool.Math.roundCut = function(a, b) {
  */
  Pool.Math.floorCut = function(a, b) {
 	if((typeof a === "number" || parseInt(a) == a) && parseInt(b) == b){
-	var temp = 1;
-	for(var e = b; e > 0; e--)
-		temp = temp * 10;
-	return Math.floor(a * temp) / temp;
+		return Math.floor(a*Math.pow(10, b))/Math.pow(10, b);
 	}else
 		throw new Error("Illegal argument type");
 };
@@ -1535,10 +1529,7 @@ Pool.Math.roundCut = function(a, b) {
  */
 Pool.Math.ceilCut = function(a, b) {
 	if((typeof a === "number" || parseInt(a) == a) && parseInt(b) == b){
-	var temp = 1;
-	for(var e = b; e > 0; e--)
-		temp = temp * 10;
-	return Math.round(a * temp) / temp;
+		return Math.ceil(a*Math.pow(10, b))/Math.pow(10, b);
 	}else
 		throw new Error("Illegal argument type");
 };
