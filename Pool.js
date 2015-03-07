@@ -1479,12 +1479,12 @@ Pool.Math.avgAG = function(a, b) {
  * @param {Number} n - 자연수
  */
  Pool.Math.fct = function(n) {
-	if(Math.floor(n) == n && Math.abs(n) == n && isFinite(Number(n)))
+	if(Math.floor(n) == n && Math.abs(n) == n && isFinite(Number(n))){
 		var sum = 1;
 		for(var e = n; e > 0; e--)
 			sum = sum * e;
 		return sum;
-	else {
+	}else {
 		throw new Error("Illegal argument type");
 	}
 };
