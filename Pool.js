@@ -1426,7 +1426,7 @@ Pool.Math.random = function(a){
  * @author CodeInside <scgtdy7151@gmail.com>
  */
 Pool.Math.randomPM = function(){
-	Math.random() >= 0.5 ? return 1 : return -1;
+	return (Math.random() >= 0.5 ? 1 : -1);
 };
 
 /**
