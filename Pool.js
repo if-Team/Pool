@@ -1210,7 +1210,7 @@ Pool.Player.getHealth = function(){
 /**
  * 플레이어가 들고 있는 아이템의 아이디를 구합니다
  *
- * @since 2015-02-29 (API 1)
+ * @since 2015-03-01 (API 1)
  * @author Choseul <chocoslime05@naver.com>
  * @return {Number} 플레이어가 들고 있는 아이템의 아이디
  */
@@ -1221,7 +1221,7 @@ Pool.Player.getHoldingItemId = function(){
 /**
  * 플레이어가 들고 있는 아이템의 개수를 구합니다
  *
- * @since 2015-02-29 (API 1)
+ * @since 2015-03-01 (API 1)
  * @author Choseul <chocoslime05@naver.com>
  * @return {Number} 플레이어가 들고 있는 아이템의 개수
  */
@@ -1232,7 +1232,7 @@ Pool.Player.getHoldingItemCount = function(){
 /**
  * 플레이어가 들고 있는 아이템의 데미지 값을 구합니다
  *
- * @since 2015-02-29 (API 1)
+ * @since 2015-03-01 (API 1)
  * @author Choseul <chocoslime05@naver.com>
  * @return {Number} 플레이어가 들고 있는 아이템의 데미지 값
  */
