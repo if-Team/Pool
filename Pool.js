@@ -749,6 +749,75 @@ Pool.IO.copyFile = function(source, target, deleteSourceAfterCopy){
 };
 
 /**
+ * 파일이나 디렉토리(내부의 모든 디렉토리 및 파일을 포함한)를 압축합니다
+ *
+ * @since 2015-03-08 (API 1)
+ * @author CI-CodeInside <scgtdy7151@gmail.com>
+ * @param {String|File} inputPath - 압축을 할 파일 및 폴더
+ * @param {String|File} outputPath - 출력할 zip 파일
+ */
+Pool.IO.zip = function(input, output){
+	try{
+		if(input instanceof java.io.File){
+			var inputPath = input;
+		}else if(input instanceof String){
+			var inputPath = new java.io.File(input);
+		}else{
+			throw new Error("Illegal argument type");
+		}
+		
+		if(inputPath !== null && !inputPath.exists()){
+			return false;
+		}
+		
+		if(output instanceof java.io.File){
+			var outputPath = output;
+		}else if(output instanceof String){
+			var outputPath = new java.io.File(output);
+		}else{
+			throw new Error("Illegal argument type");
+		}
+		
+		outputPath.getParentFile().mkdirs();
+		
+		var fileList = [];
+		function getEveryFiles(dir){
+			try{
+				var files = dir.listFiles();
+				for(var e in files){
+					if(files[e].isFile()){
+						fileList.push(files[e].getAbsolutePath());
+					}else{
+						getEveryFiles(files[e]);
+					}
+				}
+			}catch(e){
+				print(e);
+			}
+		};
+		getEveryFiles(inputPath);
+		var fos = new java.io.FileOutputStream(outputPath);
+		var zos = new java.util.zip.ZipOutputStream(fos);
+		for(var e in fileList){
+			var ze = new java.util.zip.ZipEntry(fileList[e].substring(inputPath.getAbsolutePath().length()+1, fileList[e].length()));
+			zos.putNextEntry(ze);
+			var fis = new java.io.FileInputStream(fileList[e]);
+			var buffer = java.lang.reflect.Array.newInstance(java.lang.Byte.TYPE, 1024);
+			var content;
+			while((content = fis.read(buffer)) > 0){
+				zos.write(buffer, 0, content);
+			}
+			zos.closeEntry();
+			fis.close();
+		}
+		zos.close();
+		fos.close();
+	}catch(err){
+		print(err);
+	}
+};
+
+/**
  * 주어진 압축 파일을 압축 해제 합니다
  *
  * @since 2015-02-26 (API 1)
