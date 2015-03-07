@@ -1157,21 +1157,21 @@ Pool.Player.getItemCount = function(itemId, itemDam){
  * @return {Boolean} 아이템 제거 성공 여부
  */
 Pool.Player.removeItem = function(id, damage, count){
-	var cc = count;
+	var real = count;
 	if(typeof damage !== "number" || isNaN(damage)){
 		damage = 0;
 	}
 	
-	for(var count = 9; count <= 44; count++){
-		if(Player.getInventorySlot(count) === id && Player.getInventorySlotData(count) === damage){
-			var k = Player.getInventorySlotCount(count);
-			Player.addItemInventory(id, -cc, damage);
-			cc -= k;
+	for(var cc = 9; cc <= 44; cc++){
+		if(Player.getInventorySlot(cc) === id && Player.getInventorySlotData(cc) === damage){
+			var k = Player.getInventorySlotCount(cc);
+			Player.addItemInventory(id, -real, damage);
+			real -= k;
 			if(cc <= 0) return true;
 		}
 	}
 	
-	return (count - cc) != count;
+	return real < count;
 };
 
 /**
