@@ -1426,7 +1426,7 @@ Pool.Math.random = function(a){
  * @author CodeInside <scgtdy7151@gmail.com>
  */
 Pool.Math.randomPM = function(){
-	Math.random() >= 0.5 ? return 1 : return -1;
+	return (Math.random() >= 0.5 ? 1 : -1);
 };
 
 /**
@@ -1457,14 +1457,14 @@ Pool.Math.avgArray = function(array){
 };
 
 /**
- * 두수의 산술기하평균을 구합니다
+ * 두수의 기하평균을 구합니다
  * 
  * @since 2015-03-05 (API 1)
  * @author CodeInside <scgtdy7151@gmail.com>
  * @param {Number} a
  * @param {Number} b
  */
-Pool.Math.avgAG = function(a, b) {
+Pool.Math.geoAvg = function(a, b) {
 	if(!isNaN(Number(a)) && isFinite(Number(a)) && !isNaN(Number(b)) && isFinite(Number(b)))
 		return Math.sqrt(a * b);
 	else
@@ -1479,12 +1479,12 @@ Pool.Math.avgAG = function(a, b) {
  * @param {Number} n - 자연수
  */
  Pool.Math.fct = function(n) {
-	if(Math.floor(n) == n && Math.abs(n) == n && isFinite(Number(n)))
+	if(Math.floor(n) == n && Math.abs(n) == n && isFinite(Number(n))) {
 		var sum = 1;
 		for(var e = n; e > 0; e--)
 			sum = sum * e;
 		return sum;
-	else {
+	}else {
 		throw new Error("Illegal argument type");
 	}
 };
