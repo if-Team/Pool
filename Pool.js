@@ -542,16 +542,15 @@ Pool.Canvas.drawCircle = function(center, radius, blockId, blockDamage){
  * @since 2015-02-24 (API 1)
  * @author affogatoman <colombia2@naver.com>
  * @param {Pool.Vector3} center - 타원의 중심점의 좌표
- * @param {Number} radius - 타원의 반지름
- * @param {Number} squashX - X좌표로 뭉개지는 정도 (1~0)
- * @param {Number} squashZ - Z좌표로 뭉개지는 정도 (1~0)
+ * @param {Number} width - 타원의 가로 길이
+ * @param {Number} height - 타원의 세로 길이
  * @param {Number} blockId - 타원을 이룰 블럭의 ID 값
  * @param {Number} blockDamage - 타원을 이룰 블럭의 데미지 값
  */
-Pool.Canvas.drawEllipse = function(center, radius, squashX, squashZ, blockId, blockDamage){
+Pool.Canvas.drawEllipse = function(center, width, height, blockId, blockDamage){
 	for(var a = 0; a <= 360; a++){
-   		var x = java.lang.Math.cos(java.lang.Math.toRadians(a)) * radius * squashX;
-    	var z = java.lang.Math.sin(java.lang.Math.toRadians(a)) * radius * squashZ;
+   		var x = java.lang.Math.cos(java.lang.Math.toRadians(a)) * width / 2;
+    	var z = java.lang.Math.sin(java.lang.Math.toRadians(a)) * height / 2;
     	
 		Level.setTile(center.x + Math.floor(x), center.y, center.z + Math.floor(z), blockId, blockDamage);
 	}
