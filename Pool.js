@@ -1603,6 +1603,23 @@ Pool.Math.ceilCut = function(a, b) {
 		throw new Error("Illegal argument type");
 };
 
+/**
+ * 주어진 수의 거듭제곱근을 구합니다
+ * @since 2015-03-08 (API 1)
+ * @author affogatoman <colombia2@naver.com>
+ * @param {Number} n
+ * @param {Number} target - n제곱근할 수
+ * @example
+ * //return 3
+ * Pool.Math.radrt(3, 27);
+ */
+Pool.Math.radrt = function(n, target){
+	if(typeof n === "number" && !isNaN(n) && typeof target === "number" && !isNaN(target))
+		return Math.pow(target, 1/n);
+	else
+		throw new Error("Illegal argument type");
+};
+
 
 
 
