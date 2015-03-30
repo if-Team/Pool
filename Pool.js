@@ -115,7 +115,7 @@ Pool.load = function(path){
  */
 Pool.getApiVersion = function(){
 	return 1;
-}
+};
 
 /**
  * 에러를 출력합니다
@@ -918,6 +918,36 @@ Pool.Entity.EntityTypeName = {
 
 Pool.Entity.getName = function(ent){
 	return Pool.Entity.EntityTypeName["E" + Entity.getEntityTypeId(ent)];
+};
+
+/**
+ * 엔티티와 가장 가까이에 있는 엔티티를 구합니다.
+ *
+ * @since 2015-03-06 (API 1)
+ * @author programmerDark <angello10@naver.com>
+ * @author ChalkPE <amato0617@gmail.com>
+ * @return {EntityId}
+ */
+
+Pool.Entity.prototype.getNearestEntity = function (){
+    var x = Entity.getX(this.ent);
+    var y = Entity.getY(this.ent);
+    var z = Entity.getZ(this.ent);
+
+    var that = this;
+
+    return Entity.getAll().reduce(function (a, b){
+        if(that.ent === a){
+            return b;
+        }else if(that.ent === b){
+            return a;
+        }
+
+        var distanceA = Math.hypot(Entity.getX(a) - x, Entity.getY(a) - y, Entity.getZ(a) - z);
+        var distanceB = Math.hypot(Entity.getX(a) - x, Entity.getY(b) - y, Entity.getZ(b) - z);
+
+        return distanceA < distanceB ? a : b;
+    });
 };
 
 /**
