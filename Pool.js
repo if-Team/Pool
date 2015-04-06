@@ -1507,11 +1507,15 @@ Pool.Math = {};
  * 
  * @since 2015-03-04 (API 1)
  * @author CodeInside <scgtdy7151@gmail.com>
- * @param {Number} a
+ * @author onebone <jyc0410@naver.com>
+ * @param {Number} a - 주어지는 수
+ * @param {Boolean} raw - 내림을 할지 여부
  */
-Pool.Math.random = function(a){
+Pool.Math.random = function(a, raw){
+	if(typeof raw === null) raw = false;
 	if(typeof a === "number" || parseInt(a) == a) {
-		return Math.random() * a;
+		var random = Math.random() * a;
+		return ((raw) ? random : Math.floor(random));
 	}else {
 		throw new Error("Illegal argument type");
 	}
