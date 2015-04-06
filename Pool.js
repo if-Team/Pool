@@ -1509,13 +1509,15 @@ Pool.Math = {};
  * @author CodeInside <scgtdy7151@gmail.com>
  * @author onebone <jyc0410@naver.com>
  * @param {Number} a - 주어지는 수
+ * @param {Number} min - 나올 수 있는 가장 작은 수
  * @param {Boolean} raw - 내림을 할지 여부
  */
-Pool.Math.random = function(a, raw){
+Pool.Math.random = function(a, min, raw){
 	if(typeof raw === null) raw = false;
+	if(typeof min !== "number" || isNaN(min)) min = 0;
 	if(typeof a === "number" || parseInt(a) == a) {
 		var random = Math.random() * a;
-		return ((raw) ? random : Math.floor(random));
+		return (((raw) ? random  : Math.floor(random)) + min);
 	}else {
 		throw new Error("Illegal argument type");
 	}
