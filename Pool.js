@@ -141,7 +141,7 @@ Pool.showError = function(error){
  * @class
  */
 Pool.Vector2 = function(x, z){
-	if(typeof x !== "number" || isNaN(x) || typeof y !== "number" || isNaN(y) || typeof z !== "number" || isNaN(z)){
+	if(typeof x !== "number" || isNaN(x) || typeof z !== "number" || isNaN(z)){
 		throw new Error("argument must be a number");
 	}
 	
