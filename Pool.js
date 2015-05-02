@@ -375,6 +375,16 @@ Pool.Vector3.prototype.getEntities = function(){
     });
 };
 
+/**
+ * 2차원 벡터를 구합니다
+ * @since 2015-05-02 (API 1)
+ * @author affogatoman <colombia2@naver.com>
+ * @returns {Pool.Vector2} 2차원 벡터
+ */
+Pool.Vector3.prototype.getVector2 = function(){
+    return new Pool.Vector2(this.x, this.z);
+};
+
 
 
 
