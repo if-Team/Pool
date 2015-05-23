@@ -148,3 +148,44 @@ Pool.Player.getAll = function(){
         return Player.isPlayer(ent);
     });
 };
+
+/**
+ * 플레이어의 특정 슬롯에 아이템을 지정합니다
+ * 
+ * @since 2015-05-23 (API 1)
+ * @author affogatoman <colombia2@naver.com>
+ * @param {Number} slot
+ * @param {Number|Pool.Item} itemId
+ * @param {Number} itemDam
+ * @param {Number} itemCount
+ */
+Pool.Player.setInventorySlot = function(slot, itemId, itemDam, itemCount) {
+    var items = [];
+    var airs = [];
+    
+    if(itemId instanceof Pool.Item) {
+        itemDam = itemId.getDamage();
+        itemCount = itemId.getCount();
+        itemId = itemId.getId();
+    }
+    
+    for(var i = 9; i < slot; i++) {
+        if(Player.getInventorySlot(i) == 0) {
+            addItemInventory(1, 64, 0);
+            airs.push(i);
+        }
+        if(Player.getInventorySlot(i) == itemId && Player.getInventorySlotData(i) == itemDam) {
+            items.push([i, Player.getInventorySlotCount(i)]);
+            Player.clearInventorySlot(i);
+            addItemInventory(511, 64, 0);
+        }
+    }
+    Player.clearInventorySlot(slot);
+    addItemInventory(itemId, itemCount, itemDam);
+    for(var i in items) {
+        Player.clearInventorySlot(items[i][0]);
+        addItemInventory(itemId, items[i][1], itemDam);
+    }
+    for(var i in airs)
+        Player.clearInventorySlot(airs[i]);
+};
