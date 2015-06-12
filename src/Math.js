@@ -77,6 +77,20 @@ Pool.Math.geoAvg = function(a, b) {
     else
         throw new Error("Illegal argument type");
 };
+/**
+ * 두수의 조화평균을 구합니다.
+ * 
+ * @since 2015-06-12 (API 1)
+ * @author IchiKaku<woni8708@naver.com>
+ * @param {Number} a
+ * @param {Number} b
+ */
+Poo..Math.harmoAvg = function(a, b) {
+    if(!isNaN(Number(a)) && isFinite(Number(a)) && !isNaN(Number(b)) && isFinite(Number(b)))
+        return (2*a*b)/(a+b);
+    else
+        throw new Error("Illegal argument type");
+}
 
 /**
  * 주어진 자연수의 팩토리얼을 구합니다
