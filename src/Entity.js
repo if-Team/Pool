@@ -45,7 +45,7 @@ Pool.Entity.EntityType = {
 Pool.Entity.EntityTypeName = {
     "E0": "Player",
     
-    "E10": "Chicken", "E11": "Cow", "E12": "Pig", "E13": "Sheep", "E14": "Wolf", "E15": "Villager", "E16": "Mooshroom", "E17": "Squid",
+    "E10": "Chicken", "E11": "Cow", "E12": "Pig", "E13": "Sheep", "E14": "Wolf", "E15": "Villager", "E16": "Mooshroom", "E17": "Squid", "E19": "Bat",
     
     "E32": "Zombie", "E33": "Creeper", "E34": "Skeleton", "E35": "Spider", "E36": "PigZombie", "E37": "Slime", "E38": "Enderman", "E39": "Silverfish", "E40": "CaveSpider", "E41": "Ghast", "E42": "MagmaCube",
     
