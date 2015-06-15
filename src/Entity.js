@@ -19,17 +19,18 @@ Pool.Entity = function(ent){
  * @since 2015-02-27 (API 1)
  * @author ChalkPE <amato0617@gmail.com>
  * @author IchiKaku <woni8708@naver.com>
+ * @author Hanarin <canghaun@naver.com>
  */
 Pool.Entity.EntityType = {
     HUMAN: 0,
     
-    CHICKEN: 10, COW: 11, PIG: 12, SHEEP: 13, WOLF: 14, VILLAGER: 15, MOOSHROOM: 16,
+    CHICKEN: 10, COW: 11, PIG: 12, SHEEP: 13, WOLF: 14, VILLAGER: 15, MOOSHROOM: 16, SQUID: 17, BAT: 19,
     
-    ZOMBIE: 32, CREEPER: 33, SKELETON: 34, SPIDER: 35, PIGZOMBIE: 36, SLIME: 37, ENDERMAN: 38, SILVERFISH: 39,
+    ZOMBIE: 32, CREEPER: 33, SKELETON: 34, SPIDER: 35, PIGZOMBIE: 36, SLIME: 37, ENDERMAN: 38, SILVERFISH: 39, CAVE_SPIDER: 40, GHAST: 41, MAGMA_CUBE: 42,
     
     DROPPED_ITEM: 64, PRIMED_TNT: 65, FALLING_SAND: 66,
     
-    ARROW: 80, SNOWBALL: 81, EGG: 82, PAINTING: 83, MINECART: 84,
+    FISH_HOOK: 77, ARROW: 80, SNOWBALL: 81, EGG: 82, PAINTING: 83, MINECART: 84, FIREBALL: 85, BOAT: 90, 
     
     //Another name
     PLAYER: 0, MUSHROOM_COW: 16, ZOMBIE_PIGMAN: 36, ITEM: 64, TNT: 65, SAND: 66, SNOW: 81, CART: 84
@@ -39,17 +40,18 @@ Pool.Entity.EntityType = {
  * @since 2015-02-27 (API 1)
  * @author ChalkPE <amato0617@gmail.com>
  * @author IchiKaku <woni8708@naver.com>
+ * @author Hanarin <canghaun@naver.com>
  */
 Pool.Entity.EntityTypeName = {
     "E0": "Player",
     
-    "E10": "Chicken", "E11": "Cow", "E12": "Pig", "E13": "Sheep", "E14": "Wolf", "E15": "Villager", "E16": "Mooshroom",
+    "E10": "Chicken", "E11": "Cow", "E12": "Pig", "E13": "Sheep", "E14": "Wolf", "E15": "Villager", "E16": "Mooshroom", "E17": "Squid",
     
-    "E32": "Zombie", "E33": "Creeper", "E34": "Skeleton", "E35": "Spider", "E36": "PigZombie", "E37": "Slime", "E38": "Enderman", "39": "Silverfish",
+    "E32": "Zombie", "E33": "Creeper", "E34": "Skeleton", "E35": "Spider", "E36": "PigZombie", "E37": "Slime", "E38": "Enderman", "E39": "Silverfish", "E40": "CaveSpider", "E41": "Ghast", "E42": "MagmaCube",
     
     "E64": "DroppedItem", "E65": "PrimedTNT", "E66": "FallingSand",
     
-    "E80": "Arrow", "E81": "Snowball", "E82": "Egg", "E83": "Painting", "E84": "Minecart"
+  "E77": "FishHook",  "E80": "Arrow", "E81": "Snowball", "E82": "Egg", "E83": "Painting", "E84": "Minecart", "E85": "Fireball", "E90": "Boat"
 };
 
 /**
