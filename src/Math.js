@@ -171,3 +171,21 @@ Pool.Math.radrt = function(n, target){
     else
         throw new Error("Illegal argument type");
 };
+
+/**
+ * 주어진 자연수의 약수들로 이루어진 배열을 구합니다
+ * 
+ * @since 2015-06-18 (API 1)
+ * @author Hanarin <canghaun@naver.com>
+ * @param {Number} n
+ */
+ Pool.Math.getDivisor = function(n) {
+     if(Math.floor(n) == n && Math.abs(n) == n && isFinite(Number(n))) {
+         var divisor = [];
+         for(var i=1; i<n; i++)
+             if(n%i == 0) divisor.push(i);
+         return divisor;
+     }
+     else
+        throw new Error("Illegal argument type");
+ }
