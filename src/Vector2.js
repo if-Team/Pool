@@ -90,3 +90,37 @@ Pool.Vector2.prototype.getDistance = function(vec2){
     }
     return Math.hypot(this.x - vec2.x, this.z - vec2.z);
 };
+
+/**
+ * 좌표에 대하여 더합니다
+ *
+ * @since 2015-06-18 (API 1)
+ * @author onebone <jyc0410@naver.com>
+ * @author Hanarin <canghaun@naver.com>
+ * @param {Number|Pool.Vector2} x
+ * @param {Number} z
+ * @return {Pool.Vector2} 결과 값
+ */
+Pool.Vector2.prototype.add = function(x, z){
+    if(x instanceof  Pool.Vector2){
+        return new Pool.Vector2(this.x + x.x, this.z + x.z);
+    }
+    return new Pool.Vector2(this.x + x, this.z + z);
+};
+
+/**
+ * 좌표에 대하여 뺍니다
+ * 
+ * @since 2015-02-26 (API 1)
+ * @author onebone <jyc0410@naver.com>
+ * @author Hanarin <canghaun@naver.com>
+ * @param {Number|Pool.Vector2} x
+ * @param {Number} z
+ * @return {Pool.Vector2} 결과 값
+*/
+Pool.Vector2.prototype.subtract = function(x, z){
+    if(x instanceof Pool.Vector2){
+        return new Pool.Vector2(this.x - x.x, this.z - x.z);
+    }
+    return new Pool.Vector2(this.x - x, this.z - z);
+};
