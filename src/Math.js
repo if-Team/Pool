@@ -188,7 +188,7 @@ Pool.Math.getDivisor = function(n) {
     }
     else
        throw new Error("Illegal argument type");
-}
+};
  
  /**
  * 주어진 자연수가 소수인지 여부를 구합니다
@@ -202,4 +202,4 @@ Pool.Math.isPrime = function(n) {
         return Pool.Math.getDivisor(n).length ==2;
     else
        throw new Error("Illegal argument type");
-}
+};
