@@ -85,12 +85,12 @@ Pool.Math.geoAvg = function(a, b) {
  * @param {Number} a
  * @param {Number} b
  */
-Poo..Math.harmoAvg = function(a, b) {
+Pool.Math.harmoAvg = function(a, b) {
     if(!isNaN(Number(a)) && isFinite(Number(a)) && !isNaN(Number(b)) && isFinite(Number(b)))
         return (2*a*b)/(a+b);
     else
         throw new Error("Illegal argument type");
-}
+};
 
 /**
  * 주어진 자연수의 팩토리얼을 구합니다
